@@ -1,0 +1,16 @@
+{
+  "fieldName": "creditAccount",
+  "arguments": {
+    "athleteId": "46cc980b-46b7-459e-95ea-1b9ac9b85523",
+    "data":{
+      "unitAccountId" : "333452",
+      "amount": 10,
+      "addenda": "Some very long description of the payment",
+      "description": "Testing #5",
+      "receiverName": "dee tres",
+      "receiverRoutingNumber": "091311229",
+      "receiverAccountNumber": "864800000000",
+      "receiverAccountType" : "Checking"
+    }
+  }
+}

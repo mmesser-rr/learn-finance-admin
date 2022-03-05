@@ -1,0 +1,25 @@
+{
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "unitToken",
+      "environmentVariableName": "UNIT_TOKEN"
+    },
+    {
+      "cloudFormationParameterName": "unitApiUrl",
+      "environmentVariableName": "UNIT_API_URL"
+    },
+    {
+      "cloudFormationParameterName": "nodeEnv",
+      "environmentVariableName": "NODE_ENV"
+    }
+  ],
+  "permissions": {
+    "api": {
+      "theplayerscompany": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  }
+}

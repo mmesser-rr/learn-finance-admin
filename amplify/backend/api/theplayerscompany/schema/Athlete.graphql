@@ -1,0 +1,62 @@
+# import Invite from "Invite.graphql"
+# import Address from 'Address.graphql'
+# import AthleteAccount from 'AthleteAccount.graphql'
+
+type AthleteUnitLookup {
+  appId: String!
+  custId: String
+}
+
+enum AthleteLevel {
+  COLLEGE
+  PROFESSIONAL
+}
+
+type PodSettings {
+  SAVINGS: Int!
+  INVESTMENTS: Int!
+  SPENDING: Int!
+}
+
+type AthletePlaidLookup {
+  access_token: String
+  processor_token: String
+}
+
+type AthleteSport {
+  name: String!
+  airTableId: String!
+  isActive: Boolean
+}
+
+type AthleteTeam {
+  name: String!
+  airTableId: String!
+  isActive: Boolean
+}
+
+type Athlete @model {
+  firstName: String!
+  lastName: String!
+  mobilePhone: String!
+  email: String!
+  level: AthleteLevel!
+  sport: AthleteSport!
+  team: AthleteTeam!
+  address: Address!
+  dateOfBirth: String!
+  accounts: [AthleteAccount] @hasMany
+  unitLookup: AthleteUnitLookup
+  podSettings: PodSettings!
+  plaid: AthletePlaidLookup
+  wyreId: String
+  isActive: Boolean!
+}
+
+type AthleteAccount @model {
+  athlete: Athlete! @belongsTo
+  unitAccountId: String!
+  routingCode: String!
+  accountNumber: String!
+  podName: String!
+}
