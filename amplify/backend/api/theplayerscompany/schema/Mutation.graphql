@@ -1,0 +1,25 @@
+type Mutation {
+  initiatePhoneChallenge(phoneNumber: String!): PhoneChallenge @function(name: "PlayerVerifyService-${env}")
+  returnUserChallenge(phoneNumber: String!): PhoneChallenge @function(name: "PlayerVerifyService-${env}")
+  validateReturnUser(phoneNumber: String!, code: String!): Boolean! @function(name: "PlayerVerifyService-${env}")
+  tryPhoneChallenge(phoneNumber: String!, code: String!): Boolean! @function(name: "PlayerVerifyService-${env}")
+  generateInvite: Invite @function(name: "InviteService-${env}")
+  initiateEmailChallenge(email: String!): EmailChallenge @function(name: "PlayerVerifyService-${env}")
+  tryEmailChallenge(email: String!, code: String!): Boolean! @function(name: "PlayerVerifyService-${env}")
+  openAppAndAccount(ssn: String!, athleteId: ID!): [AthleteAccount] @function(name: "AccountOpenService-${env}")
+  openAccount(athleteId: ID!): AthleteAccount @function(name: "AccountOpenService-${env}")
+
+  getAthleteUnitAccounts(athleteId: ID!): [UnitAccount] @function(name: "AccountOpenService-${env}")
+  getUnitTransactionById(athleteId: ID!, unitTransactionId: String!): [UnitAccount] @function(name: "AccountOpenService-${env}")
+  getAllUnitTransaction(athleteId: ID!): [UnitAccount] @function(name: "AccountOpenService-${env}")
+  getAthleteUnitAccountById(athleteId: ID!, unitAccountId: String!): [UnitAccount] @function(name: "AccountOpenService-${env}")
+
+  podSettings(athleteId: ID!): AthleteAccount @function(name: "AccountOpenService-${env}")
+
+  createPlaidLink(athleteId: ID!): PlaidToken @function(name: "PlaidService-${env}")
+  updatePlaidLink(athleteId: ID!, accessToken: String!): PlaidToken @function(name: "PlaidService-${env}")
+
+  bookPayment(athleteId: ID!, unitAccountId: String!, amount: Float!, description: String, receiverUnitAccountId: String!, receiverAccountType: String): UnitAccount @function(name: "AccountOpenService-${env}")
+  debitAccount(athleteId: ID!, unitAccountId: String!, amount: Float!, description: String, receiverName: String!, receiverRoutingNumber: String!, receiverAccountNumber: String!, receiverAccountType: String, addenda: String): UnitAccount @function(name: "AccountOpenService-${env}")
+  creditAccount(athleteId: ID!, unitAccountId: String!, amount: Float!, description: String, receiverName: String!, receiverRoutingNumber: String!, receiverAccountNumber: String!, receiverAccountType: String, addenda: String): UnitAccount @function(name: "AccountOpenService-${env}")
+}
