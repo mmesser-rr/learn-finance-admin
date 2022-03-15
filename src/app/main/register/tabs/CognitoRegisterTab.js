@@ -6,28 +6,34 @@ import TextField from '@mui/material/TextField';
 import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerWithFirebase } from 'app/auth/store/registerSlice';
+import { registerWithCognito } from 'app/auth/store/registerSlice';
 import * as yup from 'yup';
 import _ from '@lodash';
 
 /**
  * Form Validation Schema
  */
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const schema = yup.object().shape({
-  displayName: yup.string().required('You must enter display name'),
   email: yup.string().email('You must enter a valid email').required('You must enter a email'),
+  userName: yup
+    .string()
+    // .matches(phoneRegExp, 'You must enter a valid phone number')
+    .required('You must enter a phone number'),
   password: yup
     .string()
     .required('Please enter your password.')
     .min(8, 'Password is too short - should be 8 chars minimum.'),
-  passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
+  // passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 
 const defaultValues = {
-  displayName: '',
-  email: '',
+  userName: '+16024300237',
+  email: 'troy@busot.com',
+  phoneNumber: '+16024300237',
   password: '',
-  passwordConfirm: '',
+  verified: false,
 };
 
 function CognitoRegisterTab(props) {
@@ -54,28 +60,28 @@ function CognitoRegisterTab(props) {
   }, [authRegister.errors, setError]);
 
   function onSubmit(model) {
-    dispatch(registerWithFirebase(model));
+    dispatch(registerWithCognito(model));
   }
 
   return (
     <div className="w-full">
       <form className="flex flex-col justify-center w-full" onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="displayName"
+          name="userName"
           control={control}
           render={({ field }) => (
             <TextField
               {...field}
               className="mb-16"
               type="text"
-              label="Display name"
-              error={!!errors.displayName}
-              helperText={errors?.displayName?.message}
+              label="Phone Number"
+              error={!!errors.userName}
+              helperText={errors?.userName?.message}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <Icon className="text-20" color="action">
-                      person
+                      phone
                     </Icon>
                   </InputAdornment>
                 ),
@@ -85,7 +91,6 @@ function CognitoRegisterTab(props) {
             />
           )}
         />
-
         <Controller
           name="email"
           control={control}
@@ -123,32 +128,6 @@ function CognitoRegisterTab(props) {
               label="Password"
               error={!!errors.password}
               helperText={errors?.password?.message}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Icon className="text-20" color="action">
-                      vpn_key
-                    </Icon>
-                  </InputAdornment>
-                ),
-              }}
-              variant="outlined"
-              required
-            />
-          )}
-        />
-
-        <Controller
-          name="passwordConfirm"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              className="mb-16"
-              type="password"
-              label="Confirm Password"
-              error={!!errors.passwordConfirm}
-              helperText={errors?.passwordConfirm?.message}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

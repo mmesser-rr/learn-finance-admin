@@ -23,6 +23,22 @@ const navigationConfig = [
         icon: 'whatshot',
         url: 'example',
       },
+      {
+        id: 'opportunity-add',
+        title: 'Add Opportunity',
+        translate: 'ADD_OPPORTUNITY',
+        type: 'item',
+        icon: 'whatshot',
+        url: 'pages/opportunity/add',
+      },
+      {
+        id: 'opportunities',
+        title: 'Opportunities',
+        translate: 'OPPORTUNITIES',
+        type: 'item',
+        icon: 'whatshot',
+        url: 'pages/opportunities',
+      },
     ],
   },
   {

@@ -1,5 +1,6 @@
 import FuseSplashScreen from '@fuse/core/FuseSplashScreen';
 import auth0Service from 'app/services/auth0Service';
+import cognitoService from 'app/services/cognitoService';
 import firebaseService from 'app/services/firebaseService';
 import jwtService from 'app/services/jwtService';
 import { Component } from 'react';
@@ -7,7 +8,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
 
-import { setUserDataFirebase, setUserDataAuth0, setUserData, logoutUser } from './store/userSlice';
+import {
+  setUserDataCognito,
+  setUserDataFirebase,
+  setUserDataAuth0,
+  setUserData,
+  logoutUser,
+} from './store/userSlice';
 
 class Auth extends Component {
   state = {
@@ -20,7 +27,7 @@ class Auth extends Component {
       // this.firebaseCheck(),
       // this.auth0Check(),
       // this.jwtCheck(),
-      // this.cognitoCheck(),
+      this.cognitoCheck(),
     ]).then(() => {
       this.setState({ waitAuthCheck: false });
     });
@@ -97,6 +104,29 @@ class Auth extends Component {
       return Promise.resolve();
     });
 
+  cognitoCheck = async () =>
+    new Promise((resolve) => {
+      if (cognitoService.isAuthenticated()) {
+        this.props.showMessage({ message: 'Logging in with Cognito' });
+
+        /**
+         * Retrieve user data from Cognito
+         */
+        cognitoService.getUserData().then((tokenData) => {
+          console.log('auth.js => tokenData', tokenData);
+          this.props.setUserDataCognito(tokenData);
+
+          resolve();
+
+          this.props.showMessage({ message: 'Logged in with Cognito' });
+        });
+      } else {
+        resolve();
+      }
+
+      return Promise.resolve();
+    });
+
   firebaseCheck = () =>
     new Promise((resolve) => {
       firebaseService.init((success) => {
@@ -141,6 +171,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       logout: logoutUser,
+      setUserDataCognito,
       setUserData,
       setUserDataAuth0,
       setUserDataFirebase,

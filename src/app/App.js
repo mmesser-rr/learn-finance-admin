@@ -1,3 +1,4 @@
+import Amplify from 'aws-amplify';
 import BrowserRouter from '@fuse/core/BrowserRouter';
 import FuseAuthorization from '@fuse/core/FuseAuthorization';
 import FuseLayout from '@fuse/core/FuseLayout';
@@ -10,6 +11,7 @@ import { CacheProvider } from '@emotion/react';
 import { selectCurrLangDir } from 'app/store/i18nSlice';
 import withAppProviders from './withAppProviders';
 import { Auth } from './auth';
+import awsconfig from '../aws-exports';
 
 // import axios from 'axios';
 /**
@@ -34,7 +36,7 @@ const emotionCacheOptions = {
 
 const App = () => {
   const langDirection = useSelector(selectCurrLangDir);
-
+  Amplify.configure(awsconfig);
   return (
     <CacheProvider value={createCache(emotionCacheOptions[langDirection])}>
       <Auth>

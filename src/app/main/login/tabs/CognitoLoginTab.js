@@ -6,7 +6,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { submitLoginWithFireBase } from 'app/auth/store/loginSlice';
+import { submitLoginWithCognito } from 'app/auth/store/loginSlice';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import _ from '@lodash';
@@ -15,12 +15,16 @@ import _ from '@lodash';
  * Form Validation Schema
  */
 const schema = yup.object().shape({
-  email: yup.string().email('You must enter a valid email').required('You must enter a email'),
+  // email: yup.string().email('You must enter a valid email').required('You must enter a email'),
+  userName: yup
+    .string()
+    // .matches(phoneRegExp, 'You must enter a valid phone number')
+    .required('You must enter a phone number'),
   password: yup.string().required('Please enter your password.'),
 });
 
 const defaultValues = {
-  email: '',
+  userName: '+16024300237',
   password: '',
 };
 
@@ -50,28 +54,28 @@ function CognitoLoginTab(props) {
   }, [login.errors, setError]);
 
   function onSubmit(model) {
-    dispatch(submitLoginWithFireBase(model));
+    dispatch(submitLoginWithCognito(model));
   }
 
   return (
     <div className="w-full">
       <form className="flex flex-col justify-center w-full" onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="email"
+          name="userName"
           control={control}
           render={({ field }) => (
             <TextField
               {...field}
               className="mb-16"
               type="text"
-              label="Email"
-              error={!!errors.email}
-              helperText={errors?.email?.message}
+              label="Phone Number"
+              error={!!errors.userName}
+              helperText={errors?.userName?.message}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <Icon className="text-20" color="action">
-                      email
+                      phone
                     </Icon>
                   </InputAdornment>
                 ),
