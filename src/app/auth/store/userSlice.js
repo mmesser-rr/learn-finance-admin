@@ -10,6 +10,19 @@ import auth0Service from 'app/services/auth0Service';
 import firebaseService from 'app/services/firebaseService';
 import jwtService from 'app/services/jwtService';
 import settingsConfig from 'app/fuse-configs/settingsConfig';
+import { Auth } from 'aws-amplify';
+
+export const setUserDataCognito = (userToken) => async (dispatch) => {
+  const user = {
+    role: ['admin'],
+    from: 'cognito',
+    loginRedirectUrl: '/example',
+    data: {
+      displayName: 'Rufus Montgomery',
+    },
+  };
+  return dispatch(setUserData(user));
+};
 
 export const setUserDataAuth0 = (tokenData) => async (dispatch) => {
   const user = {
@@ -76,10 +89,12 @@ export const createUserSettingsFirebase = (authUser) => async (dispatch, getStat
 };
 
 export const setUserData = (user) => async (dispatch, getState) => {
+  console.log('userSlice => setUserData =>', user);
   /*
   You can redirect the logged-in user to a specific route depending on his role
   */
   if (user.loginRedirectUrl) {
+    console.log('userSlice => loginRedirectUrl =>', user.loginRedirectUrl);
     settingsConfig.loginRedirectUrl = user.loginRedirectUrl; // for example 'apps/academy'
   }
 
@@ -128,6 +143,10 @@ export const logoutUser = () => async (dispatch, getState) => {
   });
 
   switch (user.from) {
+    case 'cognito': {
+      await Auth.signOut();
+      break;
+    }
     case 'firebase': {
       firebaseService.signOut();
       break;
@@ -152,6 +171,10 @@ export const updateUserData = (user) => async (dispatch, getState) => {
     return;
   }
   switch (user.from) {
+    case 'cognito': {
+      dispatch(showMessage({ message: 'User Update not yet implemented.' }));
+      break;
+    }
     case 'firebase': {
       firebaseService
         .updateUserData(user)
