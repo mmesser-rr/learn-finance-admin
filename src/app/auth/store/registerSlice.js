@@ -1,3 +1,4 @@
+import { Auth } from 'aws-amplify';
 import { createSlice } from '@reduxjs/toolkit';
 import { showMessage } from 'app/store/fuse/messageSlice';
 import firebaseService from 'app/services/firebaseService';
@@ -21,7 +22,25 @@ export const submitRegister =
         return dispatch(registerError(errors));
       });
   };
+export const registerWithCognito = (model) => async (dispatch) => {
+  const debugKey = 'registerSlice => registerWithCognito => ';
+  console.log(`${debugKey} start`);
+  console.log(`${debugKey}`, model);
 
+  const { email, password, userName } = model;
+  Auth.signUp({
+    username: userName,
+    password,
+    attributes: {
+      email,
+      phone_number: userName,
+    },
+  })
+    .then(() => {
+      console.log(`${debugKey} Successfully signed up`);
+    })
+    .catch((err) => console.log(`${debugKey} e => ${err}`));
+};
 export const registerWithFirebase = (model) => async (dispatch) => {
   if (!firebaseService.auth) {
     console.warn("Firebase Service didn't initialize, check your configuration");
