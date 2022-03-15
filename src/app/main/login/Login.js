@@ -1,11 +1,8 @@
 import Card from '@mui/material/Card';
 import { styled, darken } from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CognitoLoginTab from './tabs/CognitoLoginTab';
 
@@ -28,12 +25,6 @@ const Root = styled('div')(({ theme }) => ({
 }));
 
 function Login() {
-  const [selectedTab, setSelectedTab] = useState(0);
-
-  function handleTabChange(event, value) {
-    setSelectedTab(value);
-  }
-
   return (
     <Root className="flex flex-col flex-auto items-center justify-center shrink-0 p-16 md:p-24">
       <motion.div
@@ -67,38 +58,7 @@ function Login() {
               </div>
             </motion.div>
 
-            <Tabs
-              value={selectedTab}
-              onChange={handleTabChange}
-              variant="fullWidth"
-              className="w-full mb-32"
-            >
-              <Tab
-                icon={
-                  <img
-                    className="h-40 p-4 bg-black rounded-12"
-                    src="assets/images/logos/jwt.svg"
-                    alt="firebase"
-                  />
-                }
-                className="min-w-0"
-                label="JWT"
-              />
-              <Tab
-                icon={
-                  <img className="h-40" src="assets/images/logos/firebase.svg" alt="firebase" />
-                }
-                className="min-w-0"
-                label="Firebase"
-              />
-              <Tab
-                icon={<img className="h-40" src="assets/images/logos/auth0.svg" alt="auth0" />}
-                className="min-w-0"
-                label="Auth0"
-              />
-            </Tabs>
-
-            {selectedTab === 0 && <CognitoLoginTab />}
+            <CognitoLoginTab />
           </CardContent>
 
           <div className="flex flex-col items-center justify-center pb-32">
@@ -131,8 +91,8 @@ function Login() {
               animate={{ opacity: 1, transition: { delay: 0.3 } }}
             >
               <Typography variant="subtitle1" color="inherit" className="mt-32">
-                Powerful and professional admin template for Web Applications, CRM, CMS, Admin
-                Panels and more.
+                Banking on the American Dream 3.0 - creating equal access provides equal
+                opportunity.
               </Typography>
             </motion.div>
           </div>

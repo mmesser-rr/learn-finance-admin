@@ -1,8 +1,9 @@
+import { Auth } from 'aws-amplify';
 import { createSlice } from '@reduxjs/toolkit';
 import { showMessage } from 'app/store/fuse/messageSlice';
 import firebaseService from 'app/services/firebaseService';
 import jwtService from 'app/services/jwtService';
-import { setUserData } from './userSlice';
+import { setUserDataCognito } from './userSlice';
 
 export const submitLogin =
   ({ email, password }) =>
@@ -10,13 +11,46 @@ export const submitLogin =
     return jwtService
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        dispatch(setUserData(user));
+        dispatch(setUserDataCognito(user));
 
         return dispatch(loginSuccess());
       })
       .catch((errors) => {
         return dispatch(loginError(errors));
       });
+  };
+
+export const submitLoginWithCognito =
+  ({ userName, password }) =>
+  (dispatch) => {
+    // const debugKey = 'loginSlice => submitLoginWithCognito => ';
+    // console.log(`${debugKey} start`);
+    const response = [];
+    Auth.signIn({
+      username: userName,
+      password,
+    })
+      .then((user) => {
+        // console.log(`${debugKey} signIn => then => user`, user);
+
+        dispatch(setUserDataCognito(user));
+        return dispatch(loginSuccess());
+      })
+      .catch((err) => {
+        response.push({
+          type: 'password',
+          message: err.message,
+        });
+        dispatch(loginError(response));
+      });
+
+    // We won't confirm yet.
+    // Auth.confirmSignIn(userName)
+    //   .then(() => {
+    //     console.log(`${debugKey} successfully confirmed signed in`);
+    //     return dispatch(loginSuccess());
+    //   })
+    //   .catch((err) => console.log(`${debugKey} Error confirming sign up - ${err}`));
   };
 
 export const submitLoginWithFireBase =
