@@ -56,7 +56,7 @@
         }
       ]
     },
-    "AccountOpenService": {
+    "PlaidService": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
@@ -72,7 +72,7 @@
         }
       ]
     },
-    "PlaidService": {
+    "UnitService": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
@@ -88,12 +88,24 @@
         },
         {
           "category": "function",
-          "resourceName": "AccountOpenService",
+          "resourceName": "PlayerVerifyService",
+          "attributes": [
+            "Name"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "PlaidService",
           "attributes": [
             "Name"
           ]
         }
       ]
+    },
+    "OpportunityService": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "auth": {
@@ -124,5 +136,6 @@
         ]
       }
     }
-  }
+  },
+  "storage": {}
 }

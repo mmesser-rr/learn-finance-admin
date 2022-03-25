@@ -12,6 +12,10 @@
     {
       "cloudFormationParameterName": "nodeEnv",
       "environmentVariableName": "NODE_ENV"
+    },
+    {
+      "cloudFormationParameterName": "sandKey",
+      "environmentVariableName": "SAND_KEY"
     }
   ],
   "permissions": {
@@ -21,14 +25,13 @@
         "Mutation"
       ]
     },
-    "function": {
-      "AccountOpenService": [
-        "read",
-        "update"
-      ]
-    },
     "storage": {
       "Athlete:@model(appsync)": [
+        "create",
+        "read",
+        "update"
+      ],
+      "AthleteAccount:@model(appsync)": [
         "create",
         "read",
         "update"

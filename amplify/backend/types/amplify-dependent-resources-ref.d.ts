@@ -19,13 +19,19 @@ export type AmplifyDependentResourcesAttributes = {
             "Region": "string",
             "LambdaExecutionRole": "string"
         },
-        "AccountOpenService": {
+        "PlaidService": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
             "LambdaExecutionRole": "string"
         },
-        "PlaidService": {
+        "UnitService": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "OpportunityService": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
