@@ -1,14 +1,15 @@
-const paramsFromId = (accessToken) => ({
-  public_token: accessToken
+const paramsFromId = (publicToken) => ({
+  public_token: publicToken
 });
 
-const updateToken = (plaid) => (accessToken) => {
-  const param = paramsFromId(accessToken);
-  return plaid.itemPublicTokenExchange(param).then((res) => (res.data))
+const updateToken = (plaid) => (publicToken) => {
+  const param = paramsFromId(publicToken);
+  return plaid.itemPublicTokenExchange(param)
+  .then((tokenResponse) => (tokenResponse.data.access_token))
   .catch((error) => {
     const err = error.response.data;
     // Indicates plaid API error
-    console.error('/Linking', {
+    console.error('/Linking update', {
       error_type: err.error_type,
       error_code: err.error_code,
       error_message: err.error_message,
@@ -19,6 +20,11 @@ const updateToken = (plaid) => (accessToken) => {
   })
 };
 
+const resultLens = (res) => ({
+    accessToken: res
+});
+
 module.exports = {
   updateToken
 }
+

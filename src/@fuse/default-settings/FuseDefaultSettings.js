@@ -11,9 +11,9 @@ export const defaultSettings = {
   customScrollbars: true,
   direction: 'ltr',
   theme: {
-    main: 'default',
+    main: 'defaultDark',
     navbar: 'mainThemeDark',
-    toolbar: 'mainThemeLight',
+    toolbar: 'mainThemeDark',
     footer: 'mainThemeDark',
   },
 };

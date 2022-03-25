@@ -10,6 +10,7 @@ const getAthleteStatement = gql`
       email
       mobilePhone
       dateOfBirth
+      plaidToken
       address {
         apt
         city

@@ -30,11 +30,11 @@ const getEnvOrJson = (varName, required = true) => getEnv(varName, false) || get
 
 
 const configuration = new Configuration({
-  basePath: PlaidEnvironments.development,
+  basePath: PlaidEnvironments.sandbox,
   baseOptions: {
     headers: {
       'PLAID-CLIENT-ID': getEnvOrJson('CLIENT_ID'),
-      'PLAID-SECRET': getEnvOrJson('SECRET_KEY'),
+      'PLAID-SECRET': getEnvOrJson('SAND_KEY'),
     },
   },
 });

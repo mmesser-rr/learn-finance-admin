@@ -22,6 +22,7 @@
         "aws-amplify-react": "^5.1.9",
         "axios": "0.24.0",
         "clsx": "1.1.1",
+        "cropperjs": "^1.5.12",
         "date-fns": "2.27.0",
         "draft-js": "0.11.7",
         "draftjs-to-html": "0.9.1",
@@ -40,6 +41,7 @@
         "qs": "6.10.2",
         "react": "17.0.2",
         "react-autosuggest": "10.1.0",
+        "react-cropper": "^2.1.8",
         "react-dom": "17.0.2",
         "react-draft-wysiwyg": "1.14.7",
         "react-hook-form": "7.22.0",
@@ -99,7 +101,7 @@
         "util": "^0.12.4"
     },
     "scripts": {
-        "start": "craco start",
+        "start": "PORT=3006 craco start",
         "build": "cross-env GENERATE_SOURCEMAP=false craco build",
         "test": "craco test --env=node",
         "eject": "craco eject",
