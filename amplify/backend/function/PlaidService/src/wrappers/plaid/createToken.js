@@ -28,7 +28,4 @@ const paramsFromId = (athleteId) => ({
   module.exports = {
     createToken
   }
-  //.then(data => {data.link_token})
-  // .then((tokenResponse) => tokenResponse.access_token)
-  // .then((accessToken) => plaidClient.accountsGet({ accessToken }))
-  // .then((accountsResponse) => console.log(accountsResponse.accounts))
+ 

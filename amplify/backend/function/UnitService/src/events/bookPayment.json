@@ -1,0 +1,15 @@
+{
+    "fieldName": "bookPayment",
+    "arguments": {
+      "athleteId": "281b7b68-3f7b-4095-8f48-42e56f24fbc3",
+        "data":{
+          "unitAccountId" : "350065",
+          "type":"bookPayment",
+          "amount": 10,
+          "description": "Book payment",
+          "receiverUnitAccountId" : "350070",
+          "receiverAccountType" : "depositAccount"
+      }
+    }
+  }
+  
