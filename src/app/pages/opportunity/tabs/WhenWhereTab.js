@@ -6,6 +6,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import LocationInput from '../../../shared-components/LocationInput';
 
 function WhenWhereTab(props) {
   const methods = useFormContext();
@@ -15,6 +18,7 @@ function WhenWhereTab(props) {
 
   return (
     <div>
+      <LocationInput />
       <Controller
         name="inPerson"
         control={control}
@@ -34,7 +38,6 @@ function WhenWhereTab(props) {
           </FormControl>
         )}
       />
-
       <Controller
         name="seatsTotal"
         control={control}
@@ -54,27 +57,25 @@ function WhenWhereTab(props) {
           />
         )}
       />
-
       <Controller
-        name="seatsTotal"
+        name="websiteUrl"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             sx={{ m: 1 }}
             className="mt-8 mb-16"
-            error={!!errors.seatsTotal}
+            error={!!errors.websiteUrl}
             required
-            helperText={errors?.seatsTotal?.message}
+            helperText={errors?.websiteUrl?.message}
             label="Website Url"
             autoFocus
-            id="seatsTotal"
+            id="websiteUrl"
             variant="standard"
             fullWidth
           />
         )}
       />
-
       <Controller
         name="websitePrompt"
         control={control}
@@ -94,7 +95,6 @@ function WhenWhereTab(props) {
           />
         )}
       />
-
       <div className="flex -mx-4">
         <Controller
           name="startDateTime"
@@ -113,7 +113,7 @@ function WhenWhereTab(props) {
         />
 
         <Controller
-          name="dueDate"
+          name="endDateTime"
           control={control}
           defaultValue=""
           render={({ field: { onChange, value } }) => (
@@ -122,7 +122,7 @@ function WhenWhereTab(props) {
               onChange={onChange}
               minDate={Date.now()}
               renderInput={(_props) => (
-                <TextField label="Due Date" className="mt-8 mb-16 mx-4" {..._props} />
+                <TextField label="End Date" className="mt-8 mb-16 mx-4" {..._props} />
               )}
             />
           )}
