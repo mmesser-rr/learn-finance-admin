@@ -53,10 +53,23 @@ function Opportunity(props) {
   const methods = useForm({
     mode: 'onChange',
     defaultValues: {
-      inPerson: false,
+      // Basic Info
       eventType: 'real_estate',
+      status: '',
       isPrivate: false,
       title: '',
+      subtitle: '',
+      description: '',
+      descriptionTldr: '',
+      categories: [],
+      tags: [],
+      // When And Where
+      inPerson: false,
+      seatsTotal: 0,
+      websiteUrl: '',
+      websitePrompt: '',
+      startDateTime: Date.now(),
+      endDateTime: Date.now(),
     },
     resolver: yupResolver(schema),
   });

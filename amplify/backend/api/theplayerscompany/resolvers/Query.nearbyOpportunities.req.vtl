@@ -1,5 +1,5 @@
 ## Query.nearbyOpportunities.req.vtl
-#set( $distance = $util.defaultIfNull($ctx.args.distInMeters, 5000) )
+#set( $distance = $util.defaultIfNull($ctx.args.distInMeters, 500) )
 #set( $limit = $util.defaultIfNull($ctx.args.limit, 10) )
 {  
   "version": "2017-02-28",
