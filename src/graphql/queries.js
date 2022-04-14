@@ -133,31 +133,33 @@ export const nearbyOpportunities = /* GraphQL */ `
     ) {
       items {
         id
-        title
-        subtitle
-        logoPath
         backgroundPath
-        organizationId
-        websiteUrl
-        websitePrompt
-        details
-        detailsTldr
-        startDateTime
-        endDateTime
-        timezone
-        eventType
-        inPerson
         categories
-        tags
-        seatsTotal
-        seatsReserved
-        isPrivate
-        status
-        reward
-        rewardDetails
         creator
         createdDateTime
+        details
+        detailsTldr
+        endDateTime
+        eventType
+        isPrivate
+        logoPath
+        onlineReserved
+        onlineTotal
+        organizationId
+        registrationUrl
+        reward
+        rewardDetails
+        seatsReserved
+        seatsTotal
+        startDateTime
+        status
+        subtitle
+        tags
+        title
+        timezone
         updatedDateTime
+        websitePrompt
+        websiteUrl
         createdAt
         updatedAt
       }
@@ -185,31 +187,33 @@ export const searchOpportunities = /* GraphQL */ `
     ) {
       items {
         id
-        title
-        subtitle
-        logoPath
         backgroundPath
-        organizationId
-        websiteUrl
-        websitePrompt
-        details
-        detailsTldr
-        startDateTime
-        endDateTime
-        timezone
-        eventType
-        inPerson
         categories
-        tags
-        seatsTotal
-        seatsReserved
-        isPrivate
-        status
-        reward
-        rewardDetails
         creator
         createdDateTime
+        details
+        detailsTldr
+        endDateTime
+        eventType
+        isPrivate
+        logoPath
+        onlineReserved
+        onlineTotal
+        organizationId
+        registrationUrl
+        reward
+        rewardDetails
+        seatsReserved
+        seatsTotal
+        startDateTime
+        status
+        subtitle
+        tags
+        title
+        timezone
         updatedDateTime
+        websitePrompt
+        websiteUrl
         createdAt
         updatedAt
       }
@@ -484,91 +488,22 @@ export const listInvites = /* GraphQL */ `
     }
   }
 `;
-export const getLocationDetail = /* GraphQL */ `
-  query GetLocationDetail($id: ID!) {
-    getLocationDetail(id: $id) {
-      address
-      unit
-      city
-      state
-      zipCode
-      country
-      name
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listLocationDetails = /* GraphQL */ `
-  query ListLocationDetails(
-    $filter: ModelLocationDetailFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listLocationDetails(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        address
-        unit
-        city
-        state
-        zipCode
-        country
-        name
-        id
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getLocation = /* GraphQL */ `
-  query GetLocation($id: ID!) {
-    getLocation(id: $id) {
-      lat
-      lon
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listLocations = /* GraphQL */ `
-  query ListLocations(
-    $filter: ModelLocationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listLocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        lat
-        lon
-        id
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getOpportunity = /* GraphQL */ `
   query GetOpportunity($id: ID!) {
     getOpportunity(id: $id) {
       id
-      title
-      subtitle
-      logoPath
       backgroundPath
-      organizationId
-      websiteUrl
-      websitePrompt
+      categories
+      creator
+      createdDateTime
+      details
+      detailsTldr
+      endDateTime
+      eventType
+      isPrivate
       location {
         lat
         lon
-        id
-        createdAt
-        updatedAt
       }
       locationDetail {
         address
@@ -578,28 +513,25 @@ export const getOpportunity = /* GraphQL */ `
         zipCode
         country
         name
-        id
-        createdAt
-        updatedAt
       }
-      details
-      detailsTldr
-      startDateTime
-      endDateTime
-      timezone
-      eventType
-      inPerson
-      categories
-      tags
-      seatsTotal
-      seatsReserved
-      isPrivate
-      status
+      logoPath
+      onlineReserved
+      onlineTotal
+      organizationId
+      registrationUrl
       reward
       rewardDetails
-      creator
-      createdDateTime
+      seatsReserved
+      seatsTotal
+      startDateTime
+      status
+      subtitle
+      tags
+      title
+      timezone
       updatedDateTime
+      websitePrompt
+      websiteUrl
       createdAt
       updatedAt
     }
@@ -614,31 +546,33 @@ export const listOpportunities = /* GraphQL */ `
     listOpportunities(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        title
-        subtitle
-        logoPath
         backgroundPath
-        organizationId
-        websiteUrl
-        websitePrompt
-        details
-        detailsTldr
-        startDateTime
-        endDateTime
-        timezone
-        eventType
-        inPerson
         categories
-        tags
-        seatsTotal
-        seatsReserved
-        isPrivate
-        status
-        reward
-        rewardDetails
         creator
         createdDateTime
+        details
+        detailsTldr
+        endDateTime
+        eventType
+        isPrivate
+        logoPath
+        onlineReserved
+        onlineTotal
+        organizationId
+        registrationUrl
+        reward
+        rewardDetails
+        seatsReserved
+        seatsTotal
+        startDateTime
+        status
+        subtitle
+        tags
+        title
+        timezone
         updatedDateTime
+        websitePrompt
+        websiteUrl
         createdAt
         updatedAt
       }

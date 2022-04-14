@@ -239,7 +239,7 @@ export function mainThemeVariations(theme) {
       palette: {
         mode: 'light',
         background: {
-          paper: '#FFFFFF',
+          paper: '#1B2330', // Toolbar Color
           default: '#F7F7F7',
         },
         text: {

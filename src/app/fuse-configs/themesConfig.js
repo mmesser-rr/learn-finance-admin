@@ -14,23 +14,55 @@ const darkText = {
 };
 
 const themesConfig = {
-  default: {
+  default2: {
     palette: {
       mode: 'light',
-      text: lightText,
+      text: darkText,
       common: {
         black: 'rgb(17, 24, 39)',
         white: 'rgb(255, 255, 255)',
       },
-      primary: fuseDark,
+      primary: {
+        light: '#cc0000', // ?
+        main: '#252F3E', // Right side of header (Gradient)
+        dark: '#1B2330', // Left side of header (Gradient)
+        // light: fuseDark[200],
+        // main: fuseDark[700],
+        // dark: fuseDark[800],
+      },
       secondary: {
         light: skyBlue[100],
         main: skyBlue[500],
         dark: skyBlue[900],
       },
       background: {
-        paper: '#FFFFFF',
-        default: '#f6f7f9',
+        paper: '#f6f7f9', // Forms Page,
+        default: fuseDark[700], // Background behind paper. Example page
+      },
+      error: red,
+    },
+    status: {
+      danger: 'orange',
+    },
+  },
+  default: {
+    palette: {
+      mode: 'dark',
+      text: darkText,
+      primary: {
+        light: '#252F3E', // Right side of header (Gradient)
+        main: '#7B8390', //
+        dark: '#1B2330', // Left side of header (Gradient)
+      },
+      secondary: {
+        light: skyBlue[100],
+        main: skyBlue[500],
+        dark: skyBlue[900],
+        contrastText: '#FFFFFF',
+      },
+      background: {
+        paper: '#252F3E',
+        default: '#1B2330',
       },
       error: red,
     },

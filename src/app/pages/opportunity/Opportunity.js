@@ -1,25 +1,23 @@
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import { useDeepCompareEffect } from '@fuse/hooks';
 import Button from '@mui/material/Button';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 import withReducer from 'app/store/withReducer';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import _ from '@lodash';
-import { useForm, FormProvider } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { useDeepCompareEffect } from '@fuse/hooks';
+import FuseLoading from '@fuse/core/FuseLoading';
 import { styled } from '@mui/material/styles';
-import { resetOpportunity, newOpportunity, fetchOpportunity } from '../store/opportunitySlice';
+import { newOpportunity, fetchOpportunity } from '../store/opportunitySlice';
 import reducer from '../store';
 import OpportunityHeader from './OpportunityHeader';
 import BasicInfoTab from './tabs/BasicInfoTab';
 import OpportunityImagesTab from './tabs/OpportunityImagesTab';
 import WhenWhereTab from './tabs/WhenWhereTab';
+import OpportunityForm from './OpportunityForm';
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
   '& .FusePageCarded-header': {
@@ -33,107 +31,70 @@ const Root = styled(FusePageCarded)(({ theme }) => ({
   },
 }));
 
-/**
- * Form Validation Schema
- */
-const schema = yup.object().shape({
-  title: yup
-    .string()
-    .required('You must enter an opportunity title')
-    .min(5, 'The opportunity title must be at least 5 characters'),
-});
-
 function Opportunity(props) {
   const dispatch = useDispatch();
   const opportunity = useSelector(({ adminApp }) => adminApp.opportunity);
-
   const routeParams = useParams();
   const [tabValue, setTabValue] = useState(0);
   const [noOpportunity, setNoOpportunity] = useState(false);
-  const methods = useForm({
-    mode: 'onChange',
-    defaultValues: {
-      // Basic Info
-      eventType: 'real_estate',
-      status: '',
-      isPrivate: false,
-      title: '',
-      subtitle: '',
-      description: '',
-      descriptionTldr: '',
-      categories: [],
-      tags: [],
-      // When And Where
-      inPerson: false,
-      seatsTotal: 0,
-      websiteUrl: '',
-      websitePrompt: '',
-      startDateTime: Date.now(),
-      endDateTime: Date.now(),
-    },
-    resolver: yupResolver(schema),
-  });
-  const { reset, watch, control, onChange, formState } = methods;
-  const form = watch();
-
+  const [formOpportunity, setFormOpportunity] = useState(undefined);
+  const [isEdit, setIsEdit] = useState(false);
+  // Side Effect: Try loading the opportunity
+  // useEffect(() => {
   useDeepCompareEffect(() => {
     function updateOpportunityState() {
-      const { opportunityId } = routeParams;
-      console.log('Opportunity => useDeepCompareEffect => opportunityId => ', opportunityId);
-      if (opportunityId === 'new') {
-        /**
-         * Create New Opportunity data
-         */
-        dispatch(newOpportunity());
+      // Deconstruct the id parameter from the url.
+      const { id } = routeParams;
+      // For new opportunity (create new), we do this by passing
+      // "new" as the id.
+      if (id === 'new') {
+        // Create New Opportunity data
+        const blankOpportunity = dispatch(newOpportunity()).payload;
+
+        setFormOpportunity(blankOpportunity);
       } else {
-        /**
-         * Get Opportunity data
-         */
+        setIsEdit(true);
+        // Get Opportunity data
         dispatch(fetchOpportunity(routeParams)).then((action) => {
-          /**
-           * If the requested opportunity is not exist show message
-           */
+          // If the requested opportunity is not exist show message
           if (!action.payload) {
             setNoOpportunity(true);
+          }
+          const opp = action.payload.getOpportunity;
+          if (opp) {
+            setFormOpportunity(opp);
           }
         });
       }
     }
 
     updateOpportunityState();
+    // }, [dispatch, routeParams]);
   }, [dispatch, routeParams]);
 
-  useEffect(() => {
-    if (!opportunity) {
-      return;
-    }
-    /**
-     * Reset the form on opportunity state changes
-     */
-    reset(opportunity);
-  }, [opportunity, reset]);
+  // useEffect(() => {
+  //   if (!opportunity) {
+  //     return;
+  //   }
+  //   // Reset the form on opportunity state changes
+  //   reset(opportunity);
+  // }, [opportunity, reset]);
 
-  useEffect(() => {
-    return () => {
-      /**
-       * Reset Opportunity on component unload
-       */
-      dispatch(resetOpportunity());
+  // useEffect(() => {
+  //   return () => {
+  //     // Reset Opportunity on component unload
+  //     dispatch(resetOpportunity());
 
-      setNoOpportunity(false);
-    };
-  }, [dispatch]);
+  //     setNoOpportunity(false);
+  //   };
+  // }, [dispatch]);
 
-  /**
-   * Tab Change
-   */
+  // Tab Change
   function handleTabChange(event, value) {
     setTabValue(value);
   }
 
-  /**
-   * Show Message if the requested opportunities is not exists
-   */
+  // Show Message if the requested opportunities is not exists
   if (noOpportunity) {
     return (
       <motion.div
@@ -156,21 +117,23 @@ function Opportunity(props) {
       </motion.div>
     );
   }
-
-  /**
-   * Wait while opportunity data is loading and form is setted
-   */
-  if (
-    _.isEmpty(form) ||
-    (opportunity &&
-      routeParams.opportunityId !== opportunity.id &&
-      routeParams.opportunityId !== 'new')
-  ) {
-    // return <FuseLoading />;
+  const opportunityForm = renderForm();
+  if (formOpportunity !== null && formOpportunity !== undefined) {
+    return <OpportunityForm data={formOpportunity} child={opportunityForm} />;
   }
+  return <FuseLoading />;
 
-  return (
-    <FormProvider {...methods}>
+  // Wait while opportunity data is loading and form is setted
+  // if (
+  //   formOpportunity === undefined ||
+  //   _.isEmpty(form) ||
+  //   (opportunity && routeParams.id !== opportunity.id && routeParams.id !== 'new')
+  // ) {
+  //   return <FuseLoading />;
+  // }
+
+  function renderForm() {
+    return (
       <Root
         header={<OpportunityHeader />}
         contentToolbar={
@@ -189,24 +152,26 @@ function Opportunity(props) {
           </Tabs>
         }
         content={
-          <div className="p-16 sm:p-24 max-w-2xl">
-            <div className={tabValue !== 0 ? 'hidden' : ''}>
-              <BasicInfoTab />
-            </div>
+          <div>
+            <div className="p-16 sm:p-24 max-w-2xl">
+              <div className={tabValue !== 0 ? 'hidden' : ''}>
+                <BasicInfoTab showStatus={isEdit} />
+              </div>
 
-            <div className={tabValue !== 1 ? 'hidden' : ''}>
-              <OpportunityImagesTab />
-            </div>
+              <div className={tabValue !== 1 ? 'hidden' : ''}>
+                <OpportunityImagesTab />
+              </div>
 
-            <div className={tabValue !== 2 ? 'hidden' : ''}>
-              <WhenWhereTab />
+              <div className={tabValue !== 2 ? 'hidden' : ''}>
+                <WhenWhereTab />
+              </div>
             </div>
           </div>
         }
         innerScroll
       />
-    </FormProvider>
-  );
+    );
+  }
 }
 
 export default withReducer('adminApp', reducer)(Opportunity);
