@@ -1,4 +1,4 @@
-type LocationDetail @model {
+type LocationDetail {
   address: String!
   unit: String
   city: String!
@@ -8,7 +8,7 @@ type LocationDetail @model {
   name: String
 }
 
-type Location @model {
+type Location {
   lat: Float!
   lon: Float!
 }

@@ -34,10 +34,10 @@ const Root = styled('div')(({ theme }) => ({
   },
 
   '& .FusePageSimple-header': {
-    height: headerHeight,
-    minHeight: headerHeight,
+    height: headerHeight / 2,
+    minHeight: headerHeight / 2,
     display: 'flex',
-    background: `linear-gradient(to right, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+    // background: `linear-gradient(to right, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
     color: theme.palette.primary.contrastText,
     backgroundSize: 'cover',
     backgroundColor: theme.palette.primary.dark,

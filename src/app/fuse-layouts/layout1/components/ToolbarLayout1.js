@@ -1,25 +1,19 @@
-import FuseSearch from '@fuse/core/FuseSearch';
 import { ThemeProvider } from '@mui/material/styles';
-import FuseShortcuts from '@fuse/core/FuseShortcuts';
 import AppBar from '@mui/material/AppBar';
 import Hidden from '@mui/material/Hidden';
 import Toolbar from '@mui/material/Toolbar';
 import NavbarToggleButton from 'app/fuse-layouts/shared-components/NavbarToggleButton';
-import QuickPanelToggleButton from 'app/fuse-layouts/shared-components/quickPanel/QuickPanelToggleButton';
 import UserMenu from 'app/fuse-layouts/shared-components/UserMenu';
 import clsx from 'clsx';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectToolbarTheme } from 'app/store/fuse/settingsSlice';
-import AdjustFontSize from '../../shared-components/AdjustFontSize';
-import FullScreenToggle from '../../shared-components/FullScreenToggle';
-import LanguageSwitcher from '../../shared-components/LanguageSwitcher';
 
 function ToolbarLayout1(props) {
   const config = useSelector(({ fuse }) => fuse.settings.current.layout.config);
   const navbar = useSelector(({ fuse }) => fuse.navbar);
   const toolbarTheme = useSelector(selectToolbarTheme);
-
+  console.log('toolbarLayout => toolbarTheme => ', toolbarTheme);
   return (
     <ThemeProvider theme={toolbarTheme}>
       <AppBar
@@ -50,23 +44,23 @@ function ToolbarLayout1(props) {
               </>
             )}
 
-            <Hidden lgDown>
+            {/* <Hidden lgDown>
               <FuseShortcuts />
-            </Hidden>
+            </Hidden> */}
           </div>
 
           <div className="flex items-center px-8 h-full overflow-x-auto">
-            <LanguageSwitcher />
+            {/* <LanguageSwitcher /> */}
 
-            <AdjustFontSize />
+            {/* <AdjustFontSize /> */}
 
-            <FullScreenToggle />
+            {/* <FullScreenToggle /> */}
 
-            <FuseSearch />
+            {/* <FuseSearch /> */}
 
-            <QuickPanelToggleButton />
+            {/* <QuickPanelToggleButton /> */}
 
-            <UserMenu />
+            <UserMenu props={toolbarTheme} />
           </div>
 
           {config.navbar.display && config.navbar.position === 'right' && (

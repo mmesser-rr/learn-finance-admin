@@ -55,11 +55,11 @@
       "function": {
         "InviteService": {
           "deploymentBucketName": "amplify-theplayerscompany-devtroy-164354-deployment",
-          "s3Key": "amplify-builds/InviteService-4238566137737635716a-build.zip"
+          "s3Key": "amplify-builds/InviteService-366c306e6e4f6132717a-build.zip"
         },
         "PlayerVerifyService": {
           "deploymentBucketName": "amplify-theplayerscompany-devtroy-164354-deployment",
-          "s3Key": "amplify-builds/PlayerVerifyService-6c6142386f746e6b4868-build.zip"
+          "s3Key": "amplify-builds/PlayerVerifyService-6269666c366a37414958-build.zip"
         },
         "PlaidService": {
           "clientId": "62152ee09cc120001ae1550f",
@@ -67,7 +67,7 @@
           "nodeEnv": "development",
           "sandKey": "0530952d1a65d2a7bf76117ac0009f",
           "deploymentBucketName": "amplify-theplayerscompany-devtroy-164354-deployment",
-          "s3Key": "amplify-builds/PlaidService-53667749676371765a30-build.zip"
+          "s3Key": "amplify-builds/PlaidService-667a624359323158686b-build.zip"
         },
         "UnitService": {
           "unitApiUrl": "https://api.s.unit.sh/",
@@ -76,15 +76,24 @@
           "clientId": "62152ee09cc120001ae1550f",
           "sandKey": "0530952d1a65d2a7bf76117ac0009f",
           "deploymentBucketName": "amplify-theplayerscompany-devtroy-164354-deployment",
-          "s3Key": "amplify-builds/UnitService-555a6166746f74514e71-build.zip"
+          "s3Key": "amplify-builds/UnitService-56694c624d5a305a594a-build.zip"
         },
         "OpportunityService": {
           "deploymentBucketName": "amplify-theplayerscompany-devtroy-164354-deployment",
-          "s3Key": "amplify-builds/OpportunityService-3775785a51716a493059-build.zip"
+          "s3Key": "amplify-builds/OpportunityService-6859726a725031443835-build.zip"
+        },
+        "S3Trigger8a6dfc74": {
+          "deploymentBucketName": "amplify-theplayerscompany-devtroy-164354-deployment",
+          "s3Key": "amplify-builds/S3Trigger8a6dfc74-4a65646631423367744b-build.zip"
+        },
+        "S3Trigger2bbae92f": {
+          "deploymentBucketName": "amplify-theplayerscompany-devtroy-164354-deployment",
+          "s3Key": "amplify-builds/S3Trigger2bbae92f-6c6359794d31786a6270-build.zip"
         }
       },
       "auth": {
-        "theplayerscompany7e8846a2": {}
+        "theplayerscompany7e8846a2": {},
+        "true": {}
       }
     }
   }

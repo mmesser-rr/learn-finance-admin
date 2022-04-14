@@ -5,55 +5,57 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useFormContext, Controller } from 'react-hook-form';
+import FormHeader from '../../../shared-components/FormHeader';
 
 function BasicInfoTab(props) {
   const methods = useFormContext();
   const { control, formState } = methods;
   const { errors } = formState;
-
+  const { showStatus } = props;
   return (
     <div>
+      <FormHeader
+        title="Event Information"
+        subtitle="Let users know the basics including the reward for attending."
+      />
       <Controller
         name="eventType"
         control={control}
         render={({ field }) => (
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="eventType">Event Type</InputLabel>
             <Select {...field} labelId="eventTypeLabel" id="eventType" label="Event Type">
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value="real_estate">Real Estate</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value="IRL">In Person</MenuItem>
+              <MenuItem value="VIRTUAL">Online</MenuItem>
+              <MenuItem value="HYBRID">Hybrid - Both In-Person & Online</MenuItem>
             </Select>
           </FormControl>
         )}
       />
-
-      <Controller
-        name="status"
-        control={control}
-        render={({ field }) => (
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="status">Status</InputLabel>
-            <Select {...field} labelId="statusLabel" id="status" label="Status" value="">
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
-        )}
-      />
+      {showStatus && (
+        <Controller
+          name="status"
+          control={control}
+          render={({ field }) => (
+            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="status">Status</InputLabel>
+              <Select {...field} labelId="statusLabel" id="status" label="Status" disabled>
+                <MenuItem value="" />
+                <MenuItem value="PENDING">Pending Review</MenuItem>
+                <MenuItem value="REJECTED">Rejected</MenuItem>
+                <MenuItem value="ACTIVE">Active</MenuItem>
+                <MenuItem value="CLOSED">Closed</MenuItem>
+              </Select>
+            </FormControl>
+          )}
+        />
+      )}
 
       <Controller
         name="isPrivate"
         control={control}
         render={({ field }) => (
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="isPrivate">Private?</InputLabel>
             <Select {...field} labelId="isPrivateLabel" id="isPrivate" label="Private?">
               <MenuItem value="false">No</MenuItem>
@@ -77,7 +79,7 @@ function BasicInfoTab(props) {
             label="Title"
             autoFocus
             id="title"
-            variant="standard"
+            variant="filled"
             fullWidth
           />
         )}
@@ -97,7 +99,7 @@ function BasicInfoTab(props) {
             label="Subtitle"
             autoFocus
             id="title"
-            variant="standard"
+            variant="filled"
             fullWidth
           />
         )}
@@ -116,7 +118,7 @@ function BasicInfoTab(props) {
             type="text"
             multiline
             rows={5}
-            variant="standard"
+            variant="filled"
             fullWidth
           />
         )}
@@ -136,9 +138,43 @@ function BasicInfoTab(props) {
             type="text"
             multiline
             rows={2}
-            variant="standard"
+            variant="filled"
             fullWidth
           />
+        )}
+      />
+
+      <Controller
+        name="reward"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            sx={{ m: 1 }}
+            className="mt-8 mb-16"
+            error={!!errors.reward}
+            required
+            helperText={errors?.reward?.message}
+            label="Reward Amount"
+            autoFocus
+            id="reward"
+            variant="filled"
+          />
+        )}
+      />
+
+      <Controller
+        name="rewardDetails"
+        control={control}
+        render={({ field }) => (
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="rewardDetailsLabel">Reward Type</InputLabel>
+            <Select {...field} labelId="rewardDetailsLabel" id="rewardDetails" label="Reward Type">
+              <MenuItem value="" />
+              <MenuItem value="$WEALTH">$WEALTH Token</MenuItem>
+              <MenuItem value="ETH">Ether</MenuItem>
+            </Select>
+          </FormControl>
         )}
       />
 
@@ -150,8 +186,22 @@ function BasicInfoTab(props) {
           <Autocomplete
             className="mt-8 mb-16"
             multiple
-            freeSolo
-            options={[]}
+            // freeSolo
+            options={[
+              'Art',
+              'Cars & Collectibles',
+              'Commercial Real Estate',
+              'Crypto',
+              'Distressed Assets',
+              'Mutual Funds',
+              'Residential Real Estate',
+              'Franchise',
+              'Insurance',
+              'NFT',
+              'Real Estate',
+              'Stocks',
+              'VC',
+            ]}
             value={value}
             onChange={(event, newValue) => {
               onChange(newValue);
@@ -162,7 +212,7 @@ function BasicInfoTab(props) {
                 sx={{ m: 1 }}
                 placeholder="Select multiple categories"
                 label="Categories"
-                variant="standard"
+                variant="filled"
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -192,7 +242,7 @@ function BasicInfoTab(props) {
                 sx={{ m: 1 }}
                 placeholder="Select multiple tags"
                 label="Tags"
-                variant="standard"
+                variant="filled"
                 InputLabelProps={{
                   shrink: true,
                 }}
