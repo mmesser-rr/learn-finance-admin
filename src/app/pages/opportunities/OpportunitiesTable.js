@@ -98,7 +98,7 @@ function OpportunitiesTable(props) {
   }
 
   function handleClick(item) {
-    props.navigate(`/apps/e-commerce/Opportunities/${item.id}/${item.handle}`);
+    props.navigate(`/pages/Opportunities/${item.id}/${item.title.replaceAll(' ', '_')}`);
   }
 
   function handleCheck(event, id) {

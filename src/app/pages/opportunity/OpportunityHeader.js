@@ -15,7 +15,9 @@ function OpportunityHeader(props) {
   const { formState, watch, getValues } = methods;
   const { isValid, dirtyFields } = formState;
   const logoPath = watch('logoPath');
+  const backgroundPath = watch('backgroundPath');
   const title = watch('title');
+  const subtitle = watch('subtitle');
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -30,7 +32,7 @@ function OpportunityHeader(props) {
   }
 
   return (
-    <div className="flex flex-1 w-full items-center justify-between">
+    <div className="flex flex-1 w-full items-center justify-between ">
       <div className="flex flex-col items-start max-w-full min-w-0">
         <motion.div
           initial={{ x: 20, opacity: 0 }}
@@ -59,11 +61,7 @@ function OpportunityHeader(props) {
             {logoPath ? (
               <img className="w-32 sm:w-48 rounded" src={logoPath} alt={title} />
             ) : (
-              <img
-                className="w-32 sm:w-48 rounded"
-                src="assets/images/ecommerce/Opportunity-image-placeholder.png"
-                alt={title}
-              />
+              <div className="2-32 sm:w-48 rounded" />
             )}
           </motion.div>
           <div className="flex flex-col min-w-0 mx-8 sm:mc-16">
@@ -72,7 +70,7 @@ function OpportunityHeader(props) {
                 {title || 'New Opportunity'}
               </Typography>
               <Typography variant="caption" className="font-medium">
-                Opportunity Detail
+                {subtitle || 'Opportunity Detail'}
               </Typography>
             </motion.div>
           </div>

@@ -370,104 +370,22 @@ export const onDeleteInvite = /* GraphQL */ `
     }
   }
 `;
-export const onCreateLocationDetail = /* GraphQL */ `
-  subscription OnCreateLocationDetail {
-    onCreateLocationDetail {
-      address
-      unit
-      city
-      state
-      zipCode
-      country
-      name
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateLocationDetail = /* GraphQL */ `
-  subscription OnUpdateLocationDetail {
-    onUpdateLocationDetail {
-      address
-      unit
-      city
-      state
-      zipCode
-      country
-      name
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteLocationDetail = /* GraphQL */ `
-  subscription OnDeleteLocationDetail {
-    onDeleteLocationDetail {
-      address
-      unit
-      city
-      state
-      zipCode
-      country
-      name
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateLocation = /* GraphQL */ `
-  subscription OnCreateLocation {
-    onCreateLocation {
-      lat
-      lon
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateLocation = /* GraphQL */ `
-  subscription OnUpdateLocation {
-    onUpdateLocation {
-      lat
-      lon
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteLocation = /* GraphQL */ `
-  subscription OnDeleteLocation {
-    onDeleteLocation {
-      lat
-      lon
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateOpportunity = /* GraphQL */ `
   subscription OnCreateOpportunity {
     onCreateOpportunity {
       id
-      title
-      subtitle
-      logoPath
       backgroundPath
-      organizationId
-      websiteUrl
-      websitePrompt
+      categories
+      creator
+      createdDateTime
+      details
+      detailsTldr
+      endDateTime
+      eventType
+      isPrivate
       location {
         lat
         lon
-        id
-        createdAt
-        updatedAt
       }
       locationDetail {
         address
@@ -477,28 +395,25 @@ export const onCreateOpportunity = /* GraphQL */ `
         zipCode
         country
         name
-        id
-        createdAt
-        updatedAt
       }
-      details
-      detailsTldr
-      startDateTime
-      endDateTime
-      timezone
-      eventType
-      inPerson
-      categories
-      tags
-      seatsTotal
-      seatsReserved
-      isPrivate
-      status
+      logoPath
+      onlineReserved
+      onlineTotal
+      organizationId
+      registrationUrl
       reward
       rewardDetails
-      creator
-      createdDateTime
+      seatsReserved
+      seatsTotal
+      startDateTime
+      status
+      subtitle
+      tags
+      title
+      timezone
       updatedDateTime
+      websitePrompt
+      websiteUrl
       createdAt
       updatedAt
     }
@@ -508,19 +423,18 @@ export const onUpdateOpportunity = /* GraphQL */ `
   subscription OnUpdateOpportunity {
     onUpdateOpportunity {
       id
-      title
-      subtitle
-      logoPath
       backgroundPath
-      organizationId
-      websiteUrl
-      websitePrompt
+      categories
+      creator
+      createdDateTime
+      details
+      detailsTldr
+      endDateTime
+      eventType
+      isPrivate
       location {
         lat
         lon
-        id
-        createdAt
-        updatedAt
       }
       locationDetail {
         address
@@ -530,28 +444,25 @@ export const onUpdateOpportunity = /* GraphQL */ `
         zipCode
         country
         name
-        id
-        createdAt
-        updatedAt
       }
-      details
-      detailsTldr
-      startDateTime
-      endDateTime
-      timezone
-      eventType
-      inPerson
-      categories
-      tags
-      seatsTotal
-      seatsReserved
-      isPrivate
-      status
+      logoPath
+      onlineReserved
+      onlineTotal
+      organizationId
+      registrationUrl
       reward
       rewardDetails
-      creator
-      createdDateTime
+      seatsReserved
+      seatsTotal
+      startDateTime
+      status
+      subtitle
+      tags
+      title
+      timezone
       updatedDateTime
+      websitePrompt
+      websiteUrl
       createdAt
       updatedAt
     }
@@ -561,19 +472,18 @@ export const onDeleteOpportunity = /* GraphQL */ `
   subscription OnDeleteOpportunity {
     onDeleteOpportunity {
       id
-      title
-      subtitle
-      logoPath
       backgroundPath
-      organizationId
-      websiteUrl
-      websitePrompt
+      categories
+      creator
+      createdDateTime
+      details
+      detailsTldr
+      endDateTime
+      eventType
+      isPrivate
       location {
         lat
         lon
-        id
-        createdAt
-        updatedAt
       }
       locationDetail {
         address
@@ -583,28 +493,25 @@ export const onDeleteOpportunity = /* GraphQL */ `
         zipCode
         country
         name
-        id
-        createdAt
-        updatedAt
       }
-      details
-      detailsTldr
-      startDateTime
-      endDateTime
-      timezone
-      eventType
-      inPerson
-      categories
-      tags
-      seatsTotal
-      seatsReserved
-      isPrivate
-      status
+      logoPath
+      onlineReserved
+      onlineTotal
+      organizationId
+      registrationUrl
       reward
       rewardDetails
-      creator
-      createdDateTime
+      seatsReserved
+      seatsTotal
+      startDateTime
+      status
+      subtitle
+      tags
+      title
+      timezone
       updatedDateTime
+      websitePrompt
+      websiteUrl
       createdAt
       updatedAt
     }

@@ -12,6 +12,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { logoutUser } from 'app/auth/store/userSlice';
 
 function UserMenu(props) {
+  const { palette } = props.props;
+  console.log('userMenu => palette => ', palette.primary.contrastText);
   const dispatch = useDispatch();
   const user = useSelector(({ auth }) => auth.user);
   const navigate = useNavigate();
@@ -34,10 +36,17 @@ function UserMenu(props) {
         color="inherit"
       >
         <div className="hidden md:flex flex-col mx-4 items-end">
-          <Typography component="span" className="font-semibold flex">
+          <Typography
+            component="span"
+            className="font-semibold flex"
+            color={palette.primary.contrastText}
+          >
             {user.data.displayName}
           </Typography>
-          <Typography className="text-11 font-medium capitalize" color="textSecondary">
+          <Typography
+            className="text-11 font-medium capitalize"
+            color={palette.primary.contrastText}
+          >
             {user.role.toString()}
             {(!user.role || (Array.isArray(user.role) && user.role.length === 0)) && 'Guest'}
           </Typography>

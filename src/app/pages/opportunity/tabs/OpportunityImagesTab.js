@@ -18,6 +18,7 @@ import { Typography } from '@mui/material';
 // Components
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
+import FormHeader from '../../../shared-components/FormHeader';
 
 const defaultSrc =
   'https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg';
@@ -112,10 +113,15 @@ function OpportunityImagesTab(props) {
   const getCropData = () => {
     // dispatch(closeDialog());
     if (typeof cropper !== 'undefined') {
+      const path = cropper.getCroppedCanvas().toDataURL();
       if (currentCropper === 'logo') {
-        setCropDataLogo(cropper.getCroppedCanvas().toDataURL());
+        setCropDataLogo(path);
+        setValue('logoPath', path, { shouldValidate: true });
       } else {
-        setCropDataBG(cropper.getCroppedCanvas().toDataURL());
+        setCropDataBG(path);
+        setValue('backgroundPath', path, {
+          shouldValidate: true,
+        });
       }
     }
     setCropperOpen(false);
@@ -127,18 +133,23 @@ function OpportunityImagesTab(props) {
   const methods = useFormContext();
   const { control, watch, setValue } = methods;
 
-  const images = watch('images');
+  const logoPath = watch('logoPath');
+  const backgroundPath = watch('backgroundPath');
 
   return (
     <Root>
+      <FormHeader
+        title="Upload Images"
+        subtitle="Make your Event stand out w/ an eye-catching logo and background image."
+      />
       <Typography variant="h5" className="mb-40 font-700">
         Upload Event Logo
       </Typography>
       <Box>
         <Grid container spacing={0} direction="row" justifyContent="flex-start" alignItems="center">
-          <Grid item xs={6} md={3}>
+          <Grid item xs={12} md={3}>
             <Controller
-              name="images"
+              name="logoPath"
               control={control}
               render={({ field: { _, value } }) => (
                 <label
@@ -152,14 +163,10 @@ function OpportunityImagesTab(props) {
                     type="file"
                     onChange={onChangeLogo}
                   />
-                  <Box>
-                    <Grid container spacing={0}>
-                      <Container>
-                        <Icon fontSize="large" color="action">
-                          camera
-                        </Icon>
-                      </Container>
-                    </Grid>
+                  <Box sx={{ textAlign: 'center' }}>
+                    <Icon fontSize="large" color="action">
+                      camera
+                    </Icon>
                     <Grid container spacing={0}>
                       <Container>
                         <Typography>Logo</Typography>
@@ -170,7 +177,7 @@ function OpportunityImagesTab(props) {
               )}
             />
           </Grid>
-          <Grid item xs={6} md={6}>
+          <Grid item xs={12} md={6}>
             {cropDataLogo && (
               <Container maxWidth="sm">
                 <img
@@ -190,9 +197,9 @@ function OpportunityImagesTab(props) {
       </Typography>
       <Box>
         <Grid container spacing={0} direction="row" justifyContent="flex-start" alignItems="center">
-          <Grid item xs={6} md={3}>
+          <Grid item xs={12} md={3}>
             <Controller
-              name="images"
+              name="backgroundPath"
               control={control}
               render={({ field: { _, value } }) => (
                 <label
@@ -206,14 +213,10 @@ function OpportunityImagesTab(props) {
                     type="file"
                     onChange={onChangeBG}
                   />
-                  <Box>
-                    <Grid container spacing={0}>
-                      <Container>
-                        <Icon fontSize="large" color="action">
-                          landscape
-                        </Icon>
-                      </Container>
-                    </Grid>
+                  <Box sx={{ textAlign: 'center' }}>
+                    <Icon fontSize="large" color="action">
+                      landscape
+                    </Icon>
                     <Grid container spacing={0}>
                       <Container>
                         <Typography>Background</Typography>
@@ -224,7 +227,7 @@ function OpportunityImagesTab(props) {
               )}
             />
           </Grid>
-          <Grid item xs={6} md={6}>
+          <Grid item xs={12} md={6}>
             {cropDataBG && (
               <Container maxWidth="sm">
                 <img

@@ -1,39 +1,42 @@
 # import Location from 'Location.graphql'
 
 enum OpportunityType {
-  REAL_ESTATE
-  CRYPTO
+  IRL
+  VIRTUAL
+  HYBRID
 }
 
 type Opportunity @model @searchable {
   id: String!
-  title: String!
-  subtitle: String!
-  logoPath: String!
   backgroundPath: String!
-  organizationId: String!
-  websiteUrl: String!
-  websitePrompt: String!
-  location: Location
-  locationDetail: LocationDetail!
-  details: String!
-  detailsTldr: String!
-  startDateTime: String!
-  endDateTime: String!
-  timezone: String!
-  eventType: String!
-  inPerson: Boolean!
-  categories: [OpportunityType]
-  tags: [String]
-  seatsTotal: Int!
-  seatsReserved: Int!
-  isPrivate: Boolean!
-  status: String!
-  reward: Float!
-  rewardDetails: String!
+  categories: [String]!
   creator: String!
   createdDateTime: String!
+  details: String!
+  detailsTldr: String!
+  endDateTime: String!
+  eventType: String!
+  isPrivate: Boolean!
+  location: Location
+  locationDetail: LocationDetail
+  logoPath: String!
+  onlineReserved: Int!
+  onlineTotal: Int!
+  organizationId: String!
+  registrationUrl: String!
+  reward: Float!
+  rewardDetails: String!
+  seatsReserved: Int!
+  seatsTotal: Int!
+  startDateTime: String!
+  status: String!
+  subtitle: String!
+  tags: [String]!
+  title: String!
+  timezone: String!
   updatedDateTime: String!
+  websitePrompt: String!
+  websiteUrl: String!
 }
 
 type ModelOpportunityConnection {

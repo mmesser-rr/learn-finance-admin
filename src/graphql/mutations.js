@@ -771,105 +771,6 @@ export const deleteInvite = /* GraphQL */ `
     }
   }
 `;
-export const createLocationDetail = /* GraphQL */ `
-  mutation CreateLocationDetail(
-    $input: CreateLocationDetailInput!
-    $condition: ModelLocationDetailConditionInput
-  ) {
-    createLocationDetail(input: $input, condition: $condition) {
-      address
-      unit
-      city
-      state
-      zipCode
-      country
-      name
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateLocationDetail = /* GraphQL */ `
-  mutation UpdateLocationDetail(
-    $input: UpdateLocationDetailInput!
-    $condition: ModelLocationDetailConditionInput
-  ) {
-    updateLocationDetail(input: $input, condition: $condition) {
-      address
-      unit
-      city
-      state
-      zipCode
-      country
-      name
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteLocationDetail = /* GraphQL */ `
-  mutation DeleteLocationDetail(
-    $input: DeleteLocationDetailInput!
-    $condition: ModelLocationDetailConditionInput
-  ) {
-    deleteLocationDetail(input: $input, condition: $condition) {
-      address
-      unit
-      city
-      state
-      zipCode
-      country
-      name
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createLocation = /* GraphQL */ `
-  mutation CreateLocation(
-    $input: CreateLocationInput!
-    $condition: ModelLocationConditionInput
-  ) {
-    createLocation(input: $input, condition: $condition) {
-      lat
-      lon
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateLocation = /* GraphQL */ `
-  mutation UpdateLocation(
-    $input: UpdateLocationInput!
-    $condition: ModelLocationConditionInput
-  ) {
-    updateLocation(input: $input, condition: $condition) {
-      lat
-      lon
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteLocation = /* GraphQL */ `
-  mutation DeleteLocation(
-    $input: DeleteLocationInput!
-    $condition: ModelLocationConditionInput
-  ) {
-    deleteLocation(input: $input, condition: $condition) {
-      lat
-      lon
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createOpportunity = /* GraphQL */ `
   mutation CreateOpportunity(
     $input: CreateOpportunityInput!
@@ -877,19 +778,18 @@ export const createOpportunity = /* GraphQL */ `
   ) {
     createOpportunity(input: $input, condition: $condition) {
       id
-      title
-      subtitle
-      logoPath
       backgroundPath
-      organizationId
-      websiteUrl
-      websitePrompt
+      categories
+      creator
+      createdDateTime
+      details
+      detailsTldr
+      endDateTime
+      eventType
+      isPrivate
       location {
         lat
         lon
-        id
-        createdAt
-        updatedAt
       }
       locationDetail {
         address
@@ -899,28 +799,25 @@ export const createOpportunity = /* GraphQL */ `
         zipCode
         country
         name
-        id
-        createdAt
-        updatedAt
       }
-      details
-      detailsTldr
-      startDateTime
-      endDateTime
-      timezone
-      eventType
-      inPerson
-      categories
-      tags
-      seatsTotal
-      seatsReserved
-      isPrivate
-      status
+      logoPath
+      onlineReserved
+      onlineTotal
+      organizationId
+      registrationUrl
       reward
       rewardDetails
-      creator
-      createdDateTime
+      seatsReserved
+      seatsTotal
+      startDateTime
+      status
+      subtitle
+      tags
+      title
+      timezone
       updatedDateTime
+      websitePrompt
+      websiteUrl
       createdAt
       updatedAt
     }
@@ -933,19 +830,18 @@ export const updateOpportunity = /* GraphQL */ `
   ) {
     updateOpportunity(input: $input, condition: $condition) {
       id
-      title
-      subtitle
-      logoPath
       backgroundPath
-      organizationId
-      websiteUrl
-      websitePrompt
+      categories
+      creator
+      createdDateTime
+      details
+      detailsTldr
+      endDateTime
+      eventType
+      isPrivate
       location {
         lat
         lon
-        id
-        createdAt
-        updatedAt
       }
       locationDetail {
         address
@@ -955,28 +851,25 @@ export const updateOpportunity = /* GraphQL */ `
         zipCode
         country
         name
-        id
-        createdAt
-        updatedAt
       }
-      details
-      detailsTldr
-      startDateTime
-      endDateTime
-      timezone
-      eventType
-      inPerson
-      categories
-      tags
-      seatsTotal
-      seatsReserved
-      isPrivate
-      status
+      logoPath
+      onlineReserved
+      onlineTotal
+      organizationId
+      registrationUrl
       reward
       rewardDetails
-      creator
-      createdDateTime
+      seatsReserved
+      seatsTotal
+      startDateTime
+      status
+      subtitle
+      tags
+      title
+      timezone
       updatedDateTime
+      websitePrompt
+      websiteUrl
       createdAt
       updatedAt
     }
@@ -989,19 +882,18 @@ export const deleteOpportunity = /* GraphQL */ `
   ) {
     deleteOpportunity(input: $input, condition: $condition) {
       id
-      title
-      subtitle
-      logoPath
       backgroundPath
-      organizationId
-      websiteUrl
-      websitePrompt
+      categories
+      creator
+      createdDateTime
+      details
+      detailsTldr
+      endDateTime
+      eventType
+      isPrivate
       location {
         lat
         lon
-        id
-        createdAt
-        updatedAt
       }
       locationDetail {
         address
@@ -1011,28 +903,25 @@ export const deleteOpportunity = /* GraphQL */ `
         zipCode
         country
         name
-        id
-        createdAt
-        updatedAt
       }
-      details
-      detailsTldr
-      startDateTime
-      endDateTime
-      timezone
-      eventType
-      inPerson
-      categories
-      tags
-      seatsTotal
-      seatsReserved
-      isPrivate
-      status
+      logoPath
+      onlineReserved
+      onlineTotal
+      organizationId
+      registrationUrl
       reward
       rewardDetails
-      creator
-      createdDateTime
+      seatsReserved
+      seatsTotal
+      startDateTime
+      status
+      subtitle
+      tags
+      title
+      timezone
       updatedDateTime
+      websitePrompt
+      websiteUrl
       createdAt
       updatedAt
     }
