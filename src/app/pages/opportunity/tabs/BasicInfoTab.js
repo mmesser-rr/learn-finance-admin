@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useFormContext, Controller } from 'react-hook-form';
 import FormHeader from '../../../shared-components/FormHeader';
+import AutocompleteChip from '../../../shared-components/AutocompleteChip';
 
 function BasicInfoTab(props) {
   const methods = useFormContext();
@@ -15,7 +16,7 @@ function BasicInfoTab(props) {
   return (
     <div>
       <FormHeader
-        title="Event Information"
+        title="EVENT INFORMATION"
         subtitle="Let users know the basics including the reward for attending."
       />
       <Controller
@@ -206,6 +207,11 @@ function BasicInfoTab(props) {
             onChange={(event, newValue) => {
               onChange(newValue);
             }}
+            renderTags={(tagValue, getTagProps) => {
+              return tagValue.map((option, index) => (
+                <AutocompleteChip {...getTagProps({ index })} label={option} />
+              ));
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -213,6 +219,7 @@ function BasicInfoTab(props) {
                 placeholder="Select multiple categories"
                 label="Categories"
                 variant="filled"
+                color="success"
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -235,6 +242,11 @@ function BasicInfoTab(props) {
             value={value}
             onChange={(event, newValue) => {
               onChange(newValue);
+            }}
+            renderTags={(tagValue, getTagProps) => {
+              return tagValue.map((option, index) => (
+                <AutocompleteChip {...getTagProps({ index })} label={option} />
+              ));
             }}
             renderInput={(params) => (
               <TextField

@@ -4,9 +4,11 @@ function FuseSplashScreen() {
   return (
     <div id="fuse-splash-screen">
       <div className="center">
+        {/* 
+        TODO: BankDao Spinner or Animated Logo
         <div className="logo">
           <img width="128" src="assets/images/logos/fuse.svg" alt="logo" />
-        </div>
+        </div> */}
         <div className="spinner-wrapper">
           <div className="spinner">
             <div className="inner">
