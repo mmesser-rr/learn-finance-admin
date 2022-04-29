@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import { authRoles } from 'app/auth';
 
 const Opportunities = lazy(() => import('./opportunities/Opportunities'));
 const Opportunity = lazy(() => import('./opportunity/Opportunity'));
@@ -10,6 +11,7 @@ const PagesConfig = {
       config: {},
     },
   },
+  auth: authRoles.admin,
   routes: [
     {
       path: 'pages/opportunities',

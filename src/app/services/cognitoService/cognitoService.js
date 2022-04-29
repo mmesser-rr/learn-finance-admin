@@ -17,8 +17,9 @@ class CognitoService {
     }
   };
 
-  isAuthenticated = () => {
-    console.log('cognitoService => Auth', Auth);
+  isAuthenticated = async () => {
+    // const u = await Auth.currentAuthenticatedUser();
+    // console.log('cognitoService => Auth => u', u);
     const isAuth = Auth.isAuthenticated ?? false;
     console.log('cognitoService => checking authenticated', isAuth);
     return isAuth;

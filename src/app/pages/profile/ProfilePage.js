@@ -1,21 +1,33 @@
-import FusePageSimple from '@fuse/core/FusePageSimple';
+import { useEffect, useState } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
 import { styled } from '@mui/material/styles';
-// import Avatar from '@mui/material/Avatar';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { motion } from 'framer-motion';
+
 import Button from '@mui/material/Button';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
+import FusePageSimple from '@fuse/core/FusePageSimple';
+// Components
 import DetailsForm from './tabs/DetailsForm';
 import AvatarEdit from '../../shared-components/AvatarEdit';
-// Components
 import 'cropperjs/dist/cropper.css';
 
-// import AboutTab from './tabs/AboutTab';
-// import PhotosVideosTab from './tabs/PhotosVideosTab';
-// import TimelineTab from './tabs/TimelineTab';
+// Form validation schema
+const schema = yup.object().shape({
+  avatarEdit: yup
+    .mixed()
+    .required('Please select a file')
+    .test('fileSize', 'The file is too large - must be less than 10mb', (value) => {
+      return value && value[0].size <= 10000000;
+    })
+    .test('fileType', 'Unsupported File Format', (value) => {
+      return value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type);
+    }),
+});
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-topBg': {
@@ -58,6 +70,12 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 }));
 
 function ProfilePage() {
+  const methods = useForm({
+    mode: 'all',
+    resolver: yupResolver(schema),
+  });
+  const { control, formState, handleSubmit, register } = methods;
+  const { errors } = formState;
   const [selectedTab, setSelectedTab] = useState(0);
   const [cropper, setCropper] = useState();
   const [cropperOpen, setCropperOpen] = useState(false);
@@ -70,10 +88,9 @@ function ProfilePage() {
   function handleTabChange(event, value) {
     setSelectedTab(value);
   }
-  function handleProfilePicChange(file) {
-    console.log('profilePage => profilePick', file);
-  }
-
+  const handleSaveProfileImage = (data) => {
+    console.log('parofilePage => testSubmit => data => ', data);
+  };
   return (
     <Root
       header={<></>}
@@ -81,16 +98,14 @@ function ProfilePage() {
         <>
           <div className="w-full px-24 pb-48 flex flex-col md:flex-row flex-1 items-center">
             <motion.div initial={{ scale: 0 }} animate={{ scale: 1, transition: { delay: 0.1 } }}>
-              <AvatarEdit
-                src="assets/images/avatars/Velazquez.jpg"
-                handleSelect={setProfileImage}
-                // sx={{
-                //   borderWidth: 4,
-                //   borderStyle: 'solid',
-                //   borderColor: 'background.default',
-                // }}
-                className="-mt-64  w-128 h-128 rounded-full flex justify-center"
-              />
+              <FormProvider {...methods}>
+                <AvatarEdit
+                  register={register}
+                  src="assets/images/avatars/Velazquez.jpg"
+                  className="-mt-64  w-128 h-128 rounded-full flex justify-center"
+                  handleSubmit={handleSaveProfileImage}
+                />
+              </FormProvider>
             </motion.div>
             <div className="flex flex-col md:flex-row flex-1 items-center justify-between p-8">
               <motion.div
