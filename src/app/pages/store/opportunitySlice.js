@@ -8,6 +8,7 @@ export const fetchOpportunity = createAsyncThunk(
   async (params) => {
     let data;
     try {
+      console.log('opportunitySlice => fetchOpportunity => ', params);
       const resp = await API.graphql(graphqlOperation(getOpportunity, params));
       data = await resp.data;
 
@@ -35,7 +36,7 @@ export const saveOpportunity = createAsyncThunk(
     // const { Opportunity } = getState().adminApp;
     const logo = OpportunityData.logoPath;
     const background = OpportunityData.backgroundPath;
-    console.log(background);
+
     const data = OpportunityData;
     data.logoPath = '';
     data.backgroundPath = '';
