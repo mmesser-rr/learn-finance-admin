@@ -23,7 +23,7 @@ function WhenWhereTab(props) {
   return (
     <div>
       <FormHeader
-        title="When & Where"
+        title="WHEN & WHERE"
         subtitle="Make your mark and let people know when and where they can find your event."
       />
       {(eventType === 'IRL' || eventType === 'HYBRID') && <LocationInput />}
