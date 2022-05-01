@@ -13,6 +13,9 @@ import Box from '@mui/material/Box';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 // Components
 import DetailsForm from './tabs/DetailsForm';
+import AboutTab from './tabs/AboutTab';
+import PhotosVideosTab from './tabs/PhotosVideosTab';
+import TimelineTab from './tabs/TimelineTab';
 import AvatarEdit from '../../shared-components/AvatarEdit';
 import 'cropperjs/dist/cropper.css';
 
@@ -171,14 +174,20 @@ function ProfilePage() {
               disableRipple
               label="Photos & Videos"
             />
+            <Tab
+              className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12 "
+              disableRipple
+              label="Timeline"
+            />
           </Tabs>
         </>
       }
       content={
         <div className="p-16 sm:p-24">
           {selectedTab === 0 && <DetailsForm />}
-          {/* {selectedTab === 1 && <AboutTab />}
-          {selectedTab === 2 && <PhotosVideosTab />} */}
+          {selectedTab === 1 && <AboutTab />}
+          {selectedTab === 2 && <PhotosVideosTab />}
+          {selectedTab === 3 && <TimelineTab />}
         </div>
       }
     />
