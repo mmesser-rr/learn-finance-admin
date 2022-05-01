@@ -20,14 +20,28 @@ const schema = yup.object().shape({
   firstName: yup.string().required('You must enter a First Name'),
 });
 
+const handleMobilePhoneInput = (value) => {
+  return (
+    value
+      .replace(/\s/g, '')
+      .replace(/(^[1])/, '+$1 ')
+      .replace(/(^[0,2-9])/, '+1 $1')
+      .replace(/(^\+1 [0-9]{3})(.+)/, '$1, $2')
+      .substr(0, 19) || ''
+  );
+};
+
 function ProfileDetailsForm({ data, child }) {
   const methods = useForm({
     mode: 'onChange',
     defaultValues: {
       firstName: 'John',
       lastName: 'Doe',
+      mobilePhone: '',
       email: '',
       bio: 'bio',
+      address: {},
+      dateOfBirth: '',
     },
     resolver: yupResolver(schema),
   });
@@ -43,7 +57,6 @@ function ProfileDetailsForm({ data, child }) {
       },
     },
   };
-
   const item = {
     hidden: { opacity: 0, y: 40 },
     show: { opacity: 1, y: 0 },
@@ -144,6 +157,37 @@ function ProfileDetailsForm({ data, child }) {
                 </div>
                 <div className="flex">
                   <div className="md:px-10 min-w-48 pt-20">
+                    <Icon color="action">phone</Icon>
+                  </div>
+
+                  <Controller
+                    name="mobilePhone"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        // {...field} Overriding the onChange
+                        sx={{ m: 1 }}
+                        className="mt-8 mb-16"
+                        error={!!errors.mobilePhone}
+                        required
+                        helperText={errors?.mobilePhone?.message}
+                        label="Mobile Phone"
+                        autoFocus
+                        id="mobilePhone"
+                        variant="filled"
+                        fullWidth
+                        placeholder="Like +1-555-555-5555"
+                        autoComplete="phone-number"
+                        onChange={(event) => {
+                          const { value } = event.target;
+                          event.target.value = handleMobilePhoneInput(value);
+                        }}
+                      />
+                    )}
+                  />
+                </div>
+                <div className="flex">
+                  <div className="md:px-10 min-w-48 pt-20">
                     <PersonIcon color="action" />
                   </div>
                   <Controller
@@ -166,6 +210,12 @@ function ProfileDetailsForm({ data, child }) {
                       />
                     )}
                   />
+                </div>
+                <div className="flex">
+                  <div className="md:px-10 min-w-48 pt-20" />
+                  <div className="my-20">
+                    <Typography variant="h6">Social Handles</Typography>
+                  </div>
                 </div>
                 <div className="flex">
                   <div className="md:px-10 min-w-48 pt-20">
