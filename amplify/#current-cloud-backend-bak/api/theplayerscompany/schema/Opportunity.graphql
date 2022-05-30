@@ -1,0 +1,44 @@
+# import Location from 'Location.graphql'
+
+enum OpportunityType {
+  IRL
+  VIRTUAL
+  HYBRID
+}
+
+type Opportunity @model @searchable {
+  categories: [String]!
+  creatorId: ID!
+  creator: Athlete! @hasOne(fields: ["creatorId"])
+  details: String!
+  detailsTldr: String!
+  endDateTime: Int!
+  eventType: String!
+  heroPhotoUri: String
+  isPrivate: Boolean!
+  location: Location
+  locationDetail: LocationDetail
+  logoUri: String
+  onlineReserved: Int!
+  onlineTotal: Int!
+  organizationId: String!
+  registrationUrl: String!
+  reward: Float!
+  rewardDetails: String!
+  seatsReserved: Int!
+  seatsTotal: Int!
+  startDateTime: Int!
+  status: String!
+  subtitle: String!
+  tags: [String]!
+  title: String!
+  timezone: String!
+  websitePrompt: String!
+  websiteUrl: String!
+}
+
+type ModelOpportunityConnection {
+ items: [Opportunity]
+ total: Int
+ nextToken: String
+}

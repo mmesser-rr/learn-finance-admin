@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "api": {
+      "theplayerscompany": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    },
+    "function": {
+      "InviteService": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "storage": {
+      "Invite:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

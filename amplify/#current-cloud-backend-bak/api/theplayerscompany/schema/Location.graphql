@@ -1,0 +1,20 @@
+type LocationDetail {
+  address: String!
+  unit: String
+  city: String!
+  state: String!
+  zipCode: String!
+  country: String!
+  name: String
+}
+
+type Location {
+  lat: Float!
+  lon: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lon: Float!
+}
+
