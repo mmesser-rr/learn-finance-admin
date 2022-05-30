@@ -133,19 +133,17 @@ export const nearbyOpportunities = /* GraphQL */ `
     ) {
       items {
         id
-        backgroundPath
         categories
-        creator
-        createdDateTime
+        creatorId
         details
         detailsTldr
         endDateTime
         eventType
+        heroPhotoUri
         isPrivate
-        logoPath
+        logoUri
         onlineReserved
         onlineTotal
-        organizationId
         registrationUrl
         reward
         rewardDetails
@@ -157,7 +155,6 @@ export const nearbyOpportunities = /* GraphQL */ `
         tags
         title
         timezone
-        updatedDateTime
         websitePrompt
         websiteUrl
         createdAt
@@ -187,19 +184,17 @@ export const searchOpportunities = /* GraphQL */ `
     ) {
       items {
         id
-        backgroundPath
         categories
-        creator
-        createdDateTime
+        creatorId
         details
         detailsTldr
         endDateTime
         eventType
+        heroPhotoUri
         isPrivate
-        logoPath
+        logoUri
         onlineReserved
         onlineTotal
-        organizationId
         registrationUrl
         reward
         rewardDetails
@@ -211,7 +206,6 @@ export const searchOpportunities = /* GraphQL */ `
         tags
         title
         timezone
-        updatedDateTime
         websitePrompt
         websiteUrl
         createdAt
@@ -243,6 +237,9 @@ export const getAthlete = /* GraphQL */ `
       lastName
       mobilePhone
       athleteTag
+      bio
+      profilePhotoUri
+      heroPhotoUri
       email
       level
       sport {
@@ -282,6 +279,10 @@ export const getAthlete = /* GraphQL */ `
       }
       wyreId
       isActive
+      handle
+      socialHandles {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -300,12 +301,16 @@ export const listAthletes = /* GraphQL */ `
         lastName
         mobilePhone
         athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
         email
         level
         dateOfBirth
         plaidToken
         wyreId
         isActive
+        handle
         id
         createdAt
         updatedAt
@@ -322,12 +327,16 @@ export const getAthleteAccount = /* GraphQL */ `
         lastName
         mobilePhone
         athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
         email
         level
         dateOfBirth
         plaidToken
         wyreId
         isActive
+        handle
         id
         createdAt
         updatedAt
@@ -407,6 +416,37 @@ export const listRecentTransactions = /* GraphQL */ `
         settled
         id
         updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getSocialHandle = /* GraphQL */ `
+  query GetSocialHandle($id: ID!) {
+    getSocialHandle(id: $id) {
+      platform
+      handle
+      id
+      createdAt
+      updatedAt
+      athleteSocialHandlesId
+    }
+  }
+`;
+export const listSocialHandles = /* GraphQL */ `
+  query ListSocialHandles(
+    $filter: ModelSocialHandleFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSocialHandles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        platform
+        handle
+        id
+        createdAt
+        updatedAt
+        athleteSocialHandlesId
       }
       nextToken
     }
@@ -492,14 +532,32 @@ export const getOpportunity = /* GraphQL */ `
   query GetOpportunity($id: ID!) {
     getOpportunity(id: $id) {
       id
-      backgroundPath
       categories
-      creator
-      createdDateTime
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
       details
       detailsTldr
       endDateTime
       eventType
+      heroPhotoUri
       isPrivate
       location {
         lat
@@ -514,10 +572,12 @@ export const getOpportunity = /* GraphQL */ `
         country
         name
       }
-      logoPath
+      logoUri
       onlineReserved
       onlineTotal
-      organizationId
+      organizations {
+        nextToken
+      }
       registrationUrl
       reward
       rewardDetails
@@ -529,7 +589,6 @@ export const getOpportunity = /* GraphQL */ `
       tags
       title
       timezone
-      updatedDateTime
       websitePrompt
       websiteUrl
       createdAt
@@ -546,19 +605,17 @@ export const listOpportunities = /* GraphQL */ `
     listOpportunities(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        backgroundPath
         categories
-        creator
-        createdDateTime
+        creatorId
         details
         detailsTldr
         endDateTime
         eventType
+        heroPhotoUri
         isPrivate
-        logoPath
+        logoUri
         onlineReserved
         onlineTotal
-        organizationId
         registrationUrl
         reward
         rewardDetails
@@ -570,13 +627,43 @@ export const listOpportunities = /* GraphQL */ `
         tags
         title
         timezone
-        updatedDateTime
         websitePrompt
         websiteUrl
         createdAt
         updatedAt
       }
       total
+      nextToken
+    }
+  }
+`;
+export const getOrganization = /* GraphQL */ `
+  query GetOrganization($id: ID!) {
+    getOrganization(id: $id) {
+      id
+      displayName
+      relationshipType
+      opportunityId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listOrganizations = /* GraphQL */ `
+  query ListOrganizations(
+    $filter: ModelOrganizationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listOrganizations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        displayName
+        relationshipType
+        opportunityId
+        createdAt
+        updatedAt
+      }
       nextToken
     }
   }

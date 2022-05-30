@@ -37,24 +37,13 @@ function Login() {
           square
         >
           <CardContent className="flex flex-col items-center justify-center w-full py-96 max-w-320">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0.2 } }}
-            >
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 1 } }}>
               <div className="flex items-center mb-48">
-                <img className="logo-icon w-48" src="assets/images/logos/fuse.svg" alt="logo" />
-                <div className="border-l-1 mr-4 w-1 h-40" />
-                <div>
-                  <Typography className="text-24 font-semibold logo-text" color="inherit">
-                    FUSE
-                  </Typography>
-                  <Typography
-                    className="text-16 tracking-widest -mt-8 font-700"
-                    color="textSecondary"
-                  >
-                    REACT
-                  </Typography>
-                </div>
+                <img
+                  className="logo-icon w-128"
+                  src="assets/images/logos/bankdaologo.svg"
+                  alt="logo"
+                />
               </div>
             </motion.div>
 
@@ -82,7 +71,7 @@ function Login() {
             >
               <Typography variant="h3" color="inherit" className="font-semibold leading-tight">
                 Welcome <br />
-                to BankDao.
+                to BankDAO.
               </Typography>
             </motion.div>
 

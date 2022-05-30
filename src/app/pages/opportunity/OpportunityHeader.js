@@ -1,33 +1,74 @@
-import Button from '@mui/material/Button';
-import Icon from '@mui/material/Icon';
-import { useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import { motion } from 'framer-motion';
-import { useFormContext } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import _ from '@lodash';
-import { saveOpportunity, removeOpportunity } from '../store/opportunitySlice';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useFormContext } from "react-hook-form";
+import { Storage } from "aws-amplify";
+import { styled, useTheme } from "@mui/material/styles";
+import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
+import _ from "@lodash";
+import Button from "@mui/material/Button";
+import Icon from "@mui/material/Icon";
+import Typography from "@mui/material/Typography";
+import { removeOpportunity, saveOpportunity } from "../store/opportunitySlice";
 
+const CustomButton = styled(Button)`
+  :disabled {
+    color: #ffffff;
+    background-color: #b1b3b4;
+  }
+`;
 function OpportunityHeader(props) {
   const dispatch = useDispatch();
+  const user = useSelector(({ auth }) => auth.user);
   const methods = useFormContext();
   const { formState, watch, getValues } = methods;
   const { isValid, dirtyFields } = formState;
-  const logoPath = watch('logoPath');
-  const backgroundPath = watch('backgroundPath');
-  const title = watch('title');
-  const subtitle = watch('subtitle');
+  const logoUri = watch("logoUri");
+  const heroPhotoUri = watch("heroPhotoUri");
+  const title = watch("title");
+  const subtitle = watch("subtitle");
+  const orgs = watch("orgs");
+  const [saveStatus, setSaveStatus] = useState("Save");
   const theme = useTheme();
   const navigate = useNavigate();
+  const [imageUrl, setImageUrl] = useState("");
 
-  function handleSaveOpportunity() {
-    dispatch(saveOpportunity(getValues()));
+  useEffect(() => {
+    async function getImage() {
+      let imgSrc = logoUri;
+      if (logoUri?.startsWith("opportunities")) {
+        console.log("opportunityHeader => logoUri => ", logoUri);
+
+        imgSrc = await Storage.get(logoUri, { download: false });
+        console.log("opportunityHeader => logoUriFetched => ", imgSrc);
+      }
+      setImageUrl(imgSrc);
+    }
+    getImage();
+  }, [logoUri]);
+
+  async function handleSaveOpportunity() {
+    setSaveStatus("Saving");
+    const formValues = {
+      ...getValues(),
+      creatorId: user.data.id,
+    };
+    await dispatch(saveOpportunity(formValues)).then((action) => {
+      console.log("opportunityHeader => save => ", action);
+      const item = action.payload;
+      navigate(
+        `/pages/Opportunity/${item.id}/${item.title.replaceAll(" ", "_")}`
+      );
+    });
+    setSaveStatus("Saved");
+    setTimeout(() => {
+      setSaveStatus("Save");
+    }, 3000);
   }
 
   function handleRemoveOpportunity() {
     dispatch(removeOpportunity()).then(() => {
-      navigate('/pages/Opportunities');
+      navigate("/pages/Opportunities");
     });
   }
 
@@ -46,9 +87,11 @@ function OpportunityHeader(props) {
             color="inherit"
           >
             <Icon className="text-20">
-              {theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}
+              {theme.direction === "ltr" ? "arrow_back" : "arrow_forward"}
             </Icon>
-            <span className="hidden sm:flex mx-4 font-medium">Opportunities</span>
+            <span className="hidden sm:flex mx-4 font-medium">
+              Opportunities
+            </span>
           </Typography>
         </motion.div>
 
@@ -58,19 +101,26 @@ function OpportunityHeader(props) {
             initial={{ scale: 0 }}
             animate={{ scale: 1, transition: { delay: 0.3 } }}
           >
-            {logoPath ? (
-              <img className="w-32 sm:w-48 rounded" src={logoPath} alt={title} />
+            {logoUri ? (
+              <img
+                className="w-32 sm:w-48 rounded"
+                src={imageUrl}
+                alt={title}
+              />
             ) : (
               <div className="2-32 sm:w-48 rounded" />
             )}
           </motion.div>
           <div className="flex flex-col min-w-0 mx-8 sm:mc-16">
-            <motion.div initial={{ x: -20 }} animate={{ x: 0, transition: { delay: 0.3 } }}>
+            <motion.div
+              initial={{ x: -20 }}
+              animate={{ x: 0, transition: { delay: 0.3 } }}
+            >
               <Typography className="text-16 sm:text-20 truncate font-semibold">
-                {title || 'New Opportunity'}
+                {title || "New Opportunity"}
               </Typography>
               <Typography variant="caption" className="font-medium">
-                {subtitle || 'Opportunity Detail'}
+                {subtitle || "Opportunity Detail"}
               </Typography>
             </motion.div>
           </div>
@@ -90,15 +140,15 @@ function OpportunityHeader(props) {
         >
           Remove
         </Button>
-        <Button
+        <CustomButton
           className="whitespace-nowrap mx-4"
           variant="contained"
           color="secondary"
           disabled={_.isEmpty(dirtyFields) || !isValid}
           onClick={handleSaveOpportunity}
         >
-          Save
-        </Button>
+          {saveStatus}
+        </CustomButton>
       </motion.div>
     </div>
   );

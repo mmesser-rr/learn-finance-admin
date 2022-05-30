@@ -1,4 +1,6 @@
 import { lazy } from 'react';
+import { authRoles } from 'app/auth';
+import OpportunityPage from './opportunity/OpportunityPage';
 
 const Opportunities = lazy(() => import('./opportunities/Opportunities'));
 const Opportunity = lazy(() => import('./opportunity/Opportunity'));
@@ -10,6 +12,7 @@ const PagesConfig = {
       config: {},
     },
   },
+  auth: authRoles.admin,
   routes: [
     {
       path: 'pages/opportunities',
@@ -18,6 +21,10 @@ const PagesConfig = {
     {
       path: 'pages/opportunities/:id/*',
       element: <Opportunity />,
+    },
+    {
+      path: 'pages/opportunity/:id/*',
+      element: <OpportunityPage />,
     },
     {
       path: 'pages/profile',
