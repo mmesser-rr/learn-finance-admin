@@ -10,12 +10,11 @@ const LocationInput = () => {
   };
   return (
     <Wrapper>
-      {/* <Input placeholder="Address" {...address} isTyping={address.value !== ''} /> */}
       <TextField
         sx={{ m: 1 }}
         className="mt-8 mb-16"
         label="Address"
-        variant="standard"
+        variant="filled"
         inputProps={inputProps}
         fullWidth
       />
@@ -113,11 +112,11 @@ const Input = styled.input`
 `;
 
 const SuggestionWrapper = styled.div`
-  background: white;
+  color: #ffffff;
+  background: #24272a;
   box-shadow: 0px 5px 10px gray;
   position: absolute;
   margin: -15px 8px 10px 8px;
-  width: 96%;
   padding: 10px 20px;
   border-radius: 0px 0px 10px 10px;
   z-index: 99;

@@ -17,16 +17,14 @@ class CognitoService {
     }
   };
 
-  isAuthenticated = () => {
-    console.log('cognitoService => Auth', Auth);
+  isAuthenticated = async () => {
     const isAuth = Auth.isAuthenticated ?? false;
-    console.log('cognitoService => checking authenticated', isAuth);
     return isAuth;
   };
 
   getUserData = async () => {
     const userData = await Auth.currentAuthenticatedUser();
-    console.log('cognitoService => getUserData => ', userData);
+    // console.log('cognitoService => getUserData => ', userData);
     return userData;
   };
 }

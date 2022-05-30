@@ -21,6 +21,7 @@ import OpportunitiesTableHead from './OpportunitiesTableHead';
 function OpportunitiesTable(props) {
   const dispatch = useDispatch();
   const opportunities = useSelector(selectOpportunities);
+  console.log('opportunities => table => opps', opportunities);
   // const opportunities = useSelector(({ adminApp }) => adminApp.opportunities.opportunities);
   const searchText = useSelector(({ adminApp }) => adminApp.opportunities.searchText);
 
@@ -35,30 +36,33 @@ function OpportunitiesTable(props) {
   });
 
   useEffect(() => {
-    console.log('opportunitiesTable => useEffect => dispatching getOpportunities ...');
-    dispatch(getOpportunities()).then(() => {
+    async function load() {
+      await dispatch(getOpportunities()).then((action) => {
+        setLoading(false);
+        console.log('opportunitiesTable => useEffect => dispatching getOpportunities ...', action);
+        setData(action.payload);
+      });
       setLoading(false);
-    });
-    console.log('opportunitiesTable => useEffect => dispatching getOpportunities ...');
-    setLoading(false);
+    }
+    load();
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log('OpportunitiesTable => opportunites => ', opportunities);
-    console.log('OpportunitiesTable => searchText => ', searchText.length);
-    // setLoading(false);
-    if (searchText.length !== 0) {
-      setData(
-        _.filter(opportunities, (item) =>
-          item.name.toLowerCase().includes(searchText.toLowerCase())
-        )
-      );
-      setPage(0);
-    } else {
-      console.log('OpportunitiesTable => data => ', opportunities);
-      setData(opportunities);
-    }
-  }, [opportunities, searchText]);
+  // useEffect(() => {
+  //   console.log('OpportunitiesTable => opportunites => ', opportunities);
+  //   console.log('OpportunitiesTable => searchText => ', searchText.length);
+  //   // setLoading(false);
+  //   if (searchText.length !== 0) {
+  //     setData(
+  //       _.filter(opportunities, (item) =>
+  //         item.name.toLowerCase().includes(searchText.toLowerCase())
+  //       )
+  //     );
+  //     setPage(0);
+  //   } else {
+  //     console.log('OpportunitiesTable => data => ', opportunities);
+  //     setData(opportunities);
+  //   }
+  // }, [opportunities, searchText]);
 
   function renderStatus(status) {
     switch (status) {
@@ -179,7 +183,6 @@ function OpportunitiesTable(props) {
             )
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((n) => {
-                console.log('n =>', n);
                 const isSelected = selected.indexOf(n.id) !== -1;
                 return (
                   <TableRow

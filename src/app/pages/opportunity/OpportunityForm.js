@@ -20,6 +20,12 @@ const schema = yup.object().shape({
     .string()
     .url("The Website URL must be a valid url like 'http://website.com/somelink'")
     .required('Please enter website'),
+  organizations: yup.array().of(
+    yup.object().shape({
+      displayName: yup.string().required('Organization name is required'),
+      relationshipType: yup.string().required('Relationship type is required'),
+    })
+  ),
 });
 
 function OpportunityForm({ data, child }) {
@@ -27,10 +33,10 @@ function OpportunityForm({ data, child }) {
     mode: 'onChange',
     defaultValues: {
       // Basic Info
-      backgroundPath: data.backgroundPath,
+      heroPhotoUri: data.heroPhotoUri,
       categories: data.categories,
-      creator: data.creator,
-      createdDateTime: data.createdDateTime,
+      // creator: data.creator,
+      // createdDateTime: data.createdDateTime,
       details: data.details,
       detailsTldr: data.detailsTldr,
       endDateTime: data.endDateTime,
@@ -47,10 +53,10 @@ function OpportunityForm({ data, child }) {
         country: 'country',
         name: 'name',
       },
-      logoPath: data.logoPath,
+      logoUri: data.logoUri,
       onlineReserved: data.onlineReserved,
       onlineTotal: data.onlineTotal,
-      organizationId: data.organizationId,
+      organizations: data.organizations?.items,
       registrationUrl: data.registrationUrl,
       reward: data.reward,
       rewardDetails: data.rewardDetails,
@@ -62,7 +68,7 @@ function OpportunityForm({ data, child }) {
       tags: data.tags,
       title: data.title,
       timezone: data.timezone,
-      updatedDateTime: data.updatedDateTime,
+      // updatedDateTime: data.updatedDateTime,
       websitePrompt: data.websitePrompt,
       websiteUrl: data.websiteUrl,
     },
@@ -72,6 +78,5 @@ function OpportunityForm({ data, child }) {
   const form = watch();
 
   return <FormProvider {...methods}>{child}</FormProvider>;
-  // return <FormProvider {...methods}>{child}</FormProvider>;
 }
 export default OpportunityForm;

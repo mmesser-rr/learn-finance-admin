@@ -8,6 +8,9 @@ export const onCreateAthlete = /* GraphQL */ `
       lastName
       mobilePhone
       athleteTag
+      bio
+      profilePhotoUri
+      heroPhotoUri
       email
       level
       sport {
@@ -47,6 +50,10 @@ export const onCreateAthlete = /* GraphQL */ `
       }
       wyreId
       isActive
+      handle
+      socialHandles {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -60,6 +67,9 @@ export const onUpdateAthlete = /* GraphQL */ `
       lastName
       mobilePhone
       athleteTag
+      bio
+      profilePhotoUri
+      heroPhotoUri
       email
       level
       sport {
@@ -99,6 +109,10 @@ export const onUpdateAthlete = /* GraphQL */ `
       }
       wyreId
       isActive
+      handle
+      socialHandles {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -112,6 +126,9 @@ export const onDeleteAthlete = /* GraphQL */ `
       lastName
       mobilePhone
       athleteTag
+      bio
+      profilePhotoUri
+      heroPhotoUri
       email
       level
       sport {
@@ -151,6 +168,10 @@ export const onDeleteAthlete = /* GraphQL */ `
       }
       wyreId
       isActive
+      handle
+      socialHandles {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -165,12 +186,16 @@ export const onCreateAthleteAccount = /* GraphQL */ `
         lastName
         mobilePhone
         athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
         email
         level
         dateOfBirth
         plaidToken
         wyreId
         isActive
+        handle
         id
         createdAt
         updatedAt
@@ -194,12 +219,16 @@ export const onUpdateAthleteAccount = /* GraphQL */ `
         lastName
         mobilePhone
         athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
         email
         level
         dateOfBirth
         plaidToken
         wyreId
         isActive
+        handle
         id
         createdAt
         updatedAt
@@ -223,12 +252,16 @@ export const onDeleteAthleteAccount = /* GraphQL */ `
         lastName
         mobilePhone
         athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
         email
         level
         dateOfBirth
         plaidToken
         wyreId
         isActive
+        handle
         id
         createdAt
         updatedAt
@@ -307,6 +340,42 @@ export const onDeleteRecentTransaction = /* GraphQL */ `
     }
   }
 `;
+export const onCreateSocialHandle = /* GraphQL */ `
+  subscription OnCreateSocialHandle {
+    onCreateSocialHandle {
+      platform
+      handle
+      id
+      createdAt
+      updatedAt
+      athleteSocialHandlesId
+    }
+  }
+`;
+export const onUpdateSocialHandle = /* GraphQL */ `
+  subscription OnUpdateSocialHandle {
+    onUpdateSocialHandle {
+      platform
+      handle
+      id
+      createdAt
+      updatedAt
+      athleteSocialHandlesId
+    }
+  }
+`;
+export const onDeleteSocialHandle = /* GraphQL */ `
+  subscription OnDeleteSocialHandle {
+    onDeleteSocialHandle {
+      platform
+      handle
+      id
+      createdAt
+      updatedAt
+      athleteSocialHandlesId
+    }
+  }
+`;
 export const onCreateEmailChallenge = /* GraphQL */ `
   subscription OnCreateEmailChallenge {
     onCreateEmailChallenge {
@@ -374,14 +443,32 @@ export const onCreateOpportunity = /* GraphQL */ `
   subscription OnCreateOpportunity {
     onCreateOpportunity {
       id
-      backgroundPath
       categories
-      creator
-      createdDateTime
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
       details
       detailsTldr
       endDateTime
       eventType
+      heroPhotoUri
       isPrivate
       location {
         lat
@@ -396,10 +483,12 @@ export const onCreateOpportunity = /* GraphQL */ `
         country
         name
       }
-      logoPath
+      logoUri
       onlineReserved
       onlineTotal
-      organizationId
+      organizations {
+        nextToken
+      }
       registrationUrl
       reward
       rewardDetails
@@ -411,7 +500,6 @@ export const onCreateOpportunity = /* GraphQL */ `
       tags
       title
       timezone
-      updatedDateTime
       websitePrompt
       websiteUrl
       createdAt
@@ -423,14 +511,32 @@ export const onUpdateOpportunity = /* GraphQL */ `
   subscription OnUpdateOpportunity {
     onUpdateOpportunity {
       id
-      backgroundPath
       categories
-      creator
-      createdDateTime
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
       details
       detailsTldr
       endDateTime
       eventType
+      heroPhotoUri
       isPrivate
       location {
         lat
@@ -445,10 +551,12 @@ export const onUpdateOpportunity = /* GraphQL */ `
         country
         name
       }
-      logoPath
+      logoUri
       onlineReserved
       onlineTotal
-      organizationId
+      organizations {
+        nextToken
+      }
       registrationUrl
       reward
       rewardDetails
@@ -460,7 +568,6 @@ export const onUpdateOpportunity = /* GraphQL */ `
       tags
       title
       timezone
-      updatedDateTime
       websitePrompt
       websiteUrl
       createdAt
@@ -472,14 +579,32 @@ export const onDeleteOpportunity = /* GraphQL */ `
   subscription OnDeleteOpportunity {
     onDeleteOpportunity {
       id
-      backgroundPath
       categories
-      creator
-      createdDateTime
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
       details
       detailsTldr
       endDateTime
       eventType
+      heroPhotoUri
       isPrivate
       location {
         lat
@@ -494,10 +619,12 @@ export const onDeleteOpportunity = /* GraphQL */ `
         country
         name
       }
-      logoPath
+      logoUri
       onlineReserved
       onlineTotal
-      organizationId
+      organizations {
+        nextToken
+      }
       registrationUrl
       reward
       rewardDetails
@@ -509,9 +636,44 @@ export const onDeleteOpportunity = /* GraphQL */ `
       tags
       title
       timezone
-      updatedDateTime
       websitePrompt
       websiteUrl
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateOrganization = /* GraphQL */ `
+  subscription OnCreateOrganization {
+    onCreateOrganization {
+      id
+      displayName
+      relationshipType
+      opportunityId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateOrganization = /* GraphQL */ `
+  subscription OnUpdateOrganization {
+    onUpdateOrganization {
+      id
+      displayName
+      relationshipType
+      opportunityId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteOrganization = /* GraphQL */ `
+  subscription OnDeleteOrganization {
+    onDeleteOrganization {
+      id
+      displayName
+      relationshipType
+      opportunityId
       createdAt
       updatedAt
     }

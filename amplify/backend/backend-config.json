@@ -151,7 +151,17 @@
     "assets": {
       "service": "S3",
       "providerPlugin": "awscloudformation",
-      "dependsOn": []
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "S3Trigger2bbae92f",
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ]
+        }
+      ]
     }
   }
 }

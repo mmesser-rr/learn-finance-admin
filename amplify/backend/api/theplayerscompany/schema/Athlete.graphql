@@ -40,19 +40,24 @@ type Athlete @model {
   lastName: String!
   mobilePhone: String!
   athleteTag: String
+  bio: String
+  profilePhotoUri: String
+  heroPhotoUri: String
   email: String!
-  level: AthleteLevel!
-  sport: AthleteSport!
-  team: AthleteTeam!
-  address: Address!
-  dateOfBirth: String!
+  level: AthleteLevel
+  sport: AthleteSport
+  team: AthleteTeam
+  address: Address
+  dateOfBirth: String
   accounts: [AthleteAccount] @hasMany
   unitLookup: AthleteUnitLookup
-  podSettings: PodSettings!
+  podSettings: PodSettings
   plaidToken: String
   plaidProcessorToken: ProcessorToken
   wyreId: String
   isActive: Boolean!
+  handle: String
+  socialHandles: [SocialHandle] @hasMany
 }
 
 type AthleteAccount @model {
@@ -73,4 +78,16 @@ type RecentTransaction @model  {
   read: Boolean
   settled: String
   podAllocation: PodSettings
+}
+
+enum SocialPlatform {
+  TWITTER,
+  INSTAGRAM,
+  DISCORD,
+  TELEGRAM,
+}
+
+type SocialHandle @model {
+  platform: SocialPlatform!
+  handle: String!
 }

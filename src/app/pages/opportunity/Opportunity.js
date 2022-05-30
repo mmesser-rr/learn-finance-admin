@@ -11,12 +11,17 @@ import { Link, useParams } from 'react-router-dom';
 import { useDeepCompareEffect } from '@fuse/hooks';
 import FuseLoading from '@fuse/core/FuseLoading';
 import { styled } from '@mui/material/styles';
+import InfoIcon from '@mui/icons-material/Info';
+import GroupsIcon from '@mui/icons-material/Groups';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import PlaceIcon from '@mui/icons-material/Place';
 import { newOpportunity, fetchOpportunity } from '../store/opportunitySlice';
 import reducer from '../store';
 import OpportunityHeader from './OpportunityHeader';
-import BasicInfoTab from './tabs/BasicInfoTab';
-import OpportunityImagesTab from './tabs/OpportunityImagesTab';
-import WhenWhereTab from './tabs/WhenWhereTab';
+import BasicInfoForm from './tabs/BasicInfoForm';
+import OpportunityImagesForm from './tabs/OpportunityImagesForm';
+import OrgsForm from './tabs/OrgsForm';
+import WhenWhereForm from './tabs/WhenWhereForm';
 import OpportunityForm from './OpportunityForm';
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
@@ -40,21 +45,21 @@ function Opportunity(props) {
   const [formOpportunity, setFormOpportunity] = useState(undefined);
   const [isEdit, setIsEdit] = useState(false);
   // Side Effect: Try loading the opportunity
-  // useEffect(() => {
+
   useDeepCompareEffect(() => {
-    function updateOpportunityState() {
+    async function load() {
       // Deconstruct the id parameter from the url.
       const { id } = routeParams;
       // For new opportunity (create new), we do this by passing
       // "new" as the id.
       if (id === 'new') {
         // Create New Opportunity data
-        const blankOpportunity = dispatch(newOpportunity()).payload;
+        const blankOpportunity = await dispatch(newOpportunity()).payload;
 
         setFormOpportunity(blankOpportunity);
       } else {
         setIsEdit(true);
-        // Get Opportunity data
+        await // Get Opportunity data
         dispatch(fetchOpportunity(routeParams)).then((action) => {
           // If the requested opportunity is not exist show message
           if (!action.payload) {
@@ -68,26 +73,8 @@ function Opportunity(props) {
       }
     }
 
-    updateOpportunityState();
-    // }, [dispatch, routeParams]);
+    load();
   }, [dispatch, routeParams]);
-
-  // useEffect(() => {
-  //   if (!opportunity) {
-  //     return;
-  //   }
-  //   // Reset the form on opportunity state changes
-  //   reset(opportunity);
-  // }, [opportunity, reset]);
-
-  // useEffect(() => {
-  //   return () => {
-  //     // Reset Opportunity on component unload
-  //     dispatch(resetOpportunity());
-
-  //     setNoOpportunity(false);
-  //   };
-  // }, [dispatch]);
 
   // Tab Change
   function handleTabChange(event, value) {
@@ -146,24 +133,55 @@ function Opportunity(props) {
             scrollButtons="auto"
             classes={{ root: 'w-full h-64' }}
           >
-            <Tab className="h-64" label="Basic Info" />
-            <Tab className="h-64" label="Opportunity Images" />
-            <Tab className="h-64" label="When & Where" />
+            <Tab
+              className="h-64"
+              icon=<InfoIcon />
+              iconPosition="start"
+              aria-label="Basic Info"
+              label="Basic Info"
+            />
+            <Tab
+              className="h-64"
+              icon=<GroupsIcon />
+              iconPosition="start"
+              aria-label="Organizations"
+              label="Organizations"
+            />
+            <Tab
+              className="h-64"
+              icon=<PhotoCameraIcon />
+              iconPosition="start"
+              aria-label="Logo & Background"
+              label="Logo & Background"
+            />
+            <Tab
+              className="h-64"
+              icon=<PlaceIcon />
+              iconPosition="start"
+              aria-label="When & Where"
+              label="When & Where"
+            />
           </Tabs>
         }
         content={
           <div>
             <div className="p-16 sm:p-24 max-w-2xl">
               <div className={tabValue !== 0 ? 'hidden' : ''}>
-                <BasicInfoTab showStatus={isEdit} />
+                <BasicInfoForm showStatus={isEdit} />
               </div>
-
               <div className={tabValue !== 1 ? 'hidden' : ''}>
-                <OpportunityImagesTab />
+                <OrgsForm />
               </div>
 
               <div className={tabValue !== 2 ? 'hidden' : ''}>
-                <WhenWhereTab />
+                <OpportunityImagesForm
+                  logoUriOrig={formOpportunity?.logoUri}
+                  heroPhotoUriOrig={formOpportunity?.heroPhotoUri}
+                />
+              </div>
+
+              <div className={tabValue !== 3 ? 'hidden' : ''}>
+                <WhenWhereForm />
               </div>
             </div>
           </div>
