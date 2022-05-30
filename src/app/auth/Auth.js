@@ -1,11 +1,12 @@
-import FuseSplashScreen from '@fuse/core/FuseSplashScreen';
-import cognitoService from 'app/services/cognitoService';
-import { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from '@reduxjs/toolkit';
-import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
+import { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import FuseSplashScreen from "@fuse/core/FuseSplashScreen";
+import cognitoService from "app/services/cognitoService";
+import { bindActionCreators } from "@reduxjs/toolkit";
+import { hideMessage, showMessage } from "app/store/fuse/messageSlice";
 
-import { setUserDataCognito, setUserData, logoutUser } from './store/userSlice';
+import { setUserDataCognito, setUserData, logoutUser } from "./store/userSlice";
 
 class Auth extends Component {
   state = {
@@ -24,12 +25,22 @@ class Auth extends Component {
         /**
          * Retrieve user data from Cognito
          */
-        cognitoService.getUserData().then((tokenData) => {
-          // console.log('auth.js => tokenData', tokenData);
-          this.props.setUserDataCognito(tokenData);
-          resolve();
-        });
+        console.log("Auth => congitoCheck => .");
+        cognitoService
+          .getUserData()
+          .then((tokenData) => {
+            // console.log('auth.js => tokenData', tokenData);
+            this.props.setUserDataCognito(tokenData);
+            resolve();
+          })
+          .catch((error) => {
+            this.props.showMessage({ message: error.message });
+
+            this.setState({ waitAuthCheck: false });
+            console.log("Auth => Err", error);
+          });
       } else {
+        console.log("Auth => right here.");
         resolve();
       }
 
@@ -37,7 +48,11 @@ class Auth extends Component {
     });
 
   render() {
-    return this.state.waitAuthCheck ? <FuseSplashScreen /> : <>{this.props.children}</>;
+    return this.state.waitAuthCheck ? (
+      <FuseSplashScreen />
+    ) : (
+      <>{this.props.children}</>
+    );
   }
 }
 
@@ -53,5 +68,11 @@ function mapDispatchToProps(dispatch) {
     dispatch
   );
 }
+
+Auth.propTypes = {
+  children: PropTypes.any,
+  setUserDataCognito: PropTypes.func,
+  showMessage: PropTypes.func,
+};
 
 export default connect(null, mapDispatchToProps)(Auth);
