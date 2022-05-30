@@ -1,100 +1,74 @@
 /* eslint import/no-extraneous-dependencies: off */
-import { createSlice } from '@reduxjs/toolkit';
-import firebase from 'firebase/compat/app';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import 'firebase/compat/auth';
 import history from '@history';
 import _ from '@lodash';
 import { setInitialSettings, setDefaultSettings } from 'app/store/fuse/settingsSlice';
 import { showMessage } from 'app/store/fuse/messageSlice';
-import auth0Service from 'app/services/auth0Service';
-import firebaseService from 'app/services/firebaseService';
-import jwtService from 'app/services/jwtService';
 import settingsConfig from 'app/fuse-configs/settingsConfig';
-import { Auth } from 'aws-amplify';
+import { API, Auth, graphqlOperation, Storage } from 'aws-amplify';
+import { getAthlete } from 'graphql/queries';
+
+export const getPhoto = createAsyncThunk('adminApp/Users/getPhoto', async (key) => {
+  let url;
+  try {
+    const resp = await Storage.get(key, { download: false, expires: 36 });
+    if (resp !== null) {
+      url = resp;
+    } else {
+      url = '';
+    }
+  } catch (err) {
+    console.log('profileSlice => getHeroPhoto => err => ', err);
+  }
+  return url;
+});
+
+export const fetchUserProfile = createAsyncThunk(
+  'adminApp/Users/getUserProfile',
+  async (params) => {
+    let data;
+    try {
+      const resp = await API.graphql(graphqlOperation(getAthlete, params));
+      data = await resp.data;
+      return data === undefined ? null : data;
+    } catch (err) {
+      console.log('userSlice => fetchUserProfile => err => ', err);
+    }
+    return data;
+  }
+);
 
 export const setUserDataCognito = (userToken) => async (dispatch) => {
+  // Fetch user from db.
+  let data;
+  try {
+    const resp = await API.graphql(graphqlOperation(getAthlete, { id: userToken.username }));
+
+    data = await resp.data;
+  } catch (err) {
+    console.log('userSlice => fetchUserProfile => err => ', err);
+  }
+  // console.log('userSlice => fetchedUser => ', data);
   const user = {
+    id: userToken.username,
     role: ['admin'],
     from: 'cognito',
-    loginRedirectUrl: '/example',
+    loginRedirectUrl: '/pages/profile',
     data: {
-      displayName: 'Rufus Montgomery',
+      ...data.getAthlete,
+      displayName: data.getAthlete.firstName,
     },
   };
-  return dispatch(setUserData(user));
-};
-
-export const setUserDataAuth0 = (tokenData) => async (dispatch) => {
-  const user = {
-    role: ['admin'],
-    from: 'auth0',
-    data: {
-      displayName: tokenData.username || tokenData.name,
-      photoURL: tokenData.picture,
-      email: tokenData.email,
-      settings:
-        tokenData.user_metadata && tokenData.user_metadata.settings
-          ? tokenData.user_metadata.settings
-          : {},
-      shortcuts:
-        tokenData.user_metadata && tokenData.user_metadata.shortcuts
-          ? tokenData.user_metadata.shortcuts
-          : [],
-    },
-  };
-
-  return dispatch(setUserData(user));
-};
-
-export const setUserDataFirebase = (user, authUser) => async (dispatch) => {
-  if (
-    user &&
-    user.data &&
-    user.data.settings &&
-    user.data.settings.theme &&
-    user.data.settings.layout &&
-    user.data.settings.layout.style
-  ) {
-    // Set user data but do not update
-    return dispatch(setUserData(user));
-  }
-
-  // Create missing user settings
-  return dispatch(createUserSettingsFirebase(authUser));
-};
-
-export const createUserSettingsFirebase = (authUser) => async (dispatch, getState) => {
-  const guestUser = getState().auth.user;
-  const fuseDefaultSettings = getState().fuse.settings.defaults;
-  const { currentUser } = firebase.auth();
-
-  /**
-   * Merge with current Settings
-   */
-  const user = _.merge({}, guestUser, {
-    uid: authUser.uid,
-    from: 'firebase',
-    role: ['admin'],
-    data: {
-      displayName: authUser.displayName,
-      email: authUser.email,
-      settings: { ...fuseDefaultSettings },
-    },
-  });
-  currentUser.updateProfile(user.data);
-
-  dispatch(updateUserData(user));
 
   return dispatch(setUserData(user));
 };
 
 export const setUserData = (user) => async (dispatch, getState) => {
-  console.log('userSlice => setUserData =>', user);
   /*
   You can redirect the logged-in user to a specific route depending on his role
   */
   if (user.loginRedirectUrl) {
-    console.log('userSlice => loginRedirectUrl =>', user.loginRedirectUrl);
     settingsConfig.loginRedirectUrl = user.loginRedirectUrl; // for example 'apps/academy'
   }
 
@@ -142,23 +116,7 @@ export const logoutUser = () => async (dispatch, getState) => {
     pathname: '/',
   });
 
-  switch (user.from) {
-    case 'cognito': {
-      await Auth.signOut();
-      break;
-    }
-    case 'firebase': {
-      firebaseService.signOut();
-      break;
-    }
-    case 'auth0': {
-      auth0Service.logout();
-      break;
-    }
-    default: {
-      jwtService.logout();
-    }
-  }
+  await Auth.signOut();
 
   dispatch(setInitialSettings());
 
@@ -170,48 +128,7 @@ export const updateUserData = (user) => async (dispatch, getState) => {
     // is guest
     return;
   }
-  switch (user.from) {
-    case 'cognito': {
-      dispatch(showMessage({ message: 'User Update not yet implemented.' }));
-      break;
-    }
-    case 'firebase': {
-      firebaseService
-        .updateUserData(user)
-        .then(() => {
-          dispatch(showMessage({ message: 'User data saved to firebase' }));
-        })
-        .catch((error) => {
-          dispatch(showMessage({ message: error.message }));
-        });
-      break;
-    }
-    case 'auth0': {
-      auth0Service
-        .updateUserData({
-          settings: user.data.settings,
-          shortcuts: user.data.shortcuts,
-        })
-        .then(() => {
-          dispatch(showMessage({ message: 'User data saved to auth0' }));
-        })
-        .catch((error) => {
-          dispatch(showMessage({ message: error.message }));
-        });
-      break;
-    }
-    default: {
-      jwtService
-        .updateUserData(user)
-        .then(() => {
-          dispatch(showMessage({ message: 'User data saved with api' }));
-        })
-        .catch((error) => {
-          dispatch(showMessage({ message: error.message }));
-        });
-      break;
-    }
-  }
+  dispatch(showMessage({ message: 'User Update not yet implemented.' }));
 };
 
 const initialState = {

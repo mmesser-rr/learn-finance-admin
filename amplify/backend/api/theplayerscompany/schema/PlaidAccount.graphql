@@ -1,0 +1,17 @@
+type PlaidAccountDetail{
+    account_id: String
+    balances: Balance
+    mask: String
+    name: String
+    official_name: String
+    subtype: String
+    type: String
+}
+
+type Balance{
+    available: Float
+    current: String
+    iso_currency_code: String
+    limit: String
+    unofficial_currency_code: String
+}

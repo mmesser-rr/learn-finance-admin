@@ -29,7 +29,7 @@ const Tab = styled(TabUnstyled)`
   display: flex;
 
   &.Mui-selected {
-    color: #fff;
+    color: #ffcc33;
     font-weight: bold;
   }
 

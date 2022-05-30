@@ -1,0 +1,60 @@
+# import Location from 'Location.graphql'
+
+enum OpportunityType {
+  IRL
+  VIRTUAL
+  HYBRID
+}
+
+
+type Opportunity @model @searchable {
+  id: ID!
+  categories: [String]!
+  creatorId: ID!
+  creator: Athlete! @hasOne(fields: ["creatorId"])
+  details: String!
+  detailsTldr: String!
+  endDateTime: Float!
+  eventType: String!
+  heroPhotoUri: String!
+  isPrivate: Boolean!
+  location: Location
+  locationDetail: LocationDetail
+  logoUri: String!
+  onlineReserved: Int!
+  onlineTotal: Int!
+  organizations: [Organization] @hasMany(indexName: "byOpportunity", fields: ["id"])
+  registrationUrl: String!
+  reward: Float!
+  rewardDetails: String!
+  seatsReserved: Int!
+  seatsTotal: Int!
+  startDateTime: Float!
+  status: String!
+  subtitle: String!
+  tags: [String]!
+  title: String!
+  timezone: String!
+  websitePrompt: String!
+  websiteUrl: String!
+}
+
+type ModelOpportunityConnection {
+ items: [Opportunity]
+ total: Int
+ nextToken: String
+}
+
+type Organization @model {
+  id: ID!
+  displayName: String!
+  relationshipType: OrganizationRelationshipType!
+  opportunityId: ID! @index(name: "byOpportunity", sortKeyFields: ["id"])
+}
+
+enum OrganizationRelationshipType {
+  ORGANIZER,
+  OWNER,
+  SPONSOR,
+}
+

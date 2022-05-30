@@ -1,0 +1,57 @@
+{
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "unitApiUrl",
+      "environmentVariableName": "UNIT_API_URL"
+    },
+    {
+      "cloudFormationParameterName": "unitToken",
+      "environmentVariableName": "UNIT_TOKEN"
+    },
+    {
+      "cloudFormationParameterName": "nodeEnv",
+      "environmentVariableName": "NODE_ENV"
+    },
+    {
+      "cloudFormationParameterName": "clientId",
+      "environmentVariableName": "CLIENT_ID"
+    },
+    {
+      "cloudFormationParameterName": "sandKey",
+      "environmentVariableName": "SAND_KEY"
+    }
+  ],
+  "permissions": {
+    "api": {
+      "theplayerscompany": [
+        "Query",
+        "Mutation"
+      ]
+    },
+    "function": {
+      "PlayerVerifyService": [
+        "create",
+        "read",
+        "update"
+      ],
+      "PlaidService": [
+        "create",
+        "read",
+        "update"
+      ]
+    },
+    "storage": {
+      "Athlete:@model(appsync)": [
+        "create",
+        "read",
+        "update"
+      ],
+      "AthleteAccount:@model(appsync)": [
+        "create",
+        "read",
+        "update"
+      ]
+    }
+  }
+}

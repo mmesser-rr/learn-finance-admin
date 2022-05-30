@@ -1,0 +1,14 @@
+type Query{
+    listPlaidAccounts(athleteId: ID!): [PlaidAccountDetail] @function(name: "PlaidService-${env}")
+    listAthletUnitAccounts(athleteId: ID!): [UnitAccount] @function(name: "UnitService-${env}")
+    getAthleteUnitAccountById(athleteId: ID!, unitAccountId: String!): UnitAccount @function(name: "UnitService-${env}")
+
+    getUnitTransactionById(athleteId: ID!, unitTransactionId: String!): UnitAccount @function(name: "UnitService-${env}")
+    listAllUnitTransactions(athleteId: ID!): [UnitAccount] @function(name: "UnitService-${env}")
+    nearbyOpportunities(
+        location: LocationInput!, 
+        distInMeters: Int, 
+        limit: Int, 
+        nextToken: String
+    ): ModelOpportunityConnection
+}
