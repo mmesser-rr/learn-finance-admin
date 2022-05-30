@@ -1,0 +1,5 @@
+type PhoneChallenge @model {
+  code: String! @primaryKey(sortKeyFields: ["phoneNumber"])
+  phoneNumber: String!
+  verified: Boolean!
+}
