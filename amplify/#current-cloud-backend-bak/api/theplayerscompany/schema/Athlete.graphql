@@ -1,0 +1,93 @@
+# import Invite from "Invite.graphql"
+# import Address from 'Address.graphql'
+# import AthleteAccount from 'AthleteAccount.graphql'
+
+type AthleteUnitLookup {
+  appId: String!
+  custId: String
+}
+
+enum AthleteLevel {
+  COLLEGE
+  PROFESSIONAL
+}
+
+type PodSettings {
+  SAVINGS: Int!
+  INVESTMENTS: Int!
+  SPENDING: Int!
+}
+
+type ProcessorToken{
+  plaidAccountId: String!
+  processorToken: String
+}
+
+type AthleteSport {
+  name: String!
+  airTableId: String!
+  isActive: Boolean
+}
+
+type AthleteTeam {
+  name: String!
+  airTableId: String!
+  isActive: Boolean
+}
+
+type Athlete @model {
+  firstName: String!
+  lastName: String!
+  mobilePhone: String!
+  athleteTag: String
+  bio: String
+  profilePhotoUri: String
+  heroPhotoUri: String
+  email: String!
+  level: AthleteLevel
+  sport: AthleteSport
+  team: AthleteTeam
+  address: Address
+  dateOfBirth: String
+  accounts: [AthleteAccount] @hasMany
+  unitLookup: AthleteUnitLookup
+  podSettings: PodSettings
+  plaidToken: String
+  plaidProcessorToken: ProcessorToken
+  wyreId: String
+  isActive: Boolean!
+  handle: String
+  socialHandles: [SocialHandle] @hasMany
+}
+
+type AthleteAccount @model {
+  athlete: Athlete! @belongsTo
+  unitAccountId: String!
+  routingCode: String!
+  accountNumber: String!
+  podName: String!
+}
+
+type RecentTransaction @model  {
+  transactionId: String! 
+  athleteId: String
+  status: String
+  amount: Float
+  direction: String
+  createdAt: String
+  read: Boolean
+  settled: String
+  podAllocation: PodSettings
+}
+
+enum SocialPlatform {
+  TWITTER,
+  INSTAGRAM,
+  DISCORD,
+  TELEGRAM,
+}
+
+type SocialHandle @model {
+  platform: SocialPlatform!
+  handle: String!
+}
