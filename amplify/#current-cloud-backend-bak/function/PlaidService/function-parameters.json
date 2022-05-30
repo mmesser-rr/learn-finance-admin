@@ -1,0 +1,41 @@
+{
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "clientId",
+      "environmentVariableName": "CLIENT_ID"
+    },
+    {
+      "cloudFormationParameterName": "secretKey",
+      "environmentVariableName": "SECRET_KEY"
+    },
+    {
+      "cloudFormationParameterName": "nodeEnv",
+      "environmentVariableName": "NODE_ENV"
+    },
+    {
+      "cloudFormationParameterName": "sandKey",
+      "environmentVariableName": "SAND_KEY"
+    }
+  ],
+  "permissions": {
+    "api": {
+      "theplayerscompany": [
+        "Query",
+        "Mutation"
+      ]
+    },
+    "storage": {
+      "Athlete:@model(appsync)": [
+        "create",
+        "read",
+        "update"
+      ],
+      "AthleteAccount:@model(appsync)": [
+        "create",
+        "read",
+        "update"
+      ]
+    }
+  }
+}

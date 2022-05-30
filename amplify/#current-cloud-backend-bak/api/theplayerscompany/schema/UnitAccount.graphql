@@ -1,0 +1,29 @@
+type UnitAccount{
+  type: String
+  id: String
+  attributes: Attributes
+}
+
+type Attributes{
+   createdAt: String
+   direction: String
+   amount: Float
+   balance: Float
+   summary: String
+   description: String
+   counterparty: Counterparty   
+   name: String
+   status: String
+   routingNumber: String
+   accountNumber: String
+   currency: String
+   hold: Float
+   available: Float     
+}
+
+type Counterparty{
+   name: String
+   routingNumber: String
+   accountNumber: String
+   accountType: String
+}
