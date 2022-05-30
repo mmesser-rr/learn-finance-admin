@@ -1,16 +1,47 @@
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getOpportunity } from '../../../graphql/queries';
-import { createOpportunity, updateOpportunity } from '../../../graphql/mutations';
+import { getOpportunityFormData } from '../../../graphql/customQueries';
+import {
+  createOpportunity,
+  createOrganization,
+  deleteOrganization,
+  updateOpportunity,
+} from '../../../graphql/mutations';
 
-export const fetchOpportunity = createAsyncThunk(
-  'adminApp/Opportunity/getOpportunity',
+export const removeOrganization = createAsyncThunk(
+  'adminApp/Opportunity/deleteOrganization',
+
   async (params) => {
     let data;
     try {
-      const resp = await API.graphql(graphqlOperation(getOpportunity, params));
-      data = await resp.data;
+      const resp = await API.graphql(graphqlOperation(deleteOrganization, params));
+    } catch (err) {
+      console.log('opportunitySlice => deleteOrganization => err => ', err);
+    }
+    return data;
+  }
+);
 
+export const fetchOpportunity = createAsyncThunk(
+  'adminApp/Opportunity/getOpportunity',
+
+  async (params) => {
+    let data;
+    try {
+      const resp = await API.graphql(graphqlOperation(getOpportunityFormData, params));
+      data = await resp.data;
+      // Fetch the proper image Urls.
+      if (data.getOpportunity.logoUri !== null) {
+        const logoUri = await Storage.get(data.getOpportunity.logoUri, { download: false });
+        data.getOpportunity.logoUri = logoUri;
+      }
+
+      if (data.getOpportunity.heroPhotoUri !== null) {
+        const heroPhotoUri = await Storage.get(data.getOpportunity.heroPhotoUri, {
+          download: false,
+        });
+        data.getOpportunity.heroPhotoUri = heroPhotoUri;
+      }
       return data === undefined ? null : data;
     } catch (err) {
       console.log('opportunitySlice => fetchOpportunity => err => ', err);
@@ -32,43 +63,73 @@ export const removeOpportunity = createAsyncThunk(
 export const saveOpportunity = createAsyncThunk(
   'adminApp/Opportunity/saveOpportunity',
   async (OpportunityData, { dispatch, getState }) => {
-    // const { Opportunity } = getState().adminApp;
-    const logo = OpportunityData.logoPath;
-    const background = OpportunityData.backgroundPath;
-    console.log(background);
+    const logo = OpportunityData.logoUri;
+    const background = OpportunityData.heroPhotoUri;
+    const { organizations } = OpportunityData;
     const data = OpportunityData;
-    data.logoPath = '';
-    data.backgroundPath = '';
+    data.logoUri = '';
+    data.heroPhotoUri = '';
+    delete data.organizations;
+    const arrOrganizations = [];
+
     try {
+      console.log('opportunitySlice => saveOpportunity => data1 => ', data);
+      console.log('startDateTime number?', Number.isNaN(data.startDateTime));
+      if (Number.isNaN(data.startDateTime) === true) {
+        data.startDateTime = Date.parse(data.startDateTime);
+        console.log('startDateTime parsed', Date.parse(data.startDateTime));
+      }
+      // data.endDateTime = Date.parse(data.endDateTime);
+      console.log('opportunitySlice => saveOpportunity => data2 => ', data);
       const resp = await API.graphql(
         graphqlOperation(createOpportunity, {
           input: data,
         })
       );
+      const newOpportunity = resp.data.createOpportunity;
       const newId = resp.data.createOpportunity.id;
-      const logoPath = `opportunities/${newId}/logo.jpg`;
-      const backgroundPath = `opportunities/${newId}/bg.jpg`;
-      console.log('opportunitySlice => saveOpportunity => resp', resp);
+
       // Upload the images
-      const logoResult = await Storage.put(logoPath, logo);
-      const bgResult = await Storage.put(backgroundPath, background);
-      console.log('logoResult', logoResult);
-      console.log('bgResult', bgResult);
+      const logoUri = `opportunities/${newId}/logo.jpg`;
+      const heroPhotoUri = `opportunities/${newId}/heroPhoto.jpg`;
+      const logoResult = await Storage.put(logoUri, await (await fetch(logo)).blob(), {
+        contentType: 'images/jpg',
+      });
+      const bgResult = await Storage.put(heroPhotoUri, await (await fetch(background)).blob(), {
+        contentType: 'images/jpg',
+      });
       const updateResp = await API.graphql(
         graphqlOperation(updateOpportunity, {
-          input: { id: newId, logoPath, backgroundPath },
+          input: {
+            id: newId,
+            logoUri,
+            heroPhotoUri,
+          },
         })
       );
+
+      // Add any organization relationships
+      if (organizations !== null) {
+        await Promise.all(
+          organizations.map(async (r) => {
+            const organization = {
+              displayName: r.displayName,
+              relationshipType: r.relationshipType,
+              opportunityId: newId,
+            };
+            const orgResp = await API.graphql(
+              graphqlOperation(createOrganization, {
+                input: organization,
+              })
+            );
+          })
+        );
+        // data.organizations = arrOrganizations;
+        return newOpportunity;
+      }
     } catch (err) {
       console.log('opportunitySlice => saveOpportunity => err => ', err);
     }
-    // console.log('opportunitySlice => saveOpportunity => response', response);
-
-    // const response = await axios.post('/api/e-commerce-app/Opportunity/save', {
-    //   ...Opportunity,
-    //   ...OpportunityData,
-    // });
-    // const data = await response.data;
     const dataEmpty = {};
     return dataEmpty;
   }
@@ -84,9 +145,9 @@ const OpportunitySlice = createSlice({
       prepare: (event) => ({
         payload: {
           // id: FuseUtils.generateGUID(),
-          backgroundPath: '',
+          heroPhotoUri: '',
           categories: ['NFT'],
-          creator: '',
+          creator: null,
           createdDateTime: Date.now(),
           details: 'details',
           detailsTldr: 'details tldr',
@@ -103,7 +164,7 @@ const OpportunitySlice = createSlice({
             country: 'country',
             name: 'name',
           },
-          logoPath: '',
+          logoUri: '',
           onlineReserved: 0,
           onlineTotal: '',
           organizationId: '',
