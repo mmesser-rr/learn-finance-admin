@@ -19,13 +19,31 @@ export type AmplifyDependentResourcesAttributes = {
             "Region": "string",
             "LambdaExecutionRole": "string"
         },
-        "AccountOpenService": {
+        "PlaidService": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
             "LambdaExecutionRole": "string"
         },
-        "PlaidService": {
+        "UnitService": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "OpportunityService": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "S3Trigger2bbae92f": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "S3Trigger8a6dfc74": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
@@ -42,6 +60,12 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientIDWeb": "string",
             "AppClientID": "string",
             "CreatedSNSRole": "string"
+        }
+    },
+    "storage": {
+        "assets": {
+            "BucketName": "string",
+            "Region": "string"
         }
     }
 }

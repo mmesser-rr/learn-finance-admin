@@ -1,13 +1,13 @@
-import { Navigate } from 'react-router-dom';
-import FuseUtils from '@fuse/utils';
-import OpportunityConfig from 'app/pages/opportunity/OpportunityConfig';
-import ExampleConfig from 'app/main/example/ExampleConfig';
-import LoginConfig from 'app/main/login/LoginConfig';
-import RegisterConfig from 'app/main/register/RegisterConfig';
-import FuseLoading from '@fuse/core/FuseLoading';
-import Error404Page from 'app/main/404/Error404Page';
+import { Navigate } from "react-router-dom";
+import FuseUtils from "@fuse/utils";
+import PagesConfig from "app/pages/PagesConfig";
+import ExampleConfig from "app/main/example/ExampleConfig";
+import LoginConfig from "app/main/login/LoginConfig";
+import RegisterConfig from "app/main/register/RegisterConfig";
+import FuseLoading from "@fuse/core/FuseLoading";
+import Error404Page from "app/main/404/Error404Page";
 
-const routeConfigs = [OpportunityConfig, ExampleConfig, LoginConfig, RegisterConfig];
+const routeConfigs = [PagesConfig, ExampleConfig, LoginConfig, RegisterConfig];
 
 const routes = [
   // if you want to make whole app auth protected by default change defaultAuth for example:
@@ -15,19 +15,19 @@ const routes = [
   // The individual route configs which has auth option won't be overridden.
   ...FuseUtils.generateRoutesFromConfigs(routeConfigs, null),
   {
-    path: '/',
+    path: "/",
     element: <Navigate to="example" />,
   },
   {
-    path: 'loading',
+    path: "loading",
     element: <FuseLoading />,
   },
   {
-    path: '404',
+    path: "404",
     element: <Error404Page />,
   },
   {
-    path: '*',
+    path: "*",
     element: <Navigate to="404" />,
   },
 ];
