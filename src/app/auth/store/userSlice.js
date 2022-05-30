@@ -6,8 +6,23 @@ import _ from '@lodash';
 import { setInitialSettings, setDefaultSettings } from 'app/store/fuse/settingsSlice';
 import { showMessage } from 'app/store/fuse/messageSlice';
 import settingsConfig from 'app/fuse-configs/settingsConfig';
-import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { API, Auth, graphqlOperation, Storage } from 'aws-amplify';
 import { getAthlete } from 'graphql/queries';
+
+export const getPhoto = createAsyncThunk('adminApp/Users/getPhoto', async (key) => {
+  let url;
+  try {
+    const resp = await Storage.get(key, { download: false, expires: 36 });
+    if (resp !== null) {
+      url = resp;
+    } else {
+      url = '';
+    }
+  } catch (err) {
+    console.log('profileSlice => getHeroPhoto => err => ', err);
+  }
+  return url;
+});
 
 export const fetchUserProfile = createAsyncThunk(
   'adminApp/Users/getUserProfile',
@@ -25,15 +40,12 @@ export const fetchUserProfile = createAsyncThunk(
 );
 
 export const setUserDataCognito = (userToken) => async (dispatch) => {
-  console.log(`userSlice => setUserDataCognito`, userToken.username);
   // Fetch user from db.
   let data;
   try {
-    //   console.log('***');
     const resp = await API.graphql(graphqlOperation(getAthlete, { id: userToken.username }));
-    //   console.log('***');
+
     data = await resp.data;
-    //   return data === undefined ? null : data;
   } catch (err) {
     console.log('userSlice => fetchUserProfile => err => ', err);
   }
@@ -48,18 +60,15 @@ export const setUserDataCognito = (userToken) => async (dispatch) => {
       displayName: data.getAthlete.firstName,
     },
   };
-  console.log('userSlice => fetchedUser => ', user);
 
   return dispatch(setUserData(user));
 };
 
 export const setUserData = (user) => async (dispatch, getState) => {
-  console.log('userSlice => setUserData =>', user);
   /*
   You can redirect the logged-in user to a specific route depending on his role
   */
   if (user.loginRedirectUrl) {
-    console.log('userSlice => loginRedirectUrl =>', user.loginRedirectUrl);
     settingsConfig.loginRedirectUrl = user.loginRedirectUrl; // for example 'apps/academy'
   }
 

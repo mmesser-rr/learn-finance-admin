@@ -6,35 +6,35 @@ enum OpportunityType {
   HYBRID
 }
 
+
 type Opportunity @model @searchable {
-  id: String!
-  backgroundPath: String!
+  id: ID!
   categories: [String]!
-  creator: String!
-  createdDateTime: String!
+  creatorId: ID!
+  creator: Athlete! @hasOne(fields: ["creatorId"])
   details: String!
   detailsTldr: String!
-  endDateTime: String!
+  endDateTime: Float!
   eventType: String!
+  heroPhotoUri: String!
   isPrivate: Boolean!
   location: Location
   locationDetail: LocationDetail
-  logoPath: String!
+  logoUri: String!
   onlineReserved: Int!
   onlineTotal: Int!
-  organizationId: String!
+  organizations: [Organization] @hasMany(indexName: "byOpportunity", fields: ["id"])
   registrationUrl: String!
   reward: Float!
   rewardDetails: String!
   seatsReserved: Int!
   seatsTotal: Int!
-  startDateTime: String!
+  startDateTime: Float!
   status: String!
   subtitle: String!
   tags: [String]!
   title: String!
   timezone: String!
-  updatedDateTime: String!
   websitePrompt: String!
   websiteUrl: String!
 }
@@ -44,3 +44,17 @@ type ModelOpportunityConnection {
  total: Int
  nextToken: String
 }
+
+type Organization @model {
+  id: ID!
+  displayName: String!
+  relationshipType: OrganizationRelationshipType!
+  opportunityId: ID! @index(name: "byOpportunity", sortKeyFields: ["id"])
+}
+
+enum OrganizationRelationshipType {
+  ORGANIZER,
+  OWNER,
+  SPONSOR,
+}
+

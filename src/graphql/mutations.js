@@ -67,12 +67,16 @@ export const openAppAndAccount = /* GraphQL */ `
         lastName
         mobilePhone
         athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
         email
         level
         dateOfBirth
         plaidToken
         wyreId
         isActive
+        handle
         id
         createdAt
         updatedAt
@@ -96,12 +100,16 @@ export const openAccount = /* GraphQL */ `
         lastName
         mobilePhone
         athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
         email
         level
         dateOfBirth
         plaidToken
         wyreId
         isActive
+        handle
         id
         createdAt
         updatedAt
@@ -158,12 +166,16 @@ export const podSettings = /* GraphQL */ `
         lastName
         mobilePhone
         athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
         email
         level
         dateOfBirth
         plaidToken
         wyreId
         isActive
+        handle
         id
         createdAt
         updatedAt
@@ -367,6 +379,9 @@ export const createAthlete = /* GraphQL */ `
       lastName
       mobilePhone
       athleteTag
+      bio
+      profilePhotoUri
+      heroPhotoUri
       email
       level
       sport {
@@ -406,6 +421,10 @@ export const createAthlete = /* GraphQL */ `
       }
       wyreId
       isActive
+      handle
+      socialHandles {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -422,6 +441,9 @@ export const updateAthlete = /* GraphQL */ `
       lastName
       mobilePhone
       athleteTag
+      bio
+      profilePhotoUri
+      heroPhotoUri
       email
       level
       sport {
@@ -461,6 +483,10 @@ export const updateAthlete = /* GraphQL */ `
       }
       wyreId
       isActive
+      handle
+      socialHandles {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -477,6 +503,9 @@ export const deleteAthlete = /* GraphQL */ `
       lastName
       mobilePhone
       athleteTag
+      bio
+      profilePhotoUri
+      heroPhotoUri
       email
       level
       sport {
@@ -516,6 +545,10 @@ export const deleteAthlete = /* GraphQL */ `
       }
       wyreId
       isActive
+      handle
+      socialHandles {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -533,12 +566,16 @@ export const createAthleteAccount = /* GraphQL */ `
         lastName
         mobilePhone
         athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
         email
         level
         dateOfBirth
         plaidToken
         wyreId
         isActive
+        handle
         id
         createdAt
         updatedAt
@@ -565,12 +602,16 @@ export const updateAthleteAccount = /* GraphQL */ `
         lastName
         mobilePhone
         athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
         email
         level
         dateOfBirth
         plaidToken
         wyreId
         isActive
+        handle
         id
         createdAt
         updatedAt
@@ -597,12 +638,16 @@ export const deleteAthleteAccount = /* GraphQL */ `
         lastName
         mobilePhone
         athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
         email
         level
         dateOfBirth
         plaidToken
         wyreId
         isActive
+        handle
         id
         createdAt
         updatedAt
@@ -687,6 +732,51 @@ export const deleteRecentTransaction = /* GraphQL */ `
       }
       id
       updatedAt
+    }
+  }
+`;
+export const createSocialHandle = /* GraphQL */ `
+  mutation CreateSocialHandle(
+    $input: CreateSocialHandleInput!
+    $condition: ModelSocialHandleConditionInput
+  ) {
+    createSocialHandle(input: $input, condition: $condition) {
+      platform
+      handle
+      id
+      createdAt
+      updatedAt
+      athleteSocialHandlesId
+    }
+  }
+`;
+export const updateSocialHandle = /* GraphQL */ `
+  mutation UpdateSocialHandle(
+    $input: UpdateSocialHandleInput!
+    $condition: ModelSocialHandleConditionInput
+  ) {
+    updateSocialHandle(input: $input, condition: $condition) {
+      platform
+      handle
+      id
+      createdAt
+      updatedAt
+      athleteSocialHandlesId
+    }
+  }
+`;
+export const deleteSocialHandle = /* GraphQL */ `
+  mutation DeleteSocialHandle(
+    $input: DeleteSocialHandleInput!
+    $condition: ModelSocialHandleConditionInput
+  ) {
+    deleteSocialHandle(input: $input, condition: $condition) {
+      platform
+      handle
+      id
+      createdAt
+      updatedAt
+      athleteSocialHandlesId
     }
   }
 `;
@@ -778,14 +868,32 @@ export const createOpportunity = /* GraphQL */ `
   ) {
     createOpportunity(input: $input, condition: $condition) {
       id
-      backgroundPath
       categories
-      creator
-      createdDateTime
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
       details
       detailsTldr
       endDateTime
       eventType
+      heroPhotoUri
       isPrivate
       location {
         lat
@@ -800,10 +908,12 @@ export const createOpportunity = /* GraphQL */ `
         country
         name
       }
-      logoPath
+      logoUri
       onlineReserved
       onlineTotal
-      organizationId
+      organizations {
+        nextToken
+      }
       registrationUrl
       reward
       rewardDetails
@@ -815,7 +925,6 @@ export const createOpportunity = /* GraphQL */ `
       tags
       title
       timezone
-      updatedDateTime
       websitePrompt
       websiteUrl
       createdAt
@@ -830,14 +939,32 @@ export const updateOpportunity = /* GraphQL */ `
   ) {
     updateOpportunity(input: $input, condition: $condition) {
       id
-      backgroundPath
       categories
-      creator
-      createdDateTime
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
       details
       detailsTldr
       endDateTime
       eventType
+      heroPhotoUri
       isPrivate
       location {
         lat
@@ -852,10 +979,12 @@ export const updateOpportunity = /* GraphQL */ `
         country
         name
       }
-      logoPath
+      logoUri
       onlineReserved
       onlineTotal
-      organizationId
+      organizations {
+        nextToken
+      }
       registrationUrl
       reward
       rewardDetails
@@ -867,7 +996,6 @@ export const updateOpportunity = /* GraphQL */ `
       tags
       title
       timezone
-      updatedDateTime
       websitePrompt
       websiteUrl
       createdAt
@@ -882,14 +1010,32 @@ export const deleteOpportunity = /* GraphQL */ `
   ) {
     deleteOpportunity(input: $input, condition: $condition) {
       id
-      backgroundPath
       categories
-      creator
-      createdDateTime
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
       details
       detailsTldr
       endDateTime
       eventType
+      heroPhotoUri
       isPrivate
       location {
         lat
@@ -904,10 +1050,12 @@ export const deleteOpportunity = /* GraphQL */ `
         country
         name
       }
-      logoPath
+      logoUri
       onlineReserved
       onlineTotal
-      organizationId
+      organizations {
+        nextToken
+      }
       registrationUrl
       reward
       rewardDetails
@@ -919,9 +1067,53 @@ export const deleteOpportunity = /* GraphQL */ `
       tags
       title
       timezone
-      updatedDateTime
       websitePrompt
       websiteUrl
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createOrganization = /* GraphQL */ `
+  mutation CreateOrganization(
+    $input: CreateOrganizationInput!
+    $condition: ModelOrganizationConditionInput
+  ) {
+    createOrganization(input: $input, condition: $condition) {
+      id
+      displayName
+      relationshipType
+      opportunityId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateOrganization = /* GraphQL */ `
+  mutation UpdateOrganization(
+    $input: UpdateOrganizationInput!
+    $condition: ModelOrganizationConditionInput
+  ) {
+    updateOrganization(input: $input, condition: $condition) {
+      id
+      displayName
+      relationshipType
+      opportunityId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteOrganization = /* GraphQL */ `
+  mutation DeleteOrganization(
+    $input: DeleteOrganizationInput!
+    $condition: ModelOrganizationConditionInput
+  ) {
+    deleteOrganization(input: $input, condition: $condition) {
+      id
+      displayName
+      relationshipType
+      opportunityId
       createdAt
       updatedAt
     }
