@@ -25,7 +25,7 @@ class Auth extends Component {
          * Retrieve user data from Cognito
          */
         cognitoService.getUserData().then((tokenData) => {
-          console.log('auth.js => tokenData', tokenData);
+          // console.log('auth.js => tokenData', tokenData);
           this.props.setUserDataCognito(tokenData);
           resolve();
         });
