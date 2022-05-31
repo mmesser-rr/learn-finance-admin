@@ -59,7 +59,7 @@ function Layout1(props) {
           <main
             id="fuse-main"
             className="flex flex-col flex-auto min-h-screen min-w-0 relative z-10"
-            style={{ paddingBottom: "40px" }}
+            // style={{ paddingBottom: "40px" }}
           >
             {/* {config.toolbar.display && (
               <TopToolbar
@@ -80,7 +80,7 @@ function Layout1(props) {
                 className={config.footer.style === "fixed" && "sticky bottom-0"}
               />
             )}
-            <div className="fixed sticky bottom-0 z-20">I am a footer!</div>
+            {/* <div className="fixed sticky bottom-0 z-20">I am a footer!</div> */}
           </main>
 
           {/* {config.navbar.display && config.navbar.position === "right" && (
