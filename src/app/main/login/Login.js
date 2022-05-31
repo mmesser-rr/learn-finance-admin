@@ -1,26 +1,24 @@
-import Card from '@mui/material/Card';
-import { styled, darken } from '@mui/material/styles';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import CognitoLoginTab from './tabs/CognitoLoginTab';
+import Card from "@mui/material/Card";
+import { styled, darken } from "@mui/material/styles";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import CognitoLoginTab from "./tabs/CognitoLoginTab";
 
-const Root = styled('div')(({ theme }) => ({
-  background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${darken(
-    theme.palette.primary.dark,
-    0.5
-  )} 100%)`,
-  color: theme.palette.primary.contrastText,
+const Root = styled("div")(({ theme }) => ({
+  background: `linear-gradient(to right, ${
+    theme.palette.secondary.dark
+  } 0%, ${darken(theme.palette.secondary.dark, 0.5)} 100%)`,
+  color: theme.palette.secondary.contrastText,
 
-  '& .Login-leftSection': {},
+  "& .Login-leftSection": {},
 
-  '& .Login-rightSection': {
-    background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${darken(
-      theme.palette.primary.dark,
-      0.5
-    )} 100%)`,
-    color: theme.palette.primary.contrastText,
+  "& .Login-rightSection": {
+    background: `linear-gradient(to right, ${
+      theme.palette.primary.dark
+    } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
+    color: theme.palette.secondary.contrastText,
   },
 }));
 
@@ -37,11 +35,14 @@ function Login() {
           square
         >
           <CardContent className="flex flex-col items-center justify-center w-full py-96 max-w-320">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 1 } }}>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { delay: 1 } }}
+            >
               <div className="flex items-center mb-48">
                 <img
                   className="logo-icon w-128"
-                  src="assets/images/logos/bankdaologo.svg"
+                  src="assets/images/logos/bankdao-logo-dark.svg"
                   alt="logo"
                 />
               </div>
@@ -69,7 +70,11 @@ function Login() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
             >
-              <Typography variant="h3" color="inherit" className="font-semibold leading-tight">
+              <Typography
+                variant="h3"
+                color="inherit"
+                className="font-semibold leading-tight"
+              >
                 Welcome <br />
                 to BankDAO.
               </Typography>
@@ -80,8 +85,8 @@ function Login() {
               animate={{ opacity: 1, transition: { delay: 0.3 } }}
             >
               <Typography variant="subtitle1" color="inherit" className="mt-32">
-                Banking on the American Dream 3.0 - creating equal access provides equal
-                opportunity.
+                Banking on the American Dream 3.0 - creating equal access
+                provides equal opportunity.
               </Typography>
             </motion.div>
           </div>
