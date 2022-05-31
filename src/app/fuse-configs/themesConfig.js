@@ -18,15 +18,15 @@ const themesConfig = {
       },
       divider: "rgba(255, 255, 255, 0)",
       primary: {
-        light: "#cc0000", // ?
-        main: "#E80A68", // '#E80A68', // '#00518E', // Active Tab/Button & Right side of header (Gradient)
-        dark: "#FF066D", // Hover State Active Tab/Button & Left side of header (Graident)
+        light: "#FFFFFF", // ?
+        main: "#DC085F", // "#E80A68", // '#E80A68', // '#00518E', // Active Tab/Button & Right side of header (Gradient)
+        dark: "#D2075A", // "#FF066D", // Hover State Active Tab/Button & Left side of header (Graident)
         contrastText: "#000000",
       },
       secondary: {
         light: "#cc0000",
-        main: "#E80A68",
-        dark: "#FF066D",
+        main: "#DC085F",
+        dark: "#24272A", // "#FF066D",
         contrastText: "#ffffff",
       },
       disabled: {
