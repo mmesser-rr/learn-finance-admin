@@ -7,9 +7,8 @@ import { Link } from 'react-router-dom';
 import CognitoRegisterTab from './tabs/CognitoRegisterTab';
 
 const Root = styled('div')(({ theme }) => ({
-  background: `linear-gradient(to right, ${
-    theme.palette.secondary.dark
-  } 0%, ${darken(theme.palette.secondary.dark, 0.5)} 100%)`,
+  background: `linear-gradient(to right, ${theme.palette.secondary.dark
+    } 0%, ${darken(theme.palette.secondary.dark, 0.5)} 100%)`,
   color: theme.palette.secondary.contrastText,
 
   '& .Register-leftSection': {},
@@ -19,7 +18,7 @@ const Root = styled('div')(({ theme }) => ({
       theme.palette.primary.dark,
       0.5
     )} 100%)`,
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.secondary.contrastText,
   },
 }));
 
@@ -40,20 +39,12 @@ function Register() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.2 } }}
             >
-              <div className="flex items-center justif-center mb-32">
-                <img className="logo-icon w-48" src="assets/images/logos/fuse.svg" alt="logo" />
-                <div className="border-l-1 mr-4 w-1 h-40" />
-                <div>
-                  <Typography className="text-24 font-semibold logo-text" color="inherit">
-                    FUSE
-                  </Typography>
-                  <Typography
-                    className="text-16 tracking-widest -mt-8 font-700"
-                    color="textSecondary"
-                  >
-                    REACT
-                  </Typography>
-                </div>
+              <div className="flex items-center mb-48">
+                <img
+                  className="logo-icon w-128"
+                  src="assets/images/logos/bankdao-logo-dark.svg"
+                  alt="logo"
+                />
               </div>
             </motion.div>
 
@@ -79,9 +70,12 @@ function Register() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
             >
-              <Typography variant="h3" color="inherit" className="font-semibold leading-tight">
+              <Typography 
+                variant="h3" 
+                color="inherit" 
+                className="font-semibold leading-tight">
                 Welcome <br />
-                to the <br /> FUSE React!
+                to BankDAO.
               </Typography>
             </motion.div>
 
@@ -90,8 +84,8 @@ function Register() {
               animate={{ opacity: 1, transition: { delay: 0.3 } }}
             >
               <Typography variant="subtitle1" color="inherit" className="mt-32">
-                Powerful and professional admin template for Web Applications, CRM, CMS, Admin
-                Panels and more.
+                Banking on the American Dream 3.0 - creating equal access
+                provides equal opportunity.
               </Typography>
             </motion.div>
           </div>
