@@ -111,7 +111,7 @@
         "webworkify-webpack": "^1.0.6"
     },
     "scripts": {
-        "start": "PORT=3006 craco start",
+        "start": "SET PORT=3006 & craco start",
         "build": "cross-env GENERATE_SOURCEMAP=false craco build",
         "test": "craco test --env=node",
         "eject": "craco eject",
