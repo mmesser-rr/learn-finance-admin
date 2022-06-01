@@ -84,11 +84,11 @@
         },
         "S3Trigger8a6dfc74": {
           "deploymentBucketName": "amplify-theplayerscompany-devtroy-164354-deployment",
-          "s3Key": "amplify-builds/S3Trigger8a6dfc74-4a65646631423367744b-build.zip"
+          "s3Key": "amplify-builds/S3Trigger8a6dfc74-7136656e783430727448-build.zip"
         },
         "S3Trigger2bbae92f": {
           "deploymentBucketName": "amplify-theplayerscompany-devtroy-164354-deployment",
-          "s3Key": "amplify-builds/S3Trigger2bbae92f-6c6359794d31786a6270-build.zip"
+          "s3Key": "amplify-builds/S3Trigger2bbae92f-3461773373704656526e-build.zip"
         }
       },
       "auth": {
