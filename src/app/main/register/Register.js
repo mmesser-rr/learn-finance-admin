@@ -7,11 +7,10 @@ import { Link } from 'react-router-dom';
 import CognitoRegisterTab from './tabs/CognitoRegisterTab';
 
 const Root = styled('div')(({ theme }) => ({
-  background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${darken(
-    theme.palette.primary.dark,
-    0.5
-  )} 100%)`,
-  color: theme.palette.primary.contrastText,
+  background: `linear-gradient(to right, ${
+    theme.palette.secondary.dark
+  } 0%, ${darken(theme.palette.secondary.dark, 0.5)} 100%)`,
+  color: theme.palette.secondary.contrastText,
 
   '& .Register-leftSection': {},
 
