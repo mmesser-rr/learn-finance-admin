@@ -57,7 +57,7 @@ function OpportunityHeader(props) {
       console.log("opportunityHeader => save => ", action);
       const item = action.payload;
       navigate(
-        `/pages/Opportunity/${item.id}/${item.title.replaceAll(" ", "_")}`
+        `/pages/Opportunity/${item.id}/${item.title?.replaceAll(" ", "_")}`
       );
     });
     setSaveStatus("Saved");
