@@ -1,7 +1,7 @@
-import { authRoles } from 'app/auth';
-import { lazy } from 'react';
+import { authRoles } from "app/auth";
+import { lazy } from "react";
 
-const ProfilePage = lazy(() => import('./ProfilePage'));
+const ProfilePage = lazy(() => import("./ProfilePage"));
 
 const ProfilePageConfig = {
   settings: {
@@ -12,7 +12,7 @@ const ProfilePageConfig = {
   auth: authRoles.admin,
   routes: [
     {
-      path: 'pages/profile',
+      path: "pages/profile",
       element: <ProfilePage />,
     },
   ],

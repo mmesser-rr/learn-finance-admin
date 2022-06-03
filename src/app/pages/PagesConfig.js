@@ -1,10 +1,10 @@
-import { lazy } from 'react';
-import { authRoles } from 'app/auth';
-import OpportunityPage from './opportunity/OpportunityPage';
+import { lazy } from "react";
+import { authRoles } from "app/auth";
+import OpportunityPage from "./opportunity/OpportunityPage";
 
-const Opportunities = lazy(() => import('./opportunities/Opportunities'));
-const Opportunity = lazy(() => import('./opportunity/Opportunity'));
-const ProfilePage = lazy(() => import('./profile/ProfilePage'));
+const Opportunities = lazy(() => import("./opportunities/Opportunities"));
+const Opportunity = lazy(() => import("./opportunity/Opportunity"));
+const ProfilePage = lazy(() => import("./profile/ProfilePage"));
 
 const PagesConfig = {
   settings: {
@@ -15,23 +15,23 @@ const PagesConfig = {
   auth: authRoles.admin,
   routes: [
     {
-      path: 'pages/opportunities',
+      path: "pages/opportunities",
       element: <Opportunities />,
     },
     {
-      path: 'pages/opportunities/:id/*',
+      path: "pages/opportunities/:id/*",
       element: <Opportunity />,
     },
     {
-      path: 'pages/opportunity/:id/*',
+      path: "pages/opportunity/:id/*",
       element: <OpportunityPage />,
     },
     {
-      path: 'pages/profile',
+      path: "pages/profile",
       element: <ProfilePage />,
     },
     {
-      path: 'pages/profile/:id/*',
+      path: "pages/profile/:id/*",
       element: <ProfilePage />,
     },
   ],
