@@ -12,7 +12,7 @@ function WhenWhereForm(props) {
   const methods = useFormContext();
   const { control, formState, register, watch, getValues, setValue } = methods;
   const { errors } = formState;
-  const [startDate, setStartDate] = useState(Date.now());
+  // const [startDate, setStartDate] = useState(Date.now());
   const eventType = watch("eventType");
   const onlineTotal = watch("onlineTotal");
   useEffect(() => {
@@ -174,7 +174,7 @@ function WhenWhereForm(props) {
               <DateTimePicker
                 value={value}
                 onChange={onChange}
-                minDateTime={Date.now()}
+                // minDateTime={Date.now()}
                 renderInput={(_props) => (
                   <TextField
                     label="Start Date"
@@ -190,12 +190,12 @@ function WhenWhereForm(props) {
           <Controller
             name="endDateTime"
             control={control}
-            defaultValue=""
+            defaultValue={Date.now()}
             render={({ field: { onChange, value } }) => (
               <DateTimePicker
                 value={value}
                 onChange={onChange}
-                minDateTime={Date.now()}
+                // minDateTime={Date.now()}
                 renderInput={(_props) => (
                   <TextField
                     label="End Date"

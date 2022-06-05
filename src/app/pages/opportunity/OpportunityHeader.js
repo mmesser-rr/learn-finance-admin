@@ -48,10 +48,12 @@ function OpportunityHeader(props) {
   }, [logoUri]);
 
   async function handleSaveOpportunity() {
-    setSaveStatus("Saving");
+    // setSaveStatus("Saving");
     const formValues = {
       ...getValues(),
       creatorId: user.data.id,
+      onlineTotal: 0,
+      onlineReserved: 0
     };
     await dispatch(saveOpportunity(formValues)).then((action) => {
       console.log("opportunityHeader => save => ", action);
@@ -60,10 +62,10 @@ function OpportunityHeader(props) {
         `/pages/Opportunity/${item.id}/${item.title?.replaceAll(" ", "_")}`
       );
     });
-    setSaveStatus("Saved");
-    setTimeout(() => {
-      setSaveStatus("Save");
-    }, 3000);
+    // setSaveStatus("Saved");
+    // setTimeout(() => {
+    //   setSaveStatus("Save");
+    // }, 3000);    
   }
 
   function handleRemoveOpportunity() {

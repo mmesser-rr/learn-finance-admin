@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useFormContext, useFieldArray } from 'react-hook-form';
+import { useFormContext, useFieldArray, Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
@@ -24,12 +24,11 @@ function OrgsForm(props) {
     name: 'organizations',
     control,
   });
-  const numberOfOrgs = 1;
 
-  function handleAppend() {
-    append({ displayName: '', relationshipType: 'SPONSOR' });
+  const handleAppend = () => {
+    append({ displayName: '', relationshipType: 'ORGANIZER' });
   }
-  function handleDeleteOrganization() {
+  const handleDeleteOrganization = () => {
     console.log('orgsForm => delete');
   }
   return (
@@ -40,40 +39,44 @@ function OrgsForm(props) {
         {fields.map((item, index) => (
           <Grid
             container
-            key={index}
+            key={item.id}
             columnSpacing={2}
             direction="row"
             justifyContent="stretch"
             alignItems="flex-start"
           >
             <Grid item xs={12} md={6}>
-              <input type="hidden" {...register(`organizations[${index}].organizationId`)} />
-              <TextField
-                // {...field}
-                sx={{ width: '100%' }}
-                className="mt-8 mb-16"
-                error={!!errors.organizations?.[index]?.displayName}
+              {/* <input type="hidden" {...register(`organizations[${index}]organizationId`)} /> */}
+              <Controller
                 name={`organizations[${index}].displayName`}
-                id={`organizations[${index}].displayName`}
-                {...register(`organizations.${index}.displayName`)}
-                required
-                helperText={errors.organizations?.[index]?.displayName?.message}
-                label="Name"
-                autoFocus
-                variant="filled"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    sx={{ width: '100%' }}
+                    className="mt-8 mb-16"
+                    error
+                    required
+                    // helperText={errors.organizations?.[index]?.displayName}
+                    label="Name"
+                    autoFocus
+                    variant="filled"
+                  />
+                )}
+                defaultValue={item.displayName}
               />
             </Grid>
             <Grid item xs={10} md={5}>
               <FormControl variant="filled" sx={{ m: 1, minWidth: 120, width: '100%' }}>
-                <InputLabel id={`organizations[${index}].relationshipType`}>
+                <InputLabel id={`organizations.${index}.relationshipType`}>
                   Relationship
                 </InputLabel>
-                <Select
+                {/* <Select
                   // {...field}
-                  labelId={`organizations[${index}].relationshipType`}
+                  labelId={`organizations.${index}.relationshipType`}
                   error={!!errors.organizations?.[index]?.relationshipType}
-                  name={`organizations[${index}].relationshipType`}
-                  id={`organizations[${index}].relationshipType`}
+                  name={`organizations.${index}.relationshipType`}
+                  id={`organizations.${index}.relationshipType`}
                   {...register(`organizations.${index}.relationshipType`)}
                   required
                   label="Relationship"
@@ -84,7 +87,7 @@ function OrgsForm(props) {
                   <MenuItem value="ORGANIZER">Organizer</MenuItem>
                   <MenuItem value="OWNER">Owner</MenuItem>
                   <MenuItem value="SPONSOR">Sponsor</MenuItem>
-                </Select>
+                </Select> */}
               </FormControl>
             </Grid>
             <Grid item xs={2} md={1}>
@@ -108,7 +111,7 @@ function OrgsForm(props) {
           variant="contained"
           startIcon={<AddIcon />}
           type="button"
-          onClick={() => append({ displayName: '', relationshipType: 'OWNER' })}
+          onClick={() => handleAppend()}
         >
           Add Organization
         </Button>

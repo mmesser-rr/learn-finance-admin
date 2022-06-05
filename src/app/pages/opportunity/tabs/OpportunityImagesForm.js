@@ -88,15 +88,15 @@ function OpportunityImagesForm(props) {
   //   getImage();
   // }, [logoUri]);
 
-  const onChangeLogo = (e: any) => {
+  const onChangeLogo = (e) => {
     setCurrentCropper('logo');
     onChange(e, 'logo');
   };
-  const onChangeBG = (e: any) => {
+  const onChangeBG = (e) => {
     setCurrentCropper('bg');
     onChange(e, 'bg');
   };
-  const onChange = (e: any, source: String) => {
+  const onChange = (e, source) => {
     if (source === 'logo') {
       setImageLogo(undefined);
     } else {

@@ -63,6 +63,32 @@ export const removeOpportunity = createAsyncThunk(
 export const saveOpportunity = createAsyncThunk(
   'adminApp/Opportunity/saveOpportunity',
   async (OpportunityData, { dispatch, getState }) => {
+    const data = OpportunityData;
+    let response;
+
+    try {
+      // if (Number.isNaN(data.startDateTime) === true) {
+      //   data.startDateTime = Date.parse(data.startDateTime);
+      // }
+      data.startDateTime = Date.parse(data.startDateTime);
+      data.endDateTime = Date.parse(data.endDateTime);
+      delete data["organizations"]
+      console.log('opportunitySlice => saveOpportunity => data => ', data);
+      response = await API.graphql(
+        graphqlOperation(updateOpportunity, {
+          input: data
+        })
+      );
+    } catch (err) {
+      console.log('opportunitySlice => saveOpportunity => err => ', err);
+    }
+    return response?.data?.updateOpportunity;
+  }
+);
+
+export const saveOpportunity1 = createAsyncThunk(
+  'adminApp/Opportunity/saveOpportunity',
+  async (OpportunityData, { dispatch, getState }) => {
     const logo = OpportunityData.logoUri;
     const background = OpportunityData.heroPhotoUri;
     const { organizations } = OpportunityData;
@@ -166,10 +192,10 @@ const OpportunitySlice = createSlice({
           },
           logoUri: '',
           onlineReserved: 0,
-          onlineTotal: '',
+          onlineTotal: 0,
           organizationId: '',
           registrationUrl: 'http://go.com',
-          reward: '100',
+          reward: 100,
           rewardDetails: '$WEALTH',
           seatsReserved: 0,
           seatsTotal: 100,
