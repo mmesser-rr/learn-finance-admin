@@ -135,28 +135,28 @@ function Opportunity(props) {
           >
             <Tab
               className="h-64"
-              icon=<InfoIcon />
+              icon={<InfoIcon />}
               iconPosition="start"
               aria-label="Basic Info"
               label="Basic Info"
             />
             <Tab
               className="h-64"
-              icon=<GroupsIcon />
+              icon={<GroupsIcon />}
               iconPosition="start"
               aria-label="Organizations"
               label="Organizations"
             />
             <Tab
               className="h-64"
-              icon=<PhotoCameraIcon />
+              icon={<PhotoCameraIcon />}
               iconPosition="start"
               aria-label="Logo & Background"
               label="Logo & Background"
             />
             <Tab
               className="h-64"
-              icon=<PlaceIcon />
+              icon={<PlaceIcon />}
               iconPosition="start"
               aria-label="When & Where"
               label="When & Where"
