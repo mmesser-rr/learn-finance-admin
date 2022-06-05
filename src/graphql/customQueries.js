@@ -27,6 +27,8 @@ export const getOpportunityFormData = /* GraphQL */ `
         zipCode
       }
       logoUri
+      onlineReserved
+      onlineTotal
       organizations {
         items {
           id
