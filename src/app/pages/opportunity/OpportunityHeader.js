@@ -9,7 +9,7 @@ import _ from "@lodash";
 import Button from "@mui/material/Button";
 import Icon from "@mui/material/Icon";
 import Typography from "@mui/material/Typography";
-import { removeOpportunity, saveOpportunity } from "../store/opportunitySlice";
+import { removeOpportunity, saveOpportunity, createOpportunityThunk } from "../store/opportunitySlice";
 
 const CustomButton = styled(Button)`
   :disabled {
@@ -55,9 +55,9 @@ function OpportunityHeader(props) {
       onlineTotal: 0,
       onlineReserved: 0
     };
-    await dispatch(saveOpportunity(formValues)).then((action) => {
+    await dispatch(formValues?.id ? saveOpportunity(formValues) : createOpportunityThunk(formValues)).then((action) => {
       console.log("opportunityHeader => save => ", action);
-      const item = action.payload;
+      const item = action.payload.data.createOpportunity;
       navigate(
         `/pages/Opportunity/${item.id}/${item.title?.replaceAll(" ", "_")}`
       );
@@ -69,7 +69,8 @@ function OpportunityHeader(props) {
   }
 
   function handleRemoveOpportunity() {
-    dispatch(removeOpportunity()).then(() => {
+    const { id } = getValues()
+    dispatch(removeOpportunity(id)).then(() => {
       navigate("/pages/Opportunities");
     });
   }

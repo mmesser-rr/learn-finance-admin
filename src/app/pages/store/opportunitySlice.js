@@ -1,11 +1,13 @@
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getOpportunityFormData } from '../../../graphql/customQueries';
+import FuseUtils from '@fuse/utils/FuseUtils'
 import {
   createOpportunity,
   createOrganization,
   deleteOrganization,
   updateOpportunity,
+  deleteOpportunity
 } from '../../../graphql/mutations';
 
 export const removeOrganization = createAsyncThunk(
@@ -41,9 +43,13 @@ export const fetchOpportunity = createAsyncThunk(
 
 export const removeOpportunity = createAsyncThunk(
   'adminApp/Opportunity/removeOpportunity',
-  async (val, { dispatch, getState }) => {
-    const { id } = getState().adminApp.Opportunity;
-    // await axios.post('/api/e-commerce-app/remove-Opportunity', { id });
+  async (id, { dispatch, getState }) => {
+    const data = { id }
+    await API.graphql(
+      graphqlOperation(deleteOpportunity, {
+        input: data
+      })
+    );
 
     return id;
   }
@@ -92,6 +98,50 @@ export const saveOpportunity = createAsyncThunk(
     return response?.data?.updateOpportunity;
   }
 );
+
+export const createOpportunityThunk = createAsyncThunk(
+  'adminApp/Opportunity/createOpportunity',
+  async (data, { dispatch, getState }) => {
+    let response;
+    try {
+      // Upload the images
+      console.log('FuseUtils.generateGUID()', FuseUtils.generateGUID())
+      console.log('FuseUtils.generateGUID()', FuseUtils.generateGUID())
+      const logoUri = `opportunities/${FuseUtils.generateGUID()}/logo.jpg`;
+      const heroPhotoUri = `opportunities/${FuseUtils.generateGUID()}/heroPhoto.jpg`;
+      await Storage.put(logoUri, await (await fetch(data.logoUri)).blob(), {
+        contentType: 'images/jpg',
+      });
+      await Storage.put(heroPhotoUri, await (await fetch(data.heroPhotoUri)).blob(), {
+        contentType: 'images/jpg',
+      });
+      data.logoUri = logoUri;
+      data.heroPhotoUri = heroPhotoUri;
+
+      delete data["organizations"]
+
+      console.log('opportunitySlice => saveOpportunity => data => ', data);
+
+      // Parse datetime
+      if (!data.startDateTime || !data.endDateTime) return null;
+      if (Number.isFinite(data.startDateTime) === false) {
+        data.startDateTime = Date.parse(data.startDateTime);
+      }
+      if (Number.isFinite(data.endDateTime) === false) {
+        data.endDateTime = Date.parse(data.endDateTime);
+      }
+
+      response = await API.graphql(
+        graphqlOperation(createOpportunity, {
+          input: data
+        })
+      );
+    } catch (err) {
+      console.log('opportunitySlice => saveOpportunity => err => ', err);
+    }
+    return response
+  }
+)
 
 export const saveOpportunity1 = createAsyncThunk(
   'adminApp/Opportunity/saveOpportunity',
