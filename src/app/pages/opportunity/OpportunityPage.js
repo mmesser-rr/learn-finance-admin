@@ -76,13 +76,8 @@ function OpportunityPage() {
         if (opp) {
           setOpportunity(opp);
           // Load background & logo images
-          console.log('opportunityPage => opp => ', opp.heroPhotoUri);
-          const logoImgUri = `opportunities/${opp.id}/logo.jpg`
-          const heroImgUri = `opportunities/${opp.id}/heroPhoto.jpg`
-          const logoImg = await Storage.get(logoImgUri, { download: false })
-          const heroImg = await Storage.get(heroImgUri, { download: false })
-          console.log("logoImg", logoImg)
-          console.log("heroImg", heroImg)
+          const logoImg = await Storage.get(opp.logoUri, { download: false })
+          const heroImg = await Storage.get(opp.heroPhotoUri, { download: false })
           setLogoSignedUrl(logoImg);
           setHeroImageSignedUrl(heroImg);
         }

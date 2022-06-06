@@ -17,6 +17,19 @@ function WhenWhereForm(props) {
   // const [startDate, setStartDate] = useState(Date.now());
   const eventType = watch("eventType");
   const onlineTotal = watch("onlineTotal");
+  const { address, unit, city, state, zipCode, country, name } = watch("locationDetail")
+  const setAddress = (_address) => {
+    console.log('_address', _address)
+    setValue("locationDetail", {
+      unit, 
+      city, 
+      state, 
+      zipCode, 
+      country, 
+      name,
+      address: _address
+    })
+  }
   useEffect(() => {
     if (onlineTotal === "") {
       setValue("onlineTotal", 0);
@@ -28,7 +41,7 @@ function WhenWhereForm(props) {
         title="WHEN & WHERE"
         subtitle="Make your mark and let people know when and where they can find your event."
       />
-      {(eventType === "IRL" || eventType === "HYBRID") && <LocationInput />}
+      {(eventType === "IRL" || eventType === "HYBRID") && <LocationInput address={address} setAddress={setAddress} />}
 
       <Controller
         name="locationDetail"
