@@ -30,18 +30,7 @@ export const fetchOpportunity = createAsyncThunk(
     try {
       const resp = await API.graphql(graphqlOperation(getOpportunityFormData, params));
       data = await resp.data;
-      // Fetch the proper image Urls.
-      if (data.getOpportunity.logoUri !== null) {
-        const logoUri = await Storage.get(data.getOpportunity.logoUri, { download: false });
-        data.getOpportunity.logoUri = logoUri;
-      }
-
-      if (data.getOpportunity.heroPhotoUri !== null) {
-        const heroPhotoUri = await Storage.get(data.getOpportunity.heroPhotoUri, {
-          download: false,
-        });
-        data.getOpportunity.heroPhotoUri = heroPhotoUri;
-      }
+      console.log('fetchOpportunity => data => ', data)      
       return data === undefined ? null : data;
     } catch (err) {
       console.log('opportunitySlice => fetchOpportunity => err => ', err);
@@ -67,13 +56,31 @@ export const saveOpportunity = createAsyncThunk(
     let response;
 
     try {
-      // if (Number.isNaN(data.startDateTime) === true) {
-      //   data.startDateTime = Date.parse(data.startDateTime);
-      // }
-      data.startDateTime = Date.parse(data.startDateTime);
-      data.endDateTime = Date.parse(data.endDateTime);
+      // Upload the images
+      const logoUri = `opportunities/${data.id}/logo.jpg`;
+      const heroPhotoUri = `opportunities/${data.id}/heroPhoto.jpg`;
+      await Storage.put(logoUri, await (await fetch(data.logoUri)).blob(), {
+        contentType: 'images/jpg',
+      });
+      await Storage.put(heroPhotoUri, await (await fetch(data.heroPhotoUri)).blob(), {
+        contentType: 'images/jpg',
+      });
+      data.logoUri = logoUri;
+      data.heroPhotoUri = heroPhotoUri;
+
       delete data["organizations"]
+
       console.log('opportunitySlice => saveOpportunity => data => ', data);
+
+      // Parse datetime
+      if (!data.startDateTime || !data.endDateTime) return null;
+      if (Number.isFinite(data.startDateTime) === false) {
+        data.startDateTime = Date.parse(data.startDateTime);
+      }
+      if (Number.isFinite(data.endDateTime) === false) {
+        data.endDateTime = Date.parse(data.endDateTime);
+      }
+
       response = await API.graphql(
         graphqlOperation(updateOpportunity, {
           input: data

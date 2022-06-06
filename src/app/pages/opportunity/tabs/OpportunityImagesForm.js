@@ -126,6 +126,7 @@ function OpportunityImagesForm(props) {
     // dispatch(closeDialog());
     if (typeof cropper !== 'undefined') {
       const path = cropper.getCroppedCanvas().toDataURL();
+      console.log('path', path)
       if (currentCropper === 'logo') {
         setCropDataLogo(path);
         setValue('logoUri', path, { shouldValidate: true });
