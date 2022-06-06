@@ -1,3 +1,4 @@
+import { Storage } from "aws-amplify"
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
@@ -68,14 +69,22 @@ function OpportunityPage() {
     async function load() {
       const { id } = routeParams;
       let opp;
-      await dispatch(fetchOpportunity(routeParams)).then((action) => {
+      console.log('routeParams', routeParams)
+      await dispatch(fetchOpportunity(routeParams)).then(async (action) => {
         opp = action.payload.getOpportunity;
+        console.log('opp', opp)
         if (opp) {
           setOpportunity(opp);
           // Load background & logo images
           console.log('opportunityPage => opp => ', opp.heroPhotoUri);
-          setLogoSignedUrl(opp.logoUri);
-          setHeroImageSignedUrl(opp.heroPhotoUri);
+          const logoImgUri = `opportunities/${opp.id}/logo.jpg`
+          const heroImgUri = `opportunities/${opp.id}/heroPhoto.jpg`
+          const logoImg = await Storage.get(logoImgUri, { download: false })
+          const heroImg = await Storage.get(heroImgUri, { download: false })
+          console.log("logoImg", logoImg)
+          console.log("heroImg", heroImg)
+          setLogoSignedUrl(logoImg);
+          setHeroImageSignedUrl(heroImg);
         }
       });
       // await dispatch(getPhoto(opp.heroPhotoUri)).then((action) => {

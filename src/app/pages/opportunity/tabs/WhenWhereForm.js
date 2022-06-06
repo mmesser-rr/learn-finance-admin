@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useFormContext, Controller } from "react-hook-form";
-import { DateTimePicker } from "@mui/lab";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
@@ -169,20 +171,20 @@ function WhenWhereForm(props) {
           <Controller
             name="startDateTime"
             control={control}
-            defaultValue={Date.now()}
             render={({ field: { onChange, value } }) => (
-              <DateTimePicker
-                value={value}
-                onChange={onChange}
-                // minDateTime={Date.now()}
-                renderInput={(_props) => (
-                  <TextField
-                    label="Start Date"
-                    className="mt-8 mb-16 mx-4"
-                    {..._props}
-                  />
-                )}
-              />
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DateTimePicker
+                  value={value}
+                  onChange={onChange}
+                  renderInput={(_props) => (
+                    <TextField
+                      label="Start Date"
+                      className="mt-8 mb-16 mx-4"
+                      {..._props}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
             )}
           />
         </div>
@@ -190,20 +192,20 @@ function WhenWhereForm(props) {
           <Controller
             name="endDateTime"
             control={control}
-            defaultValue={Date.now()}
             render={({ field: { onChange, value } }) => (
-              <DateTimePicker
-                value={value}
-                onChange={onChange}
-                // minDateTime={Date.now()}
-                renderInput={(_props) => (
-                  <TextField
-                    label="End Date"
-                    className="mt-8 mb-16 mx-4"
-                    {..._props}
-                  />
-                )}
-              />
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DateTimePicker
+                  value={value}
+                  onChange={onChange}
+                  renderInput={(_props) => (
+                    <TextField
+                      label="Start Date"
+                      className="mt-8 mb-16 mx-4"
+                      {..._props}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
             )}
           />
         </div>
