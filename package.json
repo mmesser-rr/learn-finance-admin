@@ -10,7 +10,7 @@
         "@mapbox/mapbox-gl-geocoder": "^5.0.0",
         "@mui/base": "5.0.0-alpha.60",
         "@mui/icons-material": "5.2.4",
-        "@mui/lab": "5.0.0-alpha.60",
+        "@mui/lab": "^5.0.0-alpha.84",
         "@mui/material": "5.2.4",
         "@mui/styles": "5.2.3",
         "@mui/system": "5.2.4",

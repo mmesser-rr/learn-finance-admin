@@ -25,6 +25,7 @@ function UserMenu(props) {
     // Amplify uses signed urls for images (s3)
     async function load() {
       const imgUrl = await dispatch(getPhoto(user.data.profilePhotoUri));
+      console.log('imgUrl.payload', imgUrl.payload)
       setProfileImg(imgUrl.payload);
     }
     load();
