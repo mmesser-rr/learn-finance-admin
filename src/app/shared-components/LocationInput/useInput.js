@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
-const useInput = (initialValue) => {
-  const [value, setValue] = useState(initialValue);
+const useInput = (setAddress) => {
+  // const [value, setValue] = useState(initialValue);
   const [suggestions, setSuggestions] = useState([]);
   const MAPBOX_TOKEN =
     'pk.eyJ1IjoiYmFua2RhbyIsImEiOiJjbDE1aTQyMDUwdGkxM2RydHo5N2twajgwIn0.v1ggUJ7PCs1vsQ5JDg16yw';
 
   const handleChange = async (event) => {
-    setValue(event.target.value);
+    // setValue(event.target.value);
+    setAddress(event.target.value);
 
     try {
       const MAP_ENDPOINT = `https://api.mapbox.com/geocoding/v5/mapbox.places/${event.target.value}.json?access_token=${MAPBOX_TOKEN}&autocomplete=true`;
@@ -20,9 +21,9 @@ const useInput = (initialValue) => {
   };
 
   return {
-    value,
+    // value,
     onChange: handleChange,
-    setValue,
+    // setValue,
     suggestions,
     setSuggestions,
   };

@@ -2,11 +2,13 @@ import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import useInput from './useInput';
 
-const LocationInput = () => {
-  const address = useInput('');
+const LocationInput = ({ address, setAddress }) => {
+  const mapbox = useInput(setAddress);
   const inputProps = {
-    onChange: address.onChange,
-    value: address.value,
+    onChange: (e) => {
+      mapbox.onChange(e)
+    },
+    value: address,
   };
   return (
     <Wrapper>
@@ -19,16 +21,16 @@ const LocationInput = () => {
         fullWidth
       />
 
-      {address.suggestions?.length > 0 && (
+      {mapbox.suggestions?.length > 0 && (
         <SuggestionWrapper>
-          {address.suggestions.map((suggestion, index) => {
+          {mapbox.suggestions.map((suggestion, index) => {
             return (
               <Suggestion
                 key={index}
                 onClick={() => {
                   ParseAddress(suggestion);
-                  address.setValue(suggestion.place_name);
-                  address.setSuggestions([]);
+                  setAddress(suggestion.place_name);
+                  mapbox.setSuggestions([]);
                 }}
               >
                 {suggestion.place_name}
