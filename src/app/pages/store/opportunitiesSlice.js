@@ -10,16 +10,16 @@ const initialState = {
 
 export const getOpportunities = createAsyncThunk(
   'adminApp/opportunties/getOpportunities',
-  async () => {
+  async (filterText) => {
     console.log('opportunitiesSlice => getOpportunities => start');
     let data;
     try {
-      const resp = await API.graphql(graphqlOperation(listOpportunities));
+      const resp = await API.graphql(graphqlOperation(listOpportunities, {filter: { title: { contains: filterText}}}));
       console.log('opportunitiesSlice => getOpportunities => resp => ', resp);
       data = await resp.data;
       console.log(
         'opportunitiesSlice => getOpportunities => DATA => ',
-        resp.data.listOpportunities.items
+        data.listOpportunities.items
       );
     } catch (err) {
       console.log('opportunitiesSlice => getOpportunities => err => ', err);

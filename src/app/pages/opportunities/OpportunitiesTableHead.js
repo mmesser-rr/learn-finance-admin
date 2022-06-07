@@ -39,7 +39,7 @@ const rows = [
     sort: true,
   },
   {
-    id: 'location',
+    id: 'locationDetail',
     align: 'left',
     disablePadding: false,
     label: 'Where',

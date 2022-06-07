@@ -10,7 +10,7 @@ import {
   deleteOpportunity
 } from '../../../graphql/mutations';
 
-export const removeOrganization = createAsyncThunk(
+export const removeOrganizationThunk = createAsyncThunk(
   'adminApp/Opportunity/deleteOrganization',
 
   async (params) => {
@@ -24,7 +24,7 @@ export const removeOrganization = createAsyncThunk(
   }
 );
 
-export const fetchOpportunity = createAsyncThunk(
+export const fetchOpportunityThunk = createAsyncThunk(
   'adminApp/Opportunity/getOpportunity',
 
   async (params) => {
@@ -32,10 +32,10 @@ export const fetchOpportunity = createAsyncThunk(
     try {
       const resp = await API.graphql(graphqlOperation(getOpportunityFormData, params));
       data = await resp.data;
-      console.log('fetchOpportunity => data => ', data)      
+      console.log('fetchOpportunityThunk => data => ', data)      
       return data === undefined ? null : data;
     } catch (err) {
-      console.log('opportunitySlice => fetchOpportunity => err => ', err);
+      console.log('opportunitySlice => fetchOpportunityThunk => err => ', err);
     }
     return data;
   }
@@ -55,7 +55,7 @@ export const removeOpportunity = createAsyncThunk(
   }
 );
 
-export const saveOpportunity = createAsyncThunk(
+export const saveOpportunityThunk = createAsyncThunk(
   'adminApp/Opportunity/saveOpportunity',
   async (OpportunityData, { dispatch, getState }) => {
     const data = OpportunityData;
@@ -63,6 +63,7 @@ export const saveOpportunity = createAsyncThunk(
 
     try {
       // Upload the images
+      console.log('opportunitySlice => saveOpportunity => data1 => ', data);
       const logoUri = `opportunities/${data.id}/logo.jpg`;
       const heroPhotoUri = `opportunities/${data.id}/heroPhoto.jpg`;
       await Storage.put(logoUri, await (await fetch(data.logoUri)).blob(), {
@@ -76,7 +77,7 @@ export const saveOpportunity = createAsyncThunk(
 
       delete data["organizations"]
 
-      console.log('opportunitySlice => saveOpportunity => data => ', data);
+      console.log('opportunitySlice => saveOpportunity => data2 => ', data);
 
       // Parse datetime
       if (!data.startDateTime || !data.endDateTime) return null;
@@ -139,7 +140,7 @@ export const createOpportunityThunk = createAsyncThunk(
     } catch (err) {
       console.log('opportunitySlice => saveOpportunity => err => ', err);
     }
-    return response
+    return response?.data?.createOpportunity
   }
 )
 
@@ -270,8 +271,8 @@ const OpportunitySlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchOpportunity.fulfilled]: (state, action) => action.payload,
-    [saveOpportunity.fulfilled]: (state, action) => action.payload,
+    [fetchOpportunityThunk.fulfilled]: (state, action) => action.payload,
+    [saveOpportunityThunk.fulfilled]: (state, action) => action.payload,
     [removeOpportunity.fulfilled]: (state, action) => null,
   },
 });

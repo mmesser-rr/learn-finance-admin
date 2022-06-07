@@ -36,6 +36,10 @@ export const getOpportunityFormData = /* GraphQL */ `
           relationshipType
         }
       }
+      orgs {
+        displayName
+        relationshipType
+      }
       registrationUrl
       reward
       rewardDetails
