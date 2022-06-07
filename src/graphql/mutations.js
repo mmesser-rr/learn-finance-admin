@@ -914,6 +914,10 @@ export const createOpportunity = /* GraphQL */ `
       organizations {
         nextToken
       }
+      orgs {
+        displayName
+        relationshipType
+      }
       registrationUrl
       reward
       rewardDetails
@@ -985,6 +989,10 @@ export const updateOpportunity = /* GraphQL */ `
       organizations {
         nextToken
       }
+      orgs {
+        displayName
+        relationshipType
+      }
       registrationUrl
       reward
       rewardDetails
@@ -1055,6 +1063,10 @@ export const deleteOpportunity = /* GraphQL */ `
       onlineTotal
       organizations {
         nextToken
+      }
+      orgs {
+        displayName
+        relationshipType
       }
       registrationUrl
       reward

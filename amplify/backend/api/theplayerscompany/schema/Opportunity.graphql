@@ -23,7 +23,8 @@ type Opportunity @model @searchable {
   logoUri: String!
   onlineReserved: Int!
   onlineTotal: Int!
-  organizations: [Organization]
+  organizations: [Organization] @hasMany(indexName: "byOpportunity", fields: ["id"])
+  orgs: [Org]
   registrationUrl: String!
   reward: Float!
   rewardDetails: String!
@@ -45,7 +46,14 @@ type ModelOpportunityConnection {
  nextToken: String
 }
 
-type Organization {
+type Organization @model {
+  id: ID!
+  displayName: String!
+  relationshipType: OrganizationRelationshipType!
+  opportunityId: ID! @index(name: "byOpportunity", sortKeyFields: ["id"])
+}
+
+type Org {
   displayName: String!
   relationshipType: OrganizationRelationshipType!
 }

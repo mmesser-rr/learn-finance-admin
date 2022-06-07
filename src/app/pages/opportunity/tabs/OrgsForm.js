@@ -21,7 +21,7 @@ function OrgsForm(props) {
   const { showStatus } = props;
   const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
   const { fields, append, remove } = useFieldArray({
-    name: 'organizations',
+    name: 'orgs',
     control,
   });
 
@@ -46,9 +46,9 @@ function OrgsForm(props) {
             alignItems="flex-start"
           >
             <Grid item xs={12} md={6}>
-              {/* <input type="hidden" {...register(`organizations[${index}]organizationId`)} /> */}
+              {/* <input type="hidden" {...register(`orgs[${index}]organizationId`)} /> */}
               <Controller
-                name={`organizations[${index}].displayName`}
+                name={`orgs[${index}].displayName`}
                 control={control}
                 render={({ field }) => (
                   <TextField
@@ -57,7 +57,7 @@ function OrgsForm(props) {
                     className="mt-8 mb-16"
                     error
                     required
-                    // helperText={errors.organizations?.[index]?.displayName}
+                    // helperText={errors.orgs?.[index]?.displayName}
                     label="Name"
                     autoFocus
                     variant="filled"
@@ -68,26 +68,32 @@ function OrgsForm(props) {
             </Grid>
             <Grid item xs={10} md={5}>
               <FormControl variant="filled" sx={{ m: 1, minWidth: 120, width: '100%' }}>
-                <InputLabel id={`organizations.${index}.relationshipType`}>
+                <InputLabel id={`orgs.${index}.relationshipType`}>
                   Relationship
                 </InputLabel>
-                {/* <Select
-                  // {...field}
-                  labelId={`organizations.${index}.relationshipType`}
-                  error={!!errors.organizations?.[index]?.relationshipType}
-                  name={`organizations.${index}.relationshipType`}
-                  id={`organizations.${index}.relationshipType`}
-                  {...register(`organizations.${index}.relationshipType`)}
-                  required
-                  label="Relationship"
-                  value={item.relationshipType}
-                  defaultValue=""
-                >
-                  <MenuItem>...</MenuItem>
-                  <MenuItem value="ORGANIZER">Organizer</MenuItem>
-                  <MenuItem value="OWNER">Owner</MenuItem>
-                  <MenuItem value="SPONSOR">Sponsor</MenuItem>
-                </Select> */}
+                <Controller
+                  name={`orgs[${index}].relationshipType`}
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      // labelId={`orgs.${index}.relationshipType`}
+                      // error={!!errors.orgs?.[index]?.relationshipType}
+                      // name={`orgs.${index}.relationshipType`}
+                      // id={`orgs.${index}.relationshipType`}
+                      // {...register(`orgs.${index}.relationshipType`)}
+                      required
+                      label="Relationship"
+                      // value={item.relationshipType}
+                      // defaultValue=""
+                    >
+                      <MenuItem>...</MenuItem>
+                      <MenuItem value="ORGANIZER">Organizer</MenuItem>
+                      <MenuItem value="OWNER">Owner</MenuItem>
+                      <MenuItem value="SPONSOR">Sponsor</MenuItem>
+                    </Select>
+                  )}
+                />
               </FormControl>
             </Grid>
             <Grid item xs={2} md={1}>

@@ -48,24 +48,21 @@ function OpportunityHeader(props) {
   }, [logoUri]);
 
   async function handleSaveOpportunity() {
-    // setSaveStatus("Saving");
+    // removed setSaveStatus() function because this page will be navigated to `/pages/Opportunity/...`
     const formValues = {
       ...getValues(),
       creatorId: user.data.id,
       onlineTotal: 0,
       onlineReserved: 0
     };
-    await dispatch(formValues?.id ? saveOpportunity(formValues) : createOpportunityThunk(formValues)).then((action) => {
+    console.log('formValues', formValues)
+    await dispatch(formValues?.id ? saveOpportunityThunk(formValues) : createOpportunityThunk(formValues)).then((action) => {
       console.log("opportunityHeader => save => ", action);
-      const item = action.payload.data.createOpportunity;
+      const item = formValues?.id ? action.payload : action.payload;
       navigate(
         `/pages/Opportunity/${item.id}/${item.title?.replaceAll(" ", "_")}`
       );
     });
-    // setSaveStatus("Saved");
-    // setTimeout(() => {
-    //   setSaveStatus("Save");
-    // }, 3000);    
   }
 
   function handleRemoveOpportunity() {

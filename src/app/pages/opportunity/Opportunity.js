@@ -15,7 +15,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import GroupsIcon from '@mui/icons-material/Groups';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import PlaceIcon from '@mui/icons-material/Place';
-import { newOpportunity, fetchOpportunity } from '../store/opportunitySlice';
+import { newOpportunity, fetchOpportunityThunk } from '../store/opportunitySlice';
 import reducer from '../store';
 import OpportunityHeader from './OpportunityHeader';
 import BasicInfoForm from './tabs/BasicInfoForm';
@@ -60,7 +60,7 @@ function Opportunity(props) {
       } else {
         setIsEdit(true);
         await // Get Opportunity data
-        dispatch(fetchOpportunity(routeParams)).then((action) => {
+        dispatch(fetchOpportunityThunk(routeParams)).then((action) => {
           // If the requested opportunity is not exist show message
           if (!action.payload) {
             setNoOpportunity(true);
