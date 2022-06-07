@@ -9,7 +9,7 @@ import _ from "@lodash";
 import Button from "@mui/material/Button";
 import Icon from "@mui/material/Icon";
 import Typography from "@mui/material/Typography";
-import { removeOpportunity, saveOpportunity, createOpportunityThunk } from "../store/opportunitySlice";
+import { removeOpportunity, saveOpportunityThunk, createOpportunityThunk } from "../store/opportunitySlice";
 
 const CustomButton = styled(Button)`
   :disabled {
