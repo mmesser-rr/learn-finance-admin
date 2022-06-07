@@ -13,7 +13,7 @@ import Box from '@mui/material/Box';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { useParams } from 'react-router-dom';
 // // Components
-import { fetchOpportunity } from '../store/opportunitySlice';
+import { fetchOpportunityThunk } from '../store/opportunitySlice';
 import OpportunityDetailsTab from './tabs/OpportunityDetailsTab';
 
 const Root = styled(FusePageSimple)(({ theme, heroImageSignedUrl }) => ({
@@ -70,7 +70,7 @@ function OpportunityPage() {
       const { id } = routeParams;
       let opp;
       console.log('routeParams', routeParams)
-      await dispatch(fetchOpportunity(routeParams)).then(async (action) => {
+      await dispatch(fetchOpportunityThunk(routeParams)).then(async (action) => {
         opp = action.payload.getOpportunity;
         console.log('opp', opp)
         if (opp) {

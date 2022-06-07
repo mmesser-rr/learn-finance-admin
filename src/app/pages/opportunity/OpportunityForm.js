@@ -61,6 +61,7 @@ function OpportunityForm({ data, child }) {
       onlineReserved: data.onlineReserved,
       onlineTotal: data.onlineTotal,
       organizations: data.organizations?.items,
+      orgs: data.orgs,
       registrationUrl: data.registrationUrl,
       reward: data.reward,
       rewardDetails: data.rewardDetails,

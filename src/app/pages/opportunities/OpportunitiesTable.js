@@ -37,7 +37,7 @@ function OpportunitiesTable(props) {
 
   useEffect(() => {
     async function load() {
-      await dispatch(getOpportunities()).then((action) => {
+      await dispatch(getOpportunities(searchText)).then((action) => {
         setLoading(false);
         console.log('opportunitiesTable => useEffect => dispatching getOpportunities ...', action);
         setData(action.payload);
@@ -45,7 +45,7 @@ function OpportunitiesTable(props) {
       setLoading(false);
     }
     load();
-  }, [dispatch]);
+  }, [searchText]);
 
   // useEffect(() => {
   //   console.log('OpportunitiesTable => opportunites => ', opportunities);
@@ -229,11 +229,11 @@ function OpportunitiesTable(props) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.startDateTime}
+                      {(new Date(n.startDateTime)).toISOString()}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.address?.streetAddress === '' ? n.address?.city : n.address?.zipCode}
+                      {n.locationDetail?.address}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
