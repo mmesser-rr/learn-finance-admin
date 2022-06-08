@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -10,26 +10,27 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import LocationInput from "../../../shared-components/LocationInput";
 import FormHeader from "../../../shared-components/FormHeader";
 
-function WhenWhereForm(props) {
+function WhenWhereForm() {
   const methods = useFormContext();
-  const { control, formState, register, watch, getValues, setValue } = methods;
+  const { control, formState, register, watch, setValue } = methods;
   const { errors } = formState;
   // const [startDate, setStartDate] = useState(Date.now());
   const eventType = watch("eventType");
   const onlineTotal = watch("onlineTotal");
-  const { address, unit, city, state, zipCode, country, name } = watch("locationDetail")
+  const { address, unit, city, state, zipCode, country, name } =
+    watch("locationDetail");
   const setAddress = (_address) => {
-    console.log('_address', _address)
+    console.log("_address", _address);
     setValue("locationDetail", {
-      unit, 
-      city, 
-      state, 
-      zipCode, 
-      country, 
+      unit,
+      city,
+      state,
+      zipCode,
+      country,
       name,
-      address: _address
-    })
-  }
+      address: _address,
+    });
+  };
   useEffect(() => {
     if (onlineTotal === "") {
       setValue("onlineTotal", 0);
@@ -41,7 +42,9 @@ function WhenWhereForm(props) {
         title="WHEN & WHERE"
         subtitle="Make your mark and let people know when and where they can find your event."
       />
-      {(eventType === "IRL" || eventType === "HYBRID") && <LocationInput address={address} setAddress={setAddress} />}
+      {(eventType === "IRL" || eventType === "HYBRID") && (
+        <LocationInput address={address} setAddress={setAddress} />
+      )}
 
       <Controller
         name="locationDetail"
