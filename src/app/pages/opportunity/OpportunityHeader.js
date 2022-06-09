@@ -23,6 +23,7 @@ function OpportunityHeader(props) {
   const methods = useFormContext();
   const { formState, watch, getValues } = methods;
   const { isValid, dirtyFields } = formState;
+  localStorage.setItem("dirtyFieldsLength", Object.keys(dirtyFields).length);
   const logoUri = watch("logoUri");
   const heroPhotoUri = watch("heroPhotoUri");
   const title = watch("title");

@@ -1,6 +1,7 @@
 import { API, graphqlOperation } from 'aws-amplify';
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { listOpportunities } from '../../../graphql/queries';
+import { deleteOpportunity } from '../../../graphql/mutations';
 
 // Sample data
 const initialState = {
@@ -31,6 +32,10 @@ export const getOpportunities = createAsyncThunk(
 export const removeOpportunities = createAsyncThunk(
   'adminApp/opportunities/removeOpportunities',
   async (opportunityIds, { dispatch, getState }) => {
+    console.log("opportunitiesSlice => removeOpportunities => opportunityIds => ", opportunityIds)
+    opportunityIds.forEach(async (id) => {
+      await API.graphql(graphqlOperation(deleteOpportunity, {input: { id: id }}));  
+    })
     return opportunityIds;
   }
 );

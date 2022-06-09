@@ -24,12 +24,14 @@ function OrgsForm(props) {
     name: 'orgs',
     control,
   });
+  const [indexToDelete, setIndexToDelete] = useState(-1)
 
   const handleAppend = () => {
     append({ displayName: '', relationshipType: 'ORGANIZER' });
   }
   const handleDeleteOrganization = () => {
     console.log('orgsForm => delete');
+    remove(indexToDelete)
   }
   return (
     <div>
@@ -102,7 +104,10 @@ function OrgsForm(props) {
                   variant="contained"
                   type="button"
                   // onClick={() => remove(index)}
-                  onClick={() => setConfirmationDialogOpen(true)}
+                  onClick={() => {
+                    setIndexToDelete(index)
+                    setConfirmationDialogOpen(true)
+                  }}
                   sx={{ marginTop: '16px' }}
                 >
                   <DeleteIcon />
