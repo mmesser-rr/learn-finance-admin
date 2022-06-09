@@ -15,6 +15,7 @@ import { theme } from "@fuse/default-settings/theme";
 function UserMenu(props) {
   const { palette } = props.props;
   console.log("userMenu => props => ", props);
+  localStorage.setItem("dirtyFieldsLength", '0')
   const dispatch = useDispatch();
   const user = useSelector(({ auth }) => auth.user);
   const navigate = useNavigate();
@@ -104,7 +105,17 @@ function UserMenu(props) {
             <MenuItem
               component={Link}
               to="/pages/profile"
-              onClick={userMenuClose}
+              onClick={(e) => {
+                console.log("profile is clicked")
+                const dirtyFieldsLength = Number(localStorage.getItem("dirtyFieldsLength"))
+                if (dirtyFieldsLength > 0) {
+                  e.preventDefault()
+                  alert("Hahahahaha")
+                }
+                else {
+                  userMenuClose()
+                }
+              }}
               role="button"
             >
               <ListItemIcon className="min-w-40">
@@ -115,7 +126,16 @@ function UserMenu(props) {
             <MenuItem
               component={Link}
               to="/apps/mail"
-              onClick={userMenuClose}
+              onClick={(e) => {
+                const dirtyFieldsLength = Number(localStorage.getItem("dirtyFieldsLength"))
+                if (dirtyFieldsLength > 0) {
+                  e.preventDefault()
+                  alert("Hahahahaha")
+                }
+                else {
+                  userMenuClose()
+                }
+              }}
               role="button"
             >
               <ListItemIcon className="min-w-40">
