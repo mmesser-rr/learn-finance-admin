@@ -150,13 +150,14 @@ function OpportunitiesTable(props) {
       </motion.div>
     );
   }
-
   return (
     <div className="w-full flex flex-col">
       <FuseScrollbars className="grow overflow-x-auto">
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <OpportunitiesTableHead
             selectedOpportunityIds={selected}
+            setSelectedOpportunityIds={setSelected}
+            setData={setData}
             order={order}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
@@ -229,7 +230,11 @@ function OpportunitiesTable(props) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {(new Date(n.startDateTime)).toISOString()}
+                      {(new Date(n.startDateTime)).toLocaleDateString()}
+                    </TableCell>
+
+                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                      {`${new Date(n.startDateTime).getHours() % 12}:${new Date(n.startDateTime).getMinutes()}${new Date(n.startDateTime).getHours() >= 12 && "pm"}`}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
