@@ -12,13 +12,14 @@ import FormHeader from "../../../shared-components/FormHeader";
 
 function WhenWhereForm() {
   const methods = useFormContext();
-  const { control, formState, register, watch, setValue } = methods;
+  const { control, formState, register, watch, setValue, getValues } = methods;
   const { errors } = formState;
   // const [startDate, setStartDate] = useState(Date.now());
   const eventType = watch("eventType");
   const onlineTotal = watch("onlineTotal");
-  const { address, unit, city, state, zipCode, country, name } =
-    watch("locationDetail");
+  const { address, unit, city, state, zipCode, country, name } = watch("locationDetail");
+  console.log("locationDetail.address", address)
+
   const setAddress = (_address) => {
     console.log("_address", _address);
     setValue("locationDetail", {
@@ -36,6 +37,9 @@ function WhenWhereForm() {
       setValue("onlineTotal", 0);
     }
   }, [onlineTotal, setValue]);
+  useEffect(() => {
+    setAddress(getValues().address)
+  }, [])
   return (
     <div>
       <FormHeader
@@ -47,21 +51,14 @@ function WhenWhereForm() {
       )}
 
       <Controller
-        name="locationDetail"
+        name="locationDetail.address"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             sx={{ display: "none" }}
             className="mt-8 mb-16"
-            error={!!errors.locationDetail}
             required
-            helperText={errors?.locationDetail?.message}
-            label="Location Detail"
-            autoFocus
-            id="locationDetail"
-            variant="filled"
-            fullWidth
           />
         )}
       />

@@ -60,8 +60,7 @@ export const opportunitiesSlice = createSlice({
   },
   extraReducers: {
     [getOpportunities.fulfilled]: opportunitiesAdapter.setAll,
-    [removeOpportunities.fulfilled]: (state, action) =>
-      opportunitiesAdapter.removeMany(state, action.payload),
+    [removeOpportunities.fulfilled]: opportunitiesAdapter.removeMany
   },
 });
 
