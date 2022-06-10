@@ -119,11 +119,7 @@ function OpportunitiesTableHead(props) {
               <Button onClick={()=> {
                 dispatch(closeDialog())
                 dispatch(removeOpportunities(selectedOpportunityIds)).then(async () => {
-                  window.location.reload()
-                  // await dispatch(getOpportunities("")).then((action) => {
-                  //   console.log('opportunitiesTableHead => renderConfirmDialog => dispatching getOpportunities ...', action);
-                  //   setData(action.payload);
-                  // })
+                  console.log('opportunitiesTableHead => removeOpportunities => success');
                 });
               }} color="primary" autoFocus>
                   Yes

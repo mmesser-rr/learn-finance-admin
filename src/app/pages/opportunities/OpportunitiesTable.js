@@ -28,6 +28,7 @@ function OpportunitiesTable(props) {
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState(opportunities);
+  console.log('data', data)
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState({
@@ -46,6 +47,11 @@ function OpportunitiesTable(props) {
     }
     load();
   }, [searchText]);
+
+  useEffect(() => {
+    setSelected([])
+    setData(opportunities)
+  }, [opportunities])
 
   // useEffect(() => {
   //   console.log('OpportunitiesTable => opportunites => ', opportunities);
