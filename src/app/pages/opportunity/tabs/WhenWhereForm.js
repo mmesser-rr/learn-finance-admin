@@ -37,9 +37,7 @@ function WhenWhereForm() {
       setValue("onlineTotal", 0);
     }
   }, [onlineTotal, setValue]);
-  useEffect(() => {
-    setAddress(getValues().address)
-  }, [])
+
   return (
     <div>
       <FormHeader
