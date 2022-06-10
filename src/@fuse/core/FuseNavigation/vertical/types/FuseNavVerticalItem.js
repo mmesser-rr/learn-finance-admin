@@ -78,7 +78,6 @@ function FuseNavVerticalItem(props) {
   const handleItemClick = (e) => {
     const dirtyFieldsLength = Number(localStorage.getItem("dirtyFieldsLength"))
     if (dirtyFieldsLength > 0) {
-      console.log('+++++++++++++++++++++ dirtyFieldsLength', dirtyFieldsLength)
       const navUrl = e.currentTarget.href
       e.preventDefault()
       renderConfirmDialog(navUrl)
