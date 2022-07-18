@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Storage } from "aws-amplify"
 
 import { Controller, useFormContext } from 'react-hook-form';
 // Mui
@@ -67,8 +68,12 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 function OpportunityImagesForm(props) {
   const { logoUriOrig, heroPhotoUriOrig } = props;
+
+
   const dispatch = useDispatch();
   /* Begin */
+  const [originLogo, setOriginLogo] = useState(logoUriOrig);
+  const [originBg, setOriginBg] = useState(heroPhotoUriOrig);
   const [imageLogo, setImageLogo] = useState(undefined);
   const [imageBG, setImageBG] = useState(undefined);
   const [currentCropper, setCurrentCropper] = useState('');
@@ -77,26 +82,29 @@ function OpportunityImagesForm(props) {
   const [cropper, setCropper] = useState();
   const [cropperOpen, setCropperOpen] = useState(false);
 
-  // useEffect(() => {
-  //   async function getImage() {
-  //     let imgSrc = logoUri;
-  //     if (logoUri?.startsWith('opportunities')) {
-  //       imgSrc = await Storage.get(logoUri, { download: false });
-  //     }
-  //     // setImageUrl(imgSrc);
-  //   }
-  //   getImage();
-  // }, [logoUri]);
+  useEffect(() => {
+    async function getImage() {
+      let url;
+      try {
+        setOriginLogo(await Storage.get(logoUriOrig, { download: false }) ?? "");
+        setOriginBg(await Storage.get(heroPhotoUriOrig, { download: false }) ?? "");
+      } catch (err) {
+        console.log("OpportunityImagesForm => getImage => err => ", err);
+      }
+      return url;
+    }
+    getImage();
+  }, []);
 
-  const onChangeLogo = (e: any) => {
+  const onChangeLogo = (e) => {
     setCurrentCropper('logo');
     onChange(e, 'logo');
   };
-  const onChangeBG = (e: any) => {
+  const onChangeBG = (e) => {
     setCurrentCropper('bg');
     onChange(e, 'bg');
   };
-  const onChange = (e: any, source: String) => {
+  const onChange = (e, source) => {
     if (source === 'logo') {
       setImageLogo(undefined);
     } else {
@@ -126,6 +134,7 @@ function OpportunityImagesForm(props) {
     // dispatch(closeDialog());
     if (typeof cropper !== 'undefined') {
       const path = cropper.getCroppedCanvas().toDataURL();
+      console.log('path', path)
       if (currentCropper === 'logo') {
         setCropDataLogo(path);
         setValue('logoUri', path, { shouldValidate: true });
@@ -190,12 +199,12 @@ function OpportunityImagesForm(props) {
             />
           </Grid>
           <Grid item xs={12} md={3}>
-            {(cropDataLogo || logoUriOrig) && (
+            {(cropDataLogo || originLogo) && (
               <Container maxWidth="sm">
                 <img
                   style={{ height: '120px', width: '120px' }}
                   className="rounded-12 shadow hover:shadow-lg"
-                  src={cropDataLogo ?? logoUriOrig}
+                  src={cropDataLogo ?? originLogo}
                   alt="cropped"
                 />
               </Container>
@@ -240,12 +249,12 @@ function OpportunityImagesForm(props) {
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            {(cropDataBG || heroPhotoUriOrig) && (
+            {(cropDataBG || originBg) && (
               <Container maxWidth="sm">
                 <img
                   style={{ height: '120px', width: '213px' }}
                   className="rounded-12 shadow hover:shadow-lg"
-                  src={cropDataBG ?? heroPhotoUriOrig}
+                  src={cropDataBG ?? originBg}
                   alt="cropped"
                 />
               </Container>

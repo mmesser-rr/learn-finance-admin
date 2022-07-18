@@ -578,6 +578,10 @@ export const getOpportunity = /* GraphQL */ `
       organizations {
         nextToken
       }
+      orgs {
+        displayName
+        relationshipType
+      }
       registrationUrl
       reward
       rewardDetails
@@ -613,6 +617,15 @@ export const listOpportunities = /* GraphQL */ `
         eventType
         heroPhotoUri
         isPrivate
+        locationDetail {
+          address
+          unit
+          city
+          state
+          zipCode
+          country
+          name
+        }
         logoUri
         onlineReserved
         onlineTotal

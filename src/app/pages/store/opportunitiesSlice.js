@@ -1,6 +1,7 @@
 import { API, graphqlOperation } from 'aws-amplify';
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { listOpportunities } from '../../../graphql/queries';
+import { deleteOpportunity } from '../../../graphql/mutations';
 
 // Sample data
 const initialState = {
@@ -10,16 +11,16 @@ const initialState = {
 
 export const getOpportunities = createAsyncThunk(
   'adminApp/opportunties/getOpportunities',
-  async () => {
+  async (filterText) => {
     console.log('opportunitiesSlice => getOpportunities => start');
     let data;
     try {
-      const resp = await API.graphql(graphqlOperation(listOpportunities));
+      const resp = await API.graphql(graphqlOperation(listOpportunities, {filter: { title: { contains: filterText}}}));
       console.log('opportunitiesSlice => getOpportunities => resp => ', resp);
       data = await resp.data;
       console.log(
         'opportunitiesSlice => getOpportunities => DATA => ',
-        resp.data.listOpportunities.items
+        data.listOpportunities.items
       );
     } catch (err) {
       console.log('opportunitiesSlice => getOpportunities => err => ', err);
@@ -31,6 +32,10 @@ export const getOpportunities = createAsyncThunk(
 export const removeOpportunities = createAsyncThunk(
   'adminApp/opportunities/removeOpportunities',
   async (opportunityIds, { dispatch, getState }) => {
+    console.log("opportunitiesSlice => removeOpportunities => opportunityIds => ", opportunityIds)
+    opportunityIds.forEach(async (id) => {
+      await API.graphql(graphqlOperation(deleteOpportunity, {input: { id: id }}));  
+    })
     return opportunityIds;
   }
 );
@@ -55,8 +60,7 @@ export const opportunitiesSlice = createSlice({
   },
   extraReducers: {
     [getOpportunities.fulfilled]: opportunitiesAdapter.setAll,
-    [removeOpportunities.fulfilled]: (state, action) =>
-      opportunitiesAdapter.removeMany(state, action.payload),
+    [removeOpportunities.fulfilled]: opportunitiesAdapter.removeMany
   },
 });
 

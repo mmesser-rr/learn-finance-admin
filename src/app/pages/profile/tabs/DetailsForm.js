@@ -40,7 +40,7 @@ function ProfileDetailsForm() {
     defaultValues: {
       id: user.id,
       isActive: true,
-      firstName: user.data.firstName,
+      firstName: user.data.firstName ?? "",
       lastName: user?.data?.lastName,
       mobilePhone: user?.data?.mobilePhone,
       email: user?.data?.email,

@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useFormContext, Controller } from "react-hook-form";
-import { DateTimePicker } from "@mui/lab";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
@@ -8,42 +10,53 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import LocationInput from "../../../shared-components/LocationInput";
 import FormHeader from "../../../shared-components/FormHeader";
 
-function WhenWhereForm(props) {
+function WhenWhereForm() {
   const methods = useFormContext();
-  const { control, formState, register, watch, getValues, setValue } = methods;
+  const { control, formState, register, watch, setValue, getValues } = methods;
   const { errors } = formState;
-  const [startDate, setStartDate] = useState(Date.now());
+  // const [startDate, setStartDate] = useState(Date.now());
   const eventType = watch("eventType");
   const onlineTotal = watch("onlineTotal");
+  const { address, unit, city, state, zipCode, country, name } = watch("locationDetail");
+  console.log("locationDetail.address", address)
+
+  const setAddress = (_address) => {
+    console.log("_address", _address);
+    setValue("locationDetail", {
+      unit,
+      city,
+      state,
+      zipCode,
+      country,
+      name,
+      address: _address,
+    });
+  };
   useEffect(() => {
     if (onlineTotal === "") {
       setValue("onlineTotal", 0);
     }
   }, [onlineTotal, setValue]);
+
   return (
     <div>
       <FormHeader
         title="WHEN & WHERE"
         subtitle="Make your mark and let people know when and where they can find your event."
       />
-      {(eventType === "IRL" || eventType === "HYBRID") && <LocationInput />}
+      {(eventType === "IRL" || eventType === "HYBRID") && (
+        <LocationInput address={address} setAddress={setAddress} />
+      )}
 
       <Controller
-        name="locationDetail"
+        name="locationDetail.address"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             sx={{ display: "none" }}
             className="mt-8 mb-16"
-            error={!!errors.locationDetail}
             required
-            helperText={errors?.locationDetail?.message}
-            label="Location Detail"
-            autoFocus
-            id="locationDetail"
-            variant="filled"
-            fullWidth
           />
         )}
       />
@@ -169,20 +182,20 @@ function WhenWhereForm(props) {
           <Controller
             name="startDateTime"
             control={control}
-            defaultValue={Date.now()}
             render={({ field: { onChange, value } }) => (
-              <DateTimePicker
-                value={value}
-                onChange={onChange}
-                minDateTime={Date.now()}
-                renderInput={(_props) => (
-                  <TextField
-                    label="Start Date"
-                    className="mt-8 mb-16 mx-4"
-                    {..._props}
-                  />
-                )}
-              />
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DateTimePicker
+                  value={value}
+                  onChange={onChange}
+                  renderInput={(_props) => (
+                    <TextField
+                      label="Start Date"
+                      className="mt-8 mb-16 mx-4"
+                      {..._props}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
             )}
           />
         </div>
@@ -190,20 +203,20 @@ function WhenWhereForm(props) {
           <Controller
             name="endDateTime"
             control={control}
-            defaultValue=""
             render={({ field: { onChange, value } }) => (
-              <DateTimePicker
-                value={value}
-                onChange={onChange}
-                minDateTime={Date.now()}
-                renderInput={(_props) => (
-                  <TextField
-                    label="End Date"
-                    className="mt-8 mb-16 mx-4"
-                    {..._props}
-                  />
-                )}
-              />
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DateTimePicker
+                  value={value}
+                  onChange={onChange}
+                  renderInput={(_props) => (
+                    <TextField
+                      label="Start Date"
+                      className="mt-8 mb-16 mx-4"
+                      {..._props}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
             )}
           />
         </div>

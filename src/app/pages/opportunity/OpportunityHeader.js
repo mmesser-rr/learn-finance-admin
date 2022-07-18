@@ -9,7 +9,7 @@ import _ from "@lodash";
 import Button from "@mui/material/Button";
 import Icon from "@mui/material/Icon";
 import Typography from "@mui/material/Typography";
-import { removeOpportunity, saveOpportunity } from "../store/opportunitySlice";
+import { removeOpportunity, saveOpportunityThunk, createOpportunityThunk } from "../store/opportunitySlice";
 
 const CustomButton = styled(Button)`
   :disabled {
@@ -23,6 +23,7 @@ function OpportunityHeader(props) {
   const methods = useFormContext();
   const { formState, watch, getValues } = methods;
   const { isValid, dirtyFields } = formState;
+  localStorage.setItem("dirtyFieldsLength", Object.keys(dirtyFields).length);
   const logoUri = watch("logoUri");
   const heroPhotoUri = watch("heroPhotoUri");
   const title = watch("title");
@@ -48,26 +49,26 @@ function OpportunityHeader(props) {
   }, [logoUri]);
 
   async function handleSaveOpportunity() {
-    setSaveStatus("Saving");
+    // removed setSaveStatus() function because this page will be navigated to `/pages/Opportunity/...`
     const formValues = {
       ...getValues(),
       creatorId: user.data.id,
+      onlineTotal: 0,
+      onlineReserved: 0
     };
-    await dispatch(saveOpportunity(formValues)).then((action) => {
+    console.log('formValues', formValues)
+    await dispatch(formValues?.id ? saveOpportunityThunk(formValues) : createOpportunityThunk(formValues)).then((action) => {
       console.log("opportunityHeader => save => ", action);
-      const item = action.payload;
+      const item = formValues?.id ? action.payload : action.payload;
       navigate(
-        `/pages/Opportunity/${item.id}/${item.title.replaceAll(" ", "_")}`
+        `/pages/Opportunity/${item.id}/${item.title?.replaceAll(" ", "_")}`
       );
     });
-    setSaveStatus("Saved");
-    setTimeout(() => {
-      setSaveStatus("Save");
-    }, 3000);
   }
 
   function handleRemoveOpportunity() {
-    dispatch(removeOpportunity()).then(() => {
+    const { id } = getValues()
+    dispatch(removeOpportunity(id)).then(() => {
       navigate("/pages/Opportunities");
     });
   }

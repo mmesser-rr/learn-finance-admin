@@ -14,7 +14,11 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box } from '@mui/system';
 import TableHead from '@mui/material/TableHead';
-// import { removeOpportunities } from '../store/OpportunitiesSlice';
+import { openDialog, closeDialog } from 'app/store/fuse/dialogSlice';
+import { getOpportunities, removeOpportunities } from '../store/opportunitiesSlice';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 const rows = [
   // {
@@ -35,11 +39,18 @@ const rows = [
     id: 'startDateTime',
     align: 'left',
     disablePadding: false,
-    label: 'When',
+    label: 'Start Date',
     sort: true,
   },
   {
-    id: 'location',
+    id: 'startDateTime',
+    align: 'left',
+    disablePadding: false,
+    label: 'Start Time',
+    sort: true,
+  },
+  {
+    id: 'locationDetail',
     align: 'left',
     disablePadding: false,
     label: 'Where',
@@ -76,7 +87,7 @@ const rows = [
 ];
 
 function OpportunitiesTableHead(props) {
-  const { selectedOpportunityIds } = props;
+  const { selectedOpportunityIds, setData } = props;
   const numSelected = selectedOpportunityIds.length;
 
   const [selectedOpportunitiesMenu, setSelectedOpportunitiesMenu] = useState(null);
@@ -94,6 +105,29 @@ function OpportunitiesTableHead(props) {
   function closeSelectedOpportunitiesMenu() {
     setSelectedOpportunitiesMenu(null);
   }
+
+  const renderConfirmDialog = ()=> dispatch(openDialog({
+    children: (
+      <div className="text-white">
+          <DialogTitle id="alert-dialog-title">Are you sure to delete selected opportunites?</DialogTitle>          
+          <DialogActions>
+              <Button onClick={()=> {
+                dispatch(closeDialog())                
+              }} color="primary">
+                  No
+              </Button>
+              <Button onClick={()=> {
+                dispatch(closeDialog())
+                dispatch(removeOpportunities(selectedOpportunityIds)).then(async () => {
+                  console.log('opportunitiesTableHead => removeOpportunities => success');
+                });
+              }} color="primary" autoFocus>
+                  Yes
+              </Button>
+          </DialogActions>
+      </div>
+    )
+  }))
 
   return (
     <TableHead>
@@ -128,8 +162,9 @@ function OpportunitiesTableHead(props) {
                 <MenuList>
                   <MenuItem
                     onClick={() => {
+                      renderConfirmDialog()
                       // dispatch(removeOpportunities(selectedProductIds));
-                      props.onMenuItemClick();
+                      // props.onMenuItemClick();
                       closeSelectedOpportunitiesMenu();
                     }}
                   >
@@ -143,11 +178,11 @@ function OpportunitiesTableHead(props) {
             </Box>
           )}
         </TableCell>
-        {rows.map((row) => {
+        {rows.map((row, index) => {
           return (
             <TableCell
               className="p-4 md:p-16"
-              key={row.id}
+              key={row.id + index}
               align={row.align}
               padding={row.disablePadding ? 'none' : 'normal'}
               sortDirection={props.order.id === row.id ? props.order.direction : false}
