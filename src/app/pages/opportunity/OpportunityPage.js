@@ -1,3 +1,4 @@
+import { Storage } from "aws-amplify"
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
@@ -12,7 +13,7 @@ import Box from '@mui/material/Box';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { useParams } from 'react-router-dom';
 // // Components
-import { fetchOpportunity } from '../store/opportunitySlice';
+import { fetchOpportunityThunk } from '../store/opportunitySlice';
 import OpportunityDetailsTab from './tabs/OpportunityDetailsTab';
 
 const Root = styled(FusePageSimple)(({ theme, heroImageSignedUrl }) => ({
@@ -68,14 +69,17 @@ function OpportunityPage() {
     async function load() {
       const { id } = routeParams;
       let opp;
-      await dispatch(fetchOpportunity(routeParams)).then((action) => {
+      console.log('routeParams', routeParams)
+      await dispatch(fetchOpportunityThunk(routeParams)).then(async (action) => {
         opp = action.payload.getOpportunity;
+        console.log('opp', opp)
         if (opp) {
           setOpportunity(opp);
           // Load background & logo images
-          console.log('opportunityPage => opp => ', opp.heroPhotoUri);
-          setLogoSignedUrl(opp.logoUri);
-          setHeroImageSignedUrl(opp.heroPhotoUri);
+          const logoImg = await Storage.get(opp.logoUri, { download: false })
+          const heroImg = await Storage.get(opp.heroPhotoUri, { download: false })
+          setLogoSignedUrl(logoImg);
+          setHeroImageSignedUrl(heroImg);
         }
       });
       // await dispatch(getPhoto(opp.heroPhotoUri)).then((action) => {

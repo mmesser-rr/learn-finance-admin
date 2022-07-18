@@ -14,6 +14,7 @@ import CountBug from '../components/CountBug';
 
 const OpportunityDetailsTab = (props) => {
   const { opportunity } = props;
+  console.log("OpportunityDetailsTab => props => ", props)
   const [showMore, setShowMore] = useState(false);
   function handleToggleShow() {
     setShowMore(!showMore);

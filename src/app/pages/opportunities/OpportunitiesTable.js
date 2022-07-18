@@ -28,6 +28,7 @@ function OpportunitiesTable(props) {
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState(opportunities);
+  console.log('data', data)
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState({
@@ -37,7 +38,7 @@ function OpportunitiesTable(props) {
 
   useEffect(() => {
     async function load() {
-      await dispatch(getOpportunities()).then((action) => {
+      await dispatch(getOpportunities(searchText)).then((action) => {
         setLoading(false);
         console.log('opportunitiesTable => useEffect => dispatching getOpportunities ...', action);
         setData(action.payload);
@@ -45,7 +46,12 @@ function OpportunitiesTable(props) {
       setLoading(false);
     }
     load();
-  }, [dispatch]);
+  }, [searchText]);
+
+  useEffect(() => {
+    setSelected([])
+    setData(opportunities)
+  }, [opportunities])
 
   // useEffect(() => {
   //   console.log('OpportunitiesTable => opportunites => ', opportunities);
@@ -150,13 +156,14 @@ function OpportunitiesTable(props) {
       </motion.div>
     );
   }
-
   return (
     <div className="w-full flex flex-col">
       <FuseScrollbars className="grow overflow-x-auto">
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <OpportunitiesTableHead
             selectedOpportunityIds={selected}
+            setSelectedOpportunityIds={setSelected}
+            setData={setData}
             order={order}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
@@ -229,11 +236,15 @@ function OpportunitiesTable(props) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.startDateTime}
+                      {(new Date(n.startDateTime)).toLocaleDateString()}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.address?.streetAddress === '' ? n.address?.city : n.address?.zipCode}
+                      {`${new Date(n.startDateTime).getHours() % 12}:${new Date(n.startDateTime).getMinutes()}${new Date(n.startDateTime).getHours() >= 12 && "pm"}`}
+                    </TableCell>
+
+                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                      {n.locationDetail?.address}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">

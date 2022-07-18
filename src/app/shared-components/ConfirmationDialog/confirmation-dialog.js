@@ -23,7 +23,7 @@ function ConfirmationDialog(props) {
   }
   return (
     <Dialog
-      sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
+      sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435, color: 'white' } }}
       maxWidth="xs"
       TransitionProps={{ onEntering: handleEntering }}
       open={open}
