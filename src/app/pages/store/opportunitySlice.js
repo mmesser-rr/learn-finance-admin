@@ -1,14 +1,16 @@
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getOpportunityFormData } from '../../../graphql/customQueries';
+import FuseUtils from '@fuse/utils/FuseUtils'
 import {
   createOpportunity,
   createOrganization,
   deleteOrganization,
   updateOpportunity,
+  deleteOpportunity
 } from '../../../graphql/mutations';
 
-export const removeOrganization = createAsyncThunk(
+export const removeOrganizationThunk = createAsyncThunk(
   'adminApp/Opportunity/deleteOrganization',
 
   async (params) => {
@@ -22,7 +24,7 @@ export const removeOrganization = createAsyncThunk(
   }
 );
 
-export const fetchOpportunity = createAsyncThunk(
+export const fetchOpportunityThunk = createAsyncThunk(
   'adminApp/Opportunity/getOpportunity',
 
   async (params) => {
@@ -30,21 +32,10 @@ export const fetchOpportunity = createAsyncThunk(
     try {
       const resp = await API.graphql(graphqlOperation(getOpportunityFormData, params));
       data = await resp.data;
-      // Fetch the proper image Urls.
-      if (data.getOpportunity.logoUri !== null) {
-        const logoUri = await Storage.get(data.getOpportunity.logoUri, { download: false });
-        data.getOpportunity.logoUri = logoUri;
-      }
-
-      if (data.getOpportunity.heroPhotoUri !== null) {
-        const heroPhotoUri = await Storage.get(data.getOpportunity.heroPhotoUri, {
-          download: false,
-        });
-        data.getOpportunity.heroPhotoUri = heroPhotoUri;
-      }
+      console.log('fetchOpportunityThunk => data => ', data)      
       return data === undefined ? null : data;
     } catch (err) {
-      console.log('opportunitySlice => fetchOpportunity => err => ', err);
+      console.log('opportunitySlice => fetchOpportunityThunk => err => ', err);
     }
     return data;
   }
@@ -52,15 +43,108 @@ export const fetchOpportunity = createAsyncThunk(
 
 export const removeOpportunity = createAsyncThunk(
   'adminApp/Opportunity/removeOpportunity',
-  async (val, { dispatch, getState }) => {
-    const { id } = getState().adminApp.Opportunity;
-    // await axios.post('/api/e-commerce-app/remove-Opportunity', { id });
+  async (id, { dispatch, getState }) => {
+    const data = { id }
+    await API.graphql(
+      graphqlOperation(deleteOpportunity, {
+        input: data
+      })
+    );
 
     return id;
   }
 );
 
-export const saveOpportunity = createAsyncThunk(
+export const saveOpportunityThunk = createAsyncThunk(
+  'adminApp/Opportunity/saveOpportunity',
+  async (OpportunityData, { dispatch, getState }) => {
+    const data = OpportunityData;
+    let response;
+
+    try {
+      // Upload the images
+      console.log('opportunitySlice => saveOpportunity => data1 => ', data);
+      const logoUri = `opportunities/${data.id}/logo.jpg`;
+      const heroPhotoUri = `opportunities/${data.id}/heroPhoto.jpg`;
+      await Storage.put(logoUri, await (await fetch(data.logoUri)).blob(), {
+        contentType: 'images/jpg',
+      });
+      await Storage.put(heroPhotoUri, await (await fetch(data.heroPhotoUri)).blob(), {
+        contentType: 'images/jpg',
+      });
+      data.logoUri = logoUri;
+      data.heroPhotoUri = heroPhotoUri;
+
+      delete data["organizations"]
+
+      console.log('opportunitySlice => saveOpportunity => data2 => ', data);
+
+      // Parse datetime
+      if (!data.startDateTime || !data.endDateTime) return null;
+      if (Number.isFinite(data.startDateTime) === false) {
+        data.startDateTime = Date.parse(data.startDateTime);
+      }
+      if (Number.isFinite(data.endDateTime) === false) {
+        data.endDateTime = Date.parse(data.endDateTime);
+      }
+
+      response = await API.graphql(
+        graphqlOperation(updateOpportunity, {
+          input: data
+        })
+      );
+    } catch (err) {
+      console.log('opportunitySlice => saveOpportunity => err => ', err);
+    }
+    return response?.data?.updateOpportunity;
+  }
+);
+
+export const createOpportunityThunk = createAsyncThunk(
+  'adminApp/Opportunity/createOpportunity',
+  async (data, { dispatch, getState }) => {
+    let response;
+    try {
+      // Upload the images
+      console.log('FuseUtils.generateGUID()', FuseUtils.generateGUID())
+      console.log('FuseUtils.generateGUID()', FuseUtils.generateGUID())
+      const logoUri = `opportunities/${FuseUtils.generateGUID()}/logo.jpg`;
+      const heroPhotoUri = `opportunities/${FuseUtils.generateGUID()}/heroPhoto.jpg`;
+      await Storage.put(logoUri, await (await fetch(data.logoUri)).blob(), {
+        contentType: 'images/jpg',
+      });
+      await Storage.put(heroPhotoUri, await (await fetch(data.heroPhotoUri)).blob(), {
+        contentType: 'images/jpg',
+      });
+      data.logoUri = logoUri;
+      data.heroPhotoUri = heroPhotoUri;
+
+      delete data["organizations"]
+
+      console.log('opportunitySlice => saveOpportunity => data => ', data);
+
+      // Parse datetime
+      if (!data.startDateTime || !data.endDateTime) return null;
+      if (Number.isFinite(data.startDateTime) === false) {
+        data.startDateTime = Date.parse(data.startDateTime);
+      }
+      if (Number.isFinite(data.endDateTime) === false) {
+        data.endDateTime = Date.parse(data.endDateTime);
+      }
+
+      response = await API.graphql(
+        graphqlOperation(createOpportunity, {
+          input: data
+        })
+      );
+    } catch (err) {
+      console.log('opportunitySlice => saveOpportunity => err => ', err);
+    }
+    return response?.data?.createOpportunity
+  }
+)
+
+export const saveOpportunity1 = createAsyncThunk(
   'adminApp/Opportunity/saveOpportunity',
   async (OpportunityData, { dispatch, getState }) => {
     const logo = OpportunityData.logoUri;
@@ -166,10 +250,10 @@ const OpportunitySlice = createSlice({
           },
           logoUri: '',
           onlineReserved: 0,
-          onlineTotal: '',
+          onlineTotal: 0,
           organizationId: '',
           registrationUrl: 'http://go.com',
-          reward: '100',
+          reward: 100,
           rewardDetails: '$WEALTH',
           seatsReserved: 0,
           seatsTotal: 100,
@@ -187,8 +271,8 @@ const OpportunitySlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchOpportunity.fulfilled]: (state, action) => action.payload,
-    [saveOpportunity.fulfilled]: (state, action) => action.payload,
+    [fetchOpportunityThunk.fulfilled]: (state, action) => action.payload,
+    [saveOpportunityThunk.fulfilled]: (state, action) => action.payload,
     [removeOpportunity.fulfilled]: (state, action) => null,
   },
 });

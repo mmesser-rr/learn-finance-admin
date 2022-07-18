@@ -8,6 +8,10 @@ import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import FuseNavBadge from '../../FuseNavBadge';
+import { openDialog, closeDialog } from 'app/store/fuse/dialogSlice';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 const Root = styled(ListItem)(({ theme, ...props }) => ({
   height: 40,
@@ -50,6 +54,39 @@ function FuseNavVerticalItem(props) {
 
   const itempadding = nestedLevel > 0 ? 28 + nestedLevel * 16 : 12;
 
+  const renderConfirmDialog = (navUrl)=> dispatch(openDialog({
+    children: (
+      <div className="text-white">
+          <DialogTitle id="alert-dialog-title">Do you want to ignore changes?</DialogTitle>          
+          <DialogActions>
+              <Button onClick={()=> {
+                dispatch(closeDialog())                
+              }} color="primary">
+                  No
+              </Button>
+              <Button onClick={()=> {
+                dispatch(closeDialog())
+                window.location = navUrl
+              }} color="primary" autoFocus>
+                  Yes
+              </Button>
+          </DialogActions>
+      </div>
+    )
+  }))
+
+  const handleItemClick = (e) => {
+    const dirtyFieldsLength = Number(localStorage.getItem("dirtyFieldsLength"))
+    if (dirtyFieldsLength > 0) {
+      const navUrl = e.currentTarget.href
+      e.preventDefault()
+      renderConfirmDialog(navUrl)
+    }
+    else {
+      onItemClick && onItemClick(item)
+    }
+  }
+
   return useMemo(
     () => (
       <Root
@@ -58,7 +95,7 @@ function FuseNavVerticalItem(props) {
         to={item.url}
         activeClassName="active"
         className="fuse-list-item"
-        onClick={() => onItemClick && onItemClick(item)}
+        onClick={handleItemClick}
         end={item.end}
         itempadding={itempadding}
         role="button"
