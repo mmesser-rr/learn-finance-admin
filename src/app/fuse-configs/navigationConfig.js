@@ -32,6 +32,23 @@ const navigationConfig = [
         icon: 'add',
         url: 'pages/opportunities/new',
       },
+      {
+        id: 'events',
+        title: 'Events',
+        translate: 'EVENTS',
+        type: 'item',
+        icon: 'insights',
+        url: 'pages/events',
+        end: true
+      },
+      {
+        id: 'new-event',
+        title: 'Add Event',
+        translate: 'NEW_EVENT',
+        type: 'item',
+        icon: 'add',
+        url: 'pages/events/new',
+      },
     ],
   },
   {

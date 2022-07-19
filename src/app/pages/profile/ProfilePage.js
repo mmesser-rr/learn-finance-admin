@@ -102,7 +102,9 @@ function ProfilePage() {
 
   useDeepCompareEffect(() => {
     async function load() {
+      console.log("[ProfilePage => load => user]: ", user)
       await dispatch(getProfile({ id: user.id })).then((action) => {
+        console.log('[ProfilePage => action.payload.getAthlete] => ', action.payload.getAthlete)
         setActiveUser({ data: action.payload.getAthlete });
       });
       await dispatch(getPhoto(user.data.profilePhotoUri)).then((action) => {
