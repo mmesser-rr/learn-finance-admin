@@ -1,0 +1,14 @@
+type Event @model @searchable {
+  creatorId: ID!
+  creator: Athlete! @hasOne(fields: ["creatorId"])
+  sponsor: String!
+  title: String!
+  category: String!
+  heroPhotoUri: String!
+  logoUri: String!
+  tagline: String!
+  description: String!
+  dateTime: Float!
+  location: String!
+  reward: Int!
+}

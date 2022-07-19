@@ -1,0 +1,10 @@
+type Reward @model @searchable {
+  id: ID!
+  creatorId: ID!
+  creator: Athlete! @hasOne(fields: ["creatorId"])
+  title: String!
+  wealthAmount: Int!
+  logoImgUri: String
+  description: String
+  bgImageUri: String
+}

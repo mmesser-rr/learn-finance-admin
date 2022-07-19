@@ -822,6 +822,132 @@ export const deleteEmailChallenge = /* GraphQL */ `
     }
   }
 `;
+export const createEvent = /* GraphQL */ `
+  mutation CreateEvent(
+    $input: CreateEventInput!
+    $condition: ModelEventConditionInput
+  ) {
+    createEvent(input: $input, condition: $condition) {
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
+      sponsor
+      title
+      category
+      heroPhotoUri
+      logoUri
+      tagline
+      description
+      dateTime
+      location
+      reward
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateEvent = /* GraphQL */ `
+  mutation UpdateEvent(
+    $input: UpdateEventInput!
+    $condition: ModelEventConditionInput
+  ) {
+    updateEvent(input: $input, condition: $condition) {
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
+      sponsor
+      title
+      category
+      heroPhotoUri
+      logoUri
+      tagline
+      description
+      dateTime
+      location
+      reward
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteEvent = /* GraphQL */ `
+  mutation DeleteEvent(
+    $input: DeleteEventInput!
+    $condition: ModelEventConditionInput
+  ) {
+    deleteEvent(input: $input, condition: $condition) {
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
+      sponsor
+      title
+      category
+      heroPhotoUri
+      logoUri
+      tagline
+      description
+      dateTime
+      location
+      reward
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createInvite = /* GraphQL */ `
   mutation CreateInvite(
     $input: CreateInviteInput!
@@ -856,6 +982,129 @@ export const deleteInvite = /* GraphQL */ `
     deleteInvite(input: $input, condition: $condition) {
       code
       status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createLearn = /* GraphQL */ `
+  mutation CreateLearn(
+    $input: CreateLearnInput!
+    $condition: ModelLearnConditionInput
+  ) {
+    createLearn(input: $input, condition: $condition) {
+      id
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
+      bgImageUri
+      sponsor
+      title
+      level
+      reward
+      deposits {
+        videoUri
+        title
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateLearn = /* GraphQL */ `
+  mutation UpdateLearn(
+    $input: UpdateLearnInput!
+    $condition: ModelLearnConditionInput
+  ) {
+    updateLearn(input: $input, condition: $condition) {
+      id
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
+      bgImageUri
+      sponsor
+      title
+      level
+      reward
+      deposits {
+        videoUri
+        title
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteLearn = /* GraphQL */ `
+  mutation DeleteLearn(
+    $input: DeleteLearnInput!
+    $condition: ModelLearnConditionInput
+  ) {
+    deleteLearn(input: $input, condition: $condition) {
+      id
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
+      bgImageUri
+      sponsor
+      title
+      level
+      reward
+      deposits {
+        videoUri
+        title
+      }
       createdAt
       updatedAt
     }
@@ -1168,6 +1417,117 @@ export const deletePhoneChallenge = /* GraphQL */ `
       code
       phoneNumber
       verified
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createReward = /* GraphQL */ `
+  mutation CreateReward(
+    $input: CreateRewardInput!
+    $condition: ModelRewardConditionInput
+  ) {
+    createReward(input: $input, condition: $condition) {
+      id
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
+      title
+      wealthAmount
+      logoImgUri
+      description
+      bgImageUri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateReward = /* GraphQL */ `
+  mutation UpdateReward(
+    $input: UpdateRewardInput!
+    $condition: ModelRewardConditionInput
+  ) {
+    updateReward(input: $input, condition: $condition) {
+      id
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
+      title
+      wealthAmount
+      logoImgUri
+      description
+      bgImageUri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteReward = /* GraphQL */ `
+  mutation DeleteReward(
+    $input: DeleteRewardInput!
+    $condition: ModelRewardConditionInput
+  ) {
+    deleteReward(input: $input, condition: $condition) {
+      id
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
+      title
+      wealthAmount
+      logoImgUri
+      description
+      bgImageUri
       createdAt
       updatedAt
     }
