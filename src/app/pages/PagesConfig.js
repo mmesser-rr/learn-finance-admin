@@ -1,10 +1,13 @@
 import { lazy } from "react";
 import { authRoles } from "app/auth";
-import OpportunityPage from "./opportunity/OpportunityPage";
 
 const Opportunities = lazy(() => import("./opportunities/Opportunities"));
 const Opportunity = lazy(() => import("./opportunity/Opportunity"));
+const OpportunityPage = lazy(() => import("./opportunity/OpportunityPage"));
 const ProfilePage = lazy(() => import("./profile/ProfilePage"));
+const Events = lazy(() => import("./events/Events"));
+const Event = lazy(() => import("./event/Event"));
+const EventPage = lazy(() => import("./event/EventPage"));
 
 const PagesConfig = {
   settings: {
@@ -34,6 +37,18 @@ const PagesConfig = {
       path: "pages/profile/:id/*",
       element: <ProfilePage />,
     },
+    {
+      path: "pages/events",
+      element: <Events />,
+    },
+    {
+      path: "pages/events/:id/*",
+      element: <Event />,
+    },
+    {
+      path: "pages/event/:id/*",
+      element: <EventPage />,
+    }
   ],
 };
 
