@@ -1,0 +1,24 @@
+type Learn @model @searchable {
+  id: ID!
+  creatorId: ID!
+  creator: Athlete! @hasOne(fields: ["creatorId"])
+  bgImageUri: String
+  sponsor: String!
+  title: String!
+  level: Int!
+  reward: Int!
+  deposits: [Deposit]
+}
+
+type Deposit {
+  videoUri: String
+  title: String!
+  # Duration (other meta)
+  questions: [Quiz]
+}
+
+type Quiz {
+  questionText: String!
+  answers: [String]!
+  correctAnswer: String!
+}
