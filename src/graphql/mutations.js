@@ -993,7 +993,6 @@ export const createLearn = /* GraphQL */ `
     $condition: ModelLearnConditionInput
   ) {
     createLearn(input: $input, condition: $condition) {
-      id
       creatorId
       creator {
         firstName
@@ -1023,6 +1022,7 @@ export const createLearn = /* GraphQL */ `
         videoUri
         title
       }
+      id
       createdAt
       updatedAt
     }
@@ -1034,7 +1034,6 @@ export const updateLearn = /* GraphQL */ `
     $condition: ModelLearnConditionInput
   ) {
     updateLearn(input: $input, condition: $condition) {
-      id
       creatorId
       creator {
         firstName
@@ -1064,6 +1063,7 @@ export const updateLearn = /* GraphQL */ `
         videoUri
         title
       }
+      id
       createdAt
       updatedAt
     }
@@ -1075,7 +1075,6 @@ export const deleteLearn = /* GraphQL */ `
     $condition: ModelLearnConditionInput
   ) {
     deleteLearn(input: $input, condition: $condition) {
-      id
       creatorId
       creator {
         firstName
@@ -1105,6 +1104,7 @@ export const deleteLearn = /* GraphQL */ `
         videoUri
         title
       }
+      id
       createdAt
       updatedAt
     }
