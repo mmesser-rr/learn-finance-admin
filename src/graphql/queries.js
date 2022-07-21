@@ -235,13 +235,13 @@ export const searchLearns = /* GraphQL */ `
       aggregates: $aggregates
     ) {
       items {
-        id
         creatorId
         bgImageUri
         sponsor
         title
         level
         reward
+        id
         createdAt
         updatedAt
       }
@@ -743,7 +743,6 @@ export const listInvites = /* GraphQL */ `
 export const getLearn = /* GraphQL */ `
   query GetLearn($id: ID!) {
     getLearn(id: $id) {
-      id
       creatorId
       creator {
         firstName
@@ -773,6 +772,7 @@ export const getLearn = /* GraphQL */ `
         videoUri
         title
       }
+      id
       createdAt
       updatedAt
     }
@@ -786,13 +786,13 @@ export const listLearns = /* GraphQL */ `
   ) {
     listLearns(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        id
         creatorId
         bgImageUri
         sponsor
         title
         level
         reward
+        id
         createdAt
         updatedAt
       }
