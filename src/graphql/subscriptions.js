@@ -559,7 +559,6 @@ export const onDeleteInvite = /* GraphQL */ `
 export const onCreateLearn = /* GraphQL */ `
   subscription OnCreateLearn {
     onCreateLearn {
-      id
       creatorId
       creator {
         firstName
@@ -589,6 +588,7 @@ export const onCreateLearn = /* GraphQL */ `
         videoUri
         title
       }
+      id
       createdAt
       updatedAt
     }
@@ -597,7 +597,6 @@ export const onCreateLearn = /* GraphQL */ `
 export const onUpdateLearn = /* GraphQL */ `
   subscription OnUpdateLearn {
     onUpdateLearn {
-      id
       creatorId
       creator {
         firstName
@@ -627,6 +626,7 @@ export const onUpdateLearn = /* GraphQL */ `
         videoUri
         title
       }
+      id
       createdAt
       updatedAt
     }
@@ -635,7 +635,6 @@ export const onUpdateLearn = /* GraphQL */ `
 export const onDeleteLearn = /* GraphQL */ `
   subscription OnDeleteLearn {
     onDeleteLearn {
-      id
       creatorId
       creator {
         firstName
@@ -665,6 +664,7 @@ export const onDeleteLearn = /* GraphQL */ `
         videoUri
         title
       }
+      id
       createdAt
       updatedAt
     }

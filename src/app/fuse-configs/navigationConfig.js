@@ -49,6 +49,23 @@ const navigationConfig = [
         icon: 'add',
         url: 'pages/events/new',
       },
+      {
+        id: 'learns',
+        title: 'Learns',
+        translate: 'LEARNS',
+        type: 'item',
+        icon: 'insights',
+        url: 'pages/learns',
+        end: true
+      },
+      {
+        id: 'new-learn',
+        title: 'Add Learn',
+        translate: 'NEW_LEARN',
+        type: 'item',
+        icon: 'add',
+        url: 'pages/learns/new',
+      },
     ],
   },
   {
