@@ -8,6 +8,9 @@ const ProfilePage = lazy(() => import("./profile/ProfilePage"));
 const Events = lazy(() => import("./events/Events"));
 const Event = lazy(() => import("./event/Event"));
 const EventPage = lazy(() => import("./event/EventPage"));
+const Learns = lazy(() => import("./learns/Learns"));
+const Learn = lazy(() => import("./learn/Learn"));
+const LearnPage = lazy(() => import("./learn/LearnPage"));
 
 const PagesConfig = {
   settings: {
@@ -48,6 +51,18 @@ const PagesConfig = {
     {
       path: "pages/event/:id/*",
       element: <EventPage />,
+    },
+    {
+      path: "pages/learns",
+      element: <Learns />,
+    },
+    {
+      path: "pages/learns/:id/*",
+      element: <Learn />,
+    },
+    {
+      path: "pages/learn/:id/*",
+      element: <LearnPage />,
     }
   ],
 };
