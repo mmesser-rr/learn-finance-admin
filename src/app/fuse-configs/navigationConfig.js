@@ -66,6 +66,23 @@ const navigationConfig = [
         icon: 'add',
         url: 'pages/learns/new',
       },
+      {
+        id: 'rewards',
+        title: 'Rewards',
+        translate: 'REWARDS',
+        type: 'item',
+        icon: 'insights',
+        url: 'pages/rewards',
+        end: true
+      },
+      {
+        id: 'new-reward',
+        title: 'Add Reward',
+        translate: 'NEW_REWARD',
+        type: 'item',
+        icon: 'add',
+        url: 'pages/rewards/new',
+      },
     ],
   },
   {
