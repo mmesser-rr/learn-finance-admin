@@ -57,3 +57,47 @@ export const getOpportunityFormData = /* GraphQL */ `
     }
   }
 `;
+
+export const getCustomLearn = /* GraphQL */ `
+  query GetLearn($id: ID!) {
+    getLearn(id: $id) {
+      creatorId
+      creator {
+        firstName
+        lastName
+        mobilePhone
+        athleteTag
+        bio
+        profilePhotoUri
+        heroPhotoUri
+        email
+        level
+        dateOfBirth
+        plaidToken
+        wyreId
+        isActive
+        handle
+        id
+        createdAt
+        updatedAt
+      }
+      bgImageUri
+      sponsor
+      title
+      level
+      reward
+      deposits {
+        videoUri
+        title
+        questions {
+          questionText
+          answers
+          correctAnswer
+        }
+      }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
