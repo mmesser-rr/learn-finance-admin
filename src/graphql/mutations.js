@@ -1451,9 +1451,9 @@ export const createReward = /* GraphQL */ `
       }
       title
       wealthAmount
-      logoImgUri
+      logoUri
       description
-      bgImageUri
+      heroPhotoUri
       createdAt
       updatedAt
     }
@@ -1488,9 +1488,9 @@ export const updateReward = /* GraphQL */ `
       }
       title
       wealthAmount
-      logoImgUri
+      logoUri
       description
-      bgImageUri
+      heroPhotoUri
       createdAt
       updatedAt
     }
@@ -1525,9 +1525,9 @@ export const deleteReward = /* GraphQL */ `
       }
       title
       wealthAmount
-      logoImgUri
+      logoUri
       description
-      bgImageUri
+      heroPhotoUri
       createdAt
       updatedAt
     }

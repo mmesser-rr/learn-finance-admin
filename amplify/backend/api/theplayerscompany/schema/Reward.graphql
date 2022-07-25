@@ -4,7 +4,7 @@ type Reward @model @searchable {
   creator: Athlete! @hasOne(fields: ["creatorId"])
   title: String!
   wealthAmount: Int!
-  logoImgUri: String
+  logoUri: String
   description: String
-  bgImageUri: String
+  heroPhotoUri: String
 }

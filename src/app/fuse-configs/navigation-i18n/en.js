@@ -6,7 +6,9 @@ const locale = {
   NEW_EVENT: 'Add Event',
   EVENTS: 'Events',
   NEW_LEARN: 'Add Learn',
-  LEARNS: 'Learns'
+  LEARNS: 'Learns',
+  NEW_REWARD: 'Add Reward',
+  REWARDS: 'Rewards',
 };
 
 export default locale;
