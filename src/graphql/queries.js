@@ -351,9 +351,9 @@ export const searchRewards = /* GraphQL */ `
         creatorId
         title
         wealthAmount
-        logoImgUri
+        logoUri
         description
-        bgImageUri
+        heroPhotoUri
         createdAt
         updatedAt
       }
@@ -1009,9 +1009,9 @@ export const getReward = /* GraphQL */ `
       }
       title
       wealthAmount
-      logoImgUri
+      logoUri
       description
-      bgImageUri
+      heroPhotoUri
       createdAt
       updatedAt
     }
@@ -1029,9 +1029,9 @@ export const listRewards = /* GraphQL */ `
         creatorId
         title
         wealthAmount
-        logoImgUri
+        logoUri
         description
-        bgImageUri
+        heroPhotoUri
         createdAt
         updatedAt
       }
