@@ -7542,7 +7542,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "logoImgUri",
+          "name" : "logoUri",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -7564,7 +7564,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "bgImageUri",
+          "name" : "heroPhotoUri",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -7651,7 +7651,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "logoImgUri",
+          "name" : "logoUri",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -7669,7 +7669,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "bgImageUri",
+          "name" : "heroPhotoUri",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -7789,7 +7789,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "logoImgUri",
+          "name" : "logoUri",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -7799,7 +7799,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "bgImageUri",
+          "name" : "heroPhotoUri",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -7891,7 +7891,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "logoImgUri",
+          "name" : "logoUri",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -7901,7 +7901,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "bgImageUri",
+          "name" : "heroPhotoUri",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -10069,7 +10069,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "logoImgUri",
+          "name" : "logoUri",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -10087,7 +10087,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "bgImageUri",
+          "name" : "heroPhotoUri",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -16532,7 +16532,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "logoImgUri",
+          "name" : "logoUri",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -16550,7 +16550,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "bgImageUri",
+          "name" : "heroPhotoUri",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -16595,7 +16595,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "logoImgUri",
+          "name" : "logoUri",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -16613,7 +16613,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "bgImageUri",
+          "name" : "heroPhotoUri",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -16706,7 +16706,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "logoImgUri",
+          "name" : "logoUri",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -16724,7 +16724,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "bgImageUri",
+          "name" : "heroPhotoUri",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -17979,23 +17979,6 @@
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "deprecated",
-        "description" : null,
-        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
-        "args" : [ {
-          "name" : "reason",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
-          "defaultValue" : "\"No longer supported\""
-        } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
         "name" : "aws_publish",
         "description" : "Tells the service which subscriptions will be published to when this mutation is called. This directive is deprecated use @aws_susbscribe directive instead.",
         "locations" : [ "FIELD_DEFINITION" ],
@@ -18092,6 +18075,23 @@
         "description" : "Tells the service this field/object has access authorized by a Lambda Authorizer.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
         "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "deprecated",
+        "description" : null,
+        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "args" : [ {
+          "name" : "reason",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : "\"No longer supported\""
+        } ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
