@@ -1,12 +1,12 @@
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getLearn } from '../../../graphql/queries';
+import { getCustomLearn } from '../../../graphql/customQueries';
 import FuseUtils from '@fuse/utils/FuseUtils'
 import {
-  createLearn,
-  updateLearn,
-  deleteLearn
-} from '../../../graphql/mutations';
+  createCustomLearn,
+  updateCustomLearn,
+  deleteCustomLearn
+} from '../../../graphql/customMutations';
 
 export const fetchLearnThunk = createAsyncThunk(
   'adminApp/Learn/getLearn',
@@ -14,7 +14,7 @@ export const fetchLearnThunk = createAsyncThunk(
   async (params) => {
     let data;
     try {
-      const resp = await API.graphql(graphqlOperation(getLearn, params));
+      const resp = await API.graphql(graphqlOperation(getCustomLearn, params));
       data = await resp.data;
       console.log('fetchLearnThunk => data => ', data)      
       return data === undefined ? null : data;
@@ -30,7 +30,7 @@ export const removeLearn = createAsyncThunk(
   async (id, { dispatch, getState }) => {
     const data = { id }
     await API.graphql(
-      graphqlOperation(deleteLearn, {
+      graphqlOperation(deleteCustomLearn, {
         input: data
       })
     );
@@ -57,7 +57,7 @@ export const saveLearnThunk = createAsyncThunk(
       console.log('learnSlice => saveLearn => data2 => ', data);
 
       response = await API.graphql(
-        graphqlOperation(updateLearn, {
+        graphqlOperation(updateCustomLearn, {
           input: data
         })
       );
@@ -83,8 +83,8 @@ export const createLearnThunk = createAsyncThunk(
       console.log('learnSlice => saveLearn => data => ', data);
 
       response = await API.graphql(
-        graphqlOperation(createLearn, {
-          input: data
+        graphqlOperation(createCustomLearn, {
+          inputCustom: data
         })
       );
     } catch (err) {
