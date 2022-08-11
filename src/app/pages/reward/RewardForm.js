@@ -14,6 +14,7 @@ function RewardForm({ data, child }) {
   const methods = useForm({
     mode: "onChange",
     defaultValues: {
+      id: data.id,
       title: data.title,
       wealthAmount: data.wealthAmount,
       heroPhotoUri: data.heroPhotoUri,

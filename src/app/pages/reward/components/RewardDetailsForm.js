@@ -40,14 +40,15 @@ function RewardDetailsForm({ logoUriOrig, heroPhotoUriOrig }) {
 
   useEffect(() => {
     async function getImage() {
-      let url;
-      try {
-        setOriginLogo(await Storage.get(logoUriOrig, { download: false }) ?? "");
-        setOriginBg(await Storage.get(heroPhotoUriOrig, { download: false }) ?? "");
-      } catch (err) {
-        console.log("RewardDetailsForm => getImage => err => ", err);
+      if (logoUriOrig?.startsWith("rewards")) {
+        const imgSrc = await Storage.get(logoUriOrig, { download: false });
+        setOriginLogo(imgSrc);
       }
-      return url;
+      
+      if (heroPhotoUriOrig?.startsWith("rewards")) {
+        const imgSrc = await Storage.get(heroPhotoUriOrig, { download: false });
+        setOriginBg(imgSrc);
+      }
     }
     getImage();
   }, []);

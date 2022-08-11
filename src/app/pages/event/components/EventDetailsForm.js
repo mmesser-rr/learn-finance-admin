@@ -40,14 +40,15 @@ function EventDetailsForm({ logoUriOrig, heroPhotoUriOrig }) {
 
   useEffect(() => {
     async function getImage() {
-      let url;
-      try {
-        setOriginLogo(await Storage.get(logoUriOrig, { download: false }) ?? "");
-        setOriginBg(await Storage.get(heroPhotoUriOrig, { download: false }) ?? "");
-      } catch (err) {
-        console.log("EventDetailsForm => getImage => err => ", err);
+      if (logoUriOrig?.startsWith("events")) {
+        const imgSrc = await Storage.get(logoUriOrig, { download: false });
+        setOriginLogo(imgSrc);
       }
-      return url;
+
+      if (heroPhotoUriOrig?.startsWith("events")) {
+        const imgSrc = await Storage.get(heroPhotoUriOrig, { download: false });
+        setOriginBg(imgSrc);
+      }
     }
     getImage();
   }, []);
