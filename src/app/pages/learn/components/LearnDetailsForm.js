@@ -4,18 +4,18 @@ import { useFormContext, Controller, useFieldArray } from "react-hook-form";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
-import IconButton from '@mui/material/IconButton';
+import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -23,7 +23,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import FormHeader from "../../../shared-components/FormHeader";
 import DepositForm from "./DepositForm";
-import ConfirmationDialog from '../../../shared-components/ConfirmationDialog';
+import ConfirmationDialog from "../../../shared-components/ConfirmationDialog";
 
 function LearnDetailsForm({ bgImageUri }) {
   const methods = useFormContext();
@@ -42,7 +42,10 @@ function LearnDetailsForm({ bgImageUri }) {
 
   const handleAppendDeposit = () => {
     append({ videoUri: "", title: "", questions: [] });
-    console.log('[LearnDetailsForm => handleAppendDeposi => deposits]: ', deposits)
+    console.log(
+      "[LearnDetailsForm => handleAppendDeposi => deposits]: ",
+      deposits
+    );
   };
   const handleDeleteDeposit = () => {
     remove(depositIndexToDelete);
@@ -57,13 +60,11 @@ function LearnDetailsForm({ bgImageUri }) {
 
   useEffect(() => {
     async function getImage() {
-      let url;
-      try {
-        setOriginBg((await Storage.get(bgImageUri, { download: false })) ?? "");
-      } catch (err) {
-        console.log("LearnDetailsForm => getImage => err => ", err);
+      if (bgImageUri?.startsWith("learns")) {
+        const imgSrc = await Storage.get(bgImageUri, { download: false });
+        console.log("learnHeader => logoUriFetched => ", imgSrc);
+        setOriginBg(imgSrc);
       }
-      return url;
     }
     getImage();
   }, []);
@@ -108,7 +109,7 @@ function LearnDetailsForm({ bgImageUri }) {
         setValue("logoUri", path, { shouldValidate: true });
       } else {
         setCropDataBG(path);
-        setValue("heroPhotoUri", path, {
+        setValue("bgImageUri", path, {
           shouldValidate: true,
         });
       }
@@ -287,7 +288,7 @@ function LearnDetailsForm({ bgImageUri }) {
 
       {deposits.map((deposit, depositIndex) => (
         <div key={depositIndex}>
-          <DepositForm {...{control, depositIndex}} />
+          <DepositForm {...{ control, depositIndex }} />
           <Box>
             <IconButton
               variant="contained"

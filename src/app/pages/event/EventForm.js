@@ -14,6 +14,7 @@ function EventForm({ data, child }) {
   const methods = useForm({
     mode: "onChange",
     defaultValues: {
+      id: data.id,
       sponsor: data.sponsor,
       title: data.title,
       category: data.category ?? "",

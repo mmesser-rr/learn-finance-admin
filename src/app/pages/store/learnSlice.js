@@ -84,7 +84,7 @@ export const createLearnThunk = createAsyncThunk(
 
       response = await API.graphql(
         graphqlOperation(createCustomLearn, {
-          inputCustom: data
+          input: data
         })
       );
     } catch (err) {

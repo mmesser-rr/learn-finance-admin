@@ -66,11 +66,6 @@ function Learn(props) {
     load();
   }, [dispatch, routeParams]);
 
-  // Tab Change
-  function handleTabChange(learn, value) {
-    setTabValue(value);
-  }
-
   // Show Message if the requested learns is not exists
   if (noLearn) {
     return (
@@ -94,8 +89,8 @@ function Learn(props) {
       </motion.div>
     );
   }
-  const learnForm = renderForm();
   if (data !== null && data !== undefined) {
+    const learnForm = renderForm();
     return <LearnForm data={data} child={learnForm} />;
   }
   return <FuseLoading />;
@@ -116,7 +111,7 @@ function Learn(props) {
         content={
           <div>
             <div className="p-16 sm:p-24 max-w-2xl">
-              <LearnDetailsForm logoUriOrig={data?.logoUri} heroPhotoUriOrig={data?.heroPhotoUri} />
+              <LearnDetailsForm bgImageUri={data?.bgImageUri} />
             </div>
           </div>
         }

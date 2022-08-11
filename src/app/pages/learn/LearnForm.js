@@ -14,6 +14,7 @@ function LearnForm({ data, child }) {
   const methods = useForm({
     mode: "onChange",
     defaultValues: {
+      id: data.id,
       bgImageUri: data.bgImageUri,
       sponsor: data.sponsor,
       title: data.title,
