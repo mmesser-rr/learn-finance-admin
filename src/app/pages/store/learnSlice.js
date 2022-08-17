@@ -1,37 +1,37 @@
-import { API, graphqlOperation, Storage } from 'aws-amplify';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getCustomLearn } from '../../../graphql/customQueries';
-import FuseUtils from '@fuse/utils/FuseUtils'
+import { API, graphqlOperation, Storage } from "aws-amplify";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { getCustomLearn } from "../../../graphql/customQueries";
+import FuseUtils from "@fuse/utils/FuseUtils";
 import {
   createCustomLearn,
   updateCustomLearn,
-  deleteCustomLearn
-} from '../../../graphql/customMutations';
+  deleteCustomLearn,
+} from "../../../graphql/customMutations";
 
 export const fetchLearnThunk = createAsyncThunk(
-  'adminApp/Learn/getLearn',
+  "adminApp/Learn/getLearn",
 
   async (params) => {
     let data;
     try {
       const resp = await API.graphql(graphqlOperation(getCustomLearn, params));
       data = await resp.data;
-      console.log('fetchLearnThunk => data => ', data)      
+      console.log("fetchLearnThunk => data => ", data);
       return data === undefined ? null : data;
     } catch (err) {
-      console.log('learnSlice => fetchLearnThunk => err => ', err);
+      console.log("learnSlice => fetchLearnThunk => err => ", err);
     }
     return data;
   }
 );
 
 export const removeLearn = createAsyncThunk(
-  'adminApp/Learn/removeLearn',
+  "adminApp/Learn/removeLearn",
   async (id, { dispatch, getState }) => {
-    const data = { id }
+    const data = { id };
     await API.graphql(
       graphqlOperation(deleteCustomLearn, {
-        input: data
+        input: data,
       })
     );
 
@@ -40,81 +40,91 @@ export const removeLearn = createAsyncThunk(
 );
 
 export const saveLearnThunk = createAsyncThunk(
-  'adminApp/Learn/saveLearn',
+  "adminApp/Learn/saveLearn",
   async (LearnData, { dispatch, getState }) => {
     const data = LearnData;
     let response;
 
     try {
-      // Upload the images
-      console.log('learnSlice => saveLearn => data1 => ', data);
-      const bgImageUri = `learns/${data.id}/bgImage.jpg`;
-      await Storage.put(bgImageUri, await (await fetch(data.bgImageUri)).blob(), {
-        contentType: 'images/jpg',
-      });
-      data.bgImageUri = bgImageUri;
+      if (!data.bgImageUri.startsWith("learns")) {
+        // Upload the images
+        console.log("learnSlice => saveLearn => data1 => ", data);
+        const bgImageUri = `learns/${data.id}/bgImage.jpg`;
+        await Storage.put(
+          bgImageUri,
+          await (await fetch(data.bgImageUri)).blob(),
+          {
+            contentType: "images/jpg",
+          }
+        );
+        data.bgImageUri = bgImageUri;
 
-      console.log('learnSlice => saveLearn => data2 => ', data);
+        console.log("learnSlice => saveLearn => data2 => ", data);
+      }
 
       response = await API.graphql(
         graphqlOperation(updateCustomLearn, {
-          input: data
+          input: data,
         })
       );
     } catch (err) {
-      console.log('learnSlice => saveLearn => err => ', err);
+      console.log("learnSlice => saveLearn => err => ", err);
     }
     return response?.data?.updateLearn;
   }
 );
 
 export const createLearnThunk = createAsyncThunk(
-  'adminApp/Learn/createLearn',
+  "adminApp/Learn/createLearn",
   async (data, { dispatch, getState }) => {
     let response;
     try {
       // Upload the images
       const bgImageUri = `learns/${FuseUtils.generateGUID()}/bgImage.jpg`;
-      await Storage.put(bgImageUri, await (await fetch(data.bgImageUri)).blob(), {
-        contentType: 'images/jpg',
-      });
+      await Storage.put(
+        bgImageUri,
+        await (await fetch(data.bgImageUri)).blob(),
+        {
+          contentType: "images/jpg",
+        }
+      );
       data.bgImageUri = bgImageUri;
 
-      console.log('learnSlice => saveLearn => data => ', data);
+      console.log("learnSlice => saveLearn => data => ", data);
 
       response = await API.graphql(
         graphqlOperation(createCustomLearn, {
-          input: data
+          input: data,
         })
       );
     } catch (err) {
-      console.log('learnSlice => saveLearn => err => ', err);
+      console.log("learnSlice => saveLearn => err => ", err);
     }
-    return response?.data?.createLearn
+    return response?.data?.createLearn;
   }
-)
+);
 
 export const saveLearn1 = createAsyncThunk(
-  'adminApp/Learn/saveLearn',
+  "adminApp/Learn/saveLearn",
   async (LearnData, { dispatch, getState }) => {
     const logo = LearnData.logoUri;
     const background = LearnData.heroPhotoUri;
     const { organizations } = LearnData;
     const data = LearnData;
-    data.logoUri = '';
-    data.heroPhotoUri = '';
+    data.logoUri = "";
+    data.heroPhotoUri = "";
     delete data.organizations;
     const arrOrganizations = [];
 
     try {
-      console.log('learnSlice => saveLearn => data1 => ', data);
-      console.log('startDateTime number?', Number.isNaN(data.startDateTime));
+      console.log("learnSlice => saveLearn => data1 => ", data);
+      console.log("startDateTime number?", Number.isNaN(data.startDateTime));
       if (Number.isNaN(data.startDateTime) === true) {
         data.startDateTime = Date.parse(data.startDateTime);
-        console.log('startDateTime parsed', Date.parse(data.startDateTime));
+        console.log("startDateTime parsed", Date.parse(data.startDateTime));
       }
       // data.endDateTime = Date.parse(data.endDateTime);
-      console.log('learnSlice => saveLearn => data2 => ', data);
+      console.log("learnSlice => saveLearn => data2 => ", data);
       const resp = await API.graphql(
         graphqlOperation(createLearn, {
           input: data,
@@ -126,12 +136,20 @@ export const saveLearn1 = createAsyncThunk(
       // Upload the images
       const logoUri = `learns/${newId}/logo.jpg`;
       const heroPhotoUri = `learns/${newId}/heroPhoto.jpg`;
-      const logoResult = await Storage.put(logoUri, await (await fetch(logo)).blob(), {
-        contentType: 'images/jpg',
-      });
-      const bgResult = await Storage.put(heroPhotoUri, await (await fetch(background)).blob(), {
-        contentType: 'images/jpg',
-      });
+      const logoResult = await Storage.put(
+        logoUri,
+        await (await fetch(logo)).blob(),
+        {
+          contentType: "images/jpg",
+        }
+      );
+      const bgResult = await Storage.put(
+        heroPhotoUri,
+        await (await fetch(background)).blob(),
+        {
+          contentType: "images/jpg",
+        }
+      );
       const updateResp = await API.graphql(
         graphqlOperation(updateLearn, {
           input: {
@@ -162,7 +180,7 @@ export const saveLearn1 = createAsyncThunk(
         return newLearn;
       }
     } catch (err) {
-      console.log('learnSlice => saveLearn => err => ', err);
+      console.log("learnSlice => saveLearn => err => ", err);
     }
     const dataEmpty = {};
     return dataEmpty;
@@ -170,7 +188,7 @@ export const saveLearn1 = createAsyncThunk(
 );
 
 const LearnSlice = createSlice({
-  name: 'adminApp/Learn',
+  name: "adminApp/Learn",
   initialState: null,
   reducers: {
     resetLearn: () => null,
