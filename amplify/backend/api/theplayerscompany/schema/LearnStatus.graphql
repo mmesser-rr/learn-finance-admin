@@ -1,0 +1,5 @@
+type LearnStatus @model @searchable {
+  athleteId: ID!
+  learnItemId: ID!
+  passedDepositIndex: Int!
+}

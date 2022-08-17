@@ -7,4 +7,5 @@ type Reward @model @searchable {
   logoUri: String
   description: String
   heroPhotoUri: String
+  redeemed: Boolean! @default(value: "false")
 }

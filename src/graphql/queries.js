@@ -194,6 +194,7 @@ export const searchEvents = /* GraphQL */ `
         dateTime
         location
         reward
+        registered
         id
         createdAt
         updatedAt
@@ -241,6 +242,50 @@ export const searchLearns = /* GraphQL */ `
         title
         level
         reward
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+      total
+      aggregateItems {
+        name
+        result {
+          ... on SearchableAggregateScalarResult {
+            value
+          }
+          ... on SearchableAggregateBucketResult {
+            buckets {
+              key
+              doc_count
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+export const searchLearnStatuses = /* GraphQL */ `
+  query SearchLearnStatuses(
+    $filter: SearchableLearnStatusFilterInput
+    $sort: [SearchableLearnStatusSortInput]
+    $limit: Int
+    $nextToken: String
+    $from: Int
+    $aggregates: [SearchableLearnStatusAggregationInput]
+  ) {
+    searchLearnStatuses(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+      aggregates: $aggregates
+    ) {
+      items {
+        athleteId
+        learnItemId
+        passedDepositIndex
         id
         createdAt
         updatedAt
@@ -354,6 +399,7 @@ export const searchRewards = /* GraphQL */ `
         logoUri
         description
         heroPhotoUri
+        redeemed
         createdAt
         updatedAt
       }
@@ -426,6 +472,7 @@ export const getAthlete = /* GraphQL */ `
       wyreId
       isActive
       handle
+      wealthBalance
       socialHandles {
         nextToken
       }
@@ -457,6 +504,7 @@ export const listAthletes = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -483,6 +531,7 @@ export const getAthleteAccount = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -656,6 +705,7 @@ export const getEvent = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -670,6 +720,7 @@ export const getEvent = /* GraphQL */ `
       dateTime
       location
       reward
+      registered
       id
       createdAt
       updatedAt
@@ -695,6 +746,7 @@ export const listEvents = /* GraphQL */ `
         dateTime
         location
         reward
+        registered
         id
         createdAt
         updatedAt
@@ -759,6 +811,7 @@ export const getLearn = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -800,6 +853,37 @@ export const listLearns = /* GraphQL */ `
     }
   }
 `;
+export const getLearnStatus = /* GraphQL */ `
+  query GetLearnStatus($id: ID!) {
+    getLearnStatus(id: $id) {
+      athleteId
+      learnItemId
+      passedDepositIndex
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listLearnStatuses = /* GraphQL */ `
+  query ListLearnStatuses(
+    $filter: ModelLearnStatusFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLearnStatuses(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        athleteId
+        learnItemId
+        passedDepositIndex
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getOpportunity = /* GraphQL */ `
   query GetOpportunity($id: ID!) {
     getOpportunity(id: $id) {
@@ -821,6 +905,7 @@ export const getOpportunity = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -1003,6 +1088,7 @@ export const getReward = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -1012,6 +1098,7 @@ export const getReward = /* GraphQL */ `
       logoUri
       description
       heroPhotoUri
+      redeemed
       createdAt
       updatedAt
     }
@@ -1032,6 +1119,7 @@ export const listRewards = /* GraphQL */ `
         logoUri
         description
         heroPhotoUri
+        redeemed
         createdAt
         updatedAt
       }

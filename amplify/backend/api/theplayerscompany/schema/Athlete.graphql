@@ -57,6 +57,7 @@ type Athlete @model {
   wyreId: String
   isActive: Boolean!
   handle: String
+  wealthBalance: Int! @default(value: "0")
   socialHandles: [SocialHandle] @hasMany
 }
 

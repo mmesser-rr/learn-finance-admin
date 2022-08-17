@@ -6,18 +6,18 @@ type Learn @model @searchable {
   title: String!
   level: LearnLevel!
   reward: Int!
-  deposits: [Deposit]
+  deposits: [Deposit!]!
 }
 
 type Deposit {
   videoUri: String
   title: String!
-  questions: [Quiz]
+  questions: [Quiz!]!
 }
 
 type Quiz {
   questionText: String!
-  answers: [String]!
+  answers: [String!]!
   correctAnswer: String!
 }
 
