@@ -77,6 +77,7 @@ export const openAppAndAccount = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -110,6 +111,7 @@ export const openAccount = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -176,6 +178,7 @@ export const podSettings = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -422,6 +425,7 @@ export const createAthlete = /* GraphQL */ `
       wyreId
       isActive
       handle
+      wealthBalance
       socialHandles {
         nextToken
       }
@@ -484,6 +488,7 @@ export const updateAthlete = /* GraphQL */ `
       wyreId
       isActive
       handle
+      wealthBalance
       socialHandles {
         nextToken
       }
@@ -546,6 +551,7 @@ export const deleteAthlete = /* GraphQL */ `
       wyreId
       isActive
       handle
+      wealthBalance
       socialHandles {
         nextToken
       }
@@ -576,6 +582,7 @@ export const createAthleteAccount = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -612,6 +619,7 @@ export const updateAthleteAccount = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -648,6 +656,7 @@ export const deleteAthleteAccount = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -844,6 +853,7 @@ export const createEvent = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -858,6 +868,7 @@ export const createEvent = /* GraphQL */ `
       dateTime
       location
       reward
+      registered
       id
       createdAt
       updatedAt
@@ -886,6 +897,7 @@ export const updateEvent = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -900,6 +912,7 @@ export const updateEvent = /* GraphQL */ `
       dateTime
       location
       reward
+      registered
       id
       createdAt
       updatedAt
@@ -928,6 +941,7 @@ export const deleteEvent = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -942,6 +956,7 @@ export const deleteEvent = /* GraphQL */ `
       dateTime
       location
       reward
+      registered
       id
       createdAt
       updatedAt
@@ -1009,6 +1024,7 @@ export const createLearn = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -1050,6 +1066,7 @@ export const updateLearn = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -1091,6 +1108,7 @@ export const deleteLearn = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -1104,6 +1122,51 @@ export const deleteLearn = /* GraphQL */ `
         videoUri
         title
       }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createLearnStatus = /* GraphQL */ `
+  mutation CreateLearnStatus(
+    $input: CreateLearnStatusInput!
+    $condition: ModelLearnStatusConditionInput
+  ) {
+    createLearnStatus(input: $input, condition: $condition) {
+      athleteId
+      learnItemId
+      passedDepositIndex
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateLearnStatus = /* GraphQL */ `
+  mutation UpdateLearnStatus(
+    $input: UpdateLearnStatusInput!
+    $condition: ModelLearnStatusConditionInput
+  ) {
+    updateLearnStatus(input: $input, condition: $condition) {
+      athleteId
+      learnItemId
+      passedDepositIndex
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteLearnStatus = /* GraphQL */ `
+  mutation DeleteLearnStatus(
+    $input: DeleteLearnStatusInput!
+    $condition: ModelLearnStatusConditionInput
+  ) {
+    deleteLearnStatus(input: $input, condition: $condition) {
+      athleteId
+      learnItemId
+      passedDepositIndex
       id
       createdAt
       updatedAt
@@ -1134,6 +1197,7 @@ export const createOpportunity = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -1209,6 +1273,7 @@ export const updateOpportunity = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -1284,6 +1349,7 @@ export const deleteOpportunity = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -1445,6 +1511,7 @@ export const createReward = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -1454,6 +1521,7 @@ export const createReward = /* GraphQL */ `
       logoUri
       description
       heroPhotoUri
+      redeemed
       createdAt
       updatedAt
     }
@@ -1482,6 +1550,7 @@ export const updateReward = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -1491,6 +1560,7 @@ export const updateReward = /* GraphQL */ `
       logoUri
       description
       heroPhotoUri
+      redeemed
       createdAt
       updatedAt
     }
@@ -1519,6 +1589,7 @@ export const deleteReward = /* GraphQL */ `
         wyreId
         isActive
         handle
+        wealthBalance
         id
         createdAt
         updatedAt
@@ -1528,6 +1599,7 @@ export const deleteReward = /* GraphQL */ `
       logoUri
       description
       heroPhotoUri
+      redeemed
       createdAt
       updatedAt
     }

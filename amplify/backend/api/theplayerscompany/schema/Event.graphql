@@ -11,4 +11,5 @@ type Event @model @searchable {
   dateTime: Float!
   location: String!
   reward: Int!
+  registered: Boolean! @default(value: "false")
 }
